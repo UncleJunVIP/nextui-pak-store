@@ -5,15 +5,16 @@ import (
 )
 
 type Pak struct {
-	Name        string            `json:"name"`
-	Version     string            `json:"version"`
-	PakType     sum.Int[PakType]  `json:"type"`
-	Description string            `json:"description"`
-	Author      string            `json:"author"`
-	RepoURL     string            `json:"repo_url"`
-	Banners     map[string]string `json:"banners"`
-	Platforms   []string          `json:"platforms"`
-	Categories  []string          `json:"categories"`
+	Name            string            `json:"name"`
+	Version         string            `json:"version"`
+	PakType         sum.Int[PakType]  `json:"type"`
+	Description     string            `json:"description"`
+	Author          string            `json:"author"`
+	RepoURL         string            `json:"repo_url"`
+	ReleaseFilename string            `json:"release_filename"`
+	Banners         map[string]string `json:"banners"`
+	Platforms       []string          `json:"platforms"`
+	Categories      []string          `json:"categories"`
 }
 
 type PakType struct {
