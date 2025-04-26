@@ -1,0 +1,112 @@
+package ui
+
+import (
+	"bytes"
+	"context"
+	"fmt"
+	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	"go.uber.org/zap"
+	"nextui-pak-store/models"
+	"nextui-pak-store/utils"
+	"os/exec"
+	"path/filepath"
+	"qlova.tech/sum"
+	"strings"
+)
+
+type PakInfoScreen struct {
+	Pak       models.Pak
+	Category  string
+	Installed bool
+}
+
+func InitPakInfoScreen(pak models.Pak, category string, installed bool) PakInfoScreen {
+	return PakInfoScreen{
+		Pak:       pak,
+		Category:  category,
+		Installed: installed,
+	}
+}
+
+func (pi PakInfoScreen) Name() sum.Int[models.ScreenName] {
+	return models.ScreenNames.PakInfo
+}
+
+func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e error) {
+	logger := common.GetLoggerInstance()
+	banner := pi.Pak.RepoURL + models.RefMainStub + pi.Pak.Banners["BRICK"]
+	banner = strings.ReplaceAll(banner, models.GitHubRoot, models.RawGHUC)
+
+	bannerFile, err := utils.DownloadTempFile(banner)
+	if err != nil {
+		// TODO show presenter without image
+	}
+
+	options := []string{
+		"--background-image", bannerFile,
+		"--cancel-button", "Y",
+		"--action-button", "B",
+		"--action-text", "BACK",
+		"--action-show", "true",
+		"--message-alignment", "bottom"}
+
+	message := models.BlankPresenterString
+
+	if !pi.Installed {
+		options = append(options, "--confirm-text", "INSTALL", "--confirm-show", "true", "--confirm-button", "X")
+	} else {
+		message = "Installed!"
+	}
+
+	code, err := ui.ShowMessageWithOptions(message, "0", options...)
+	if err != nil {
+		return nil, -1, err
+	}
+
+	if code == 0 {
+		dl := pi.Pak.RepoURL + models.ReleasesLatestStub + pi.Pak.ReleaseFilename
+		tmp := filepath.Join("/tmp", pi.Pak.ReleaseFilename)
+
+		ctx := context.Background()
+		ctxWithCancel, cancel := context.WithCancel(ctx)
+		defer cancel()
+
+		args := []string{
+			"--message", fmt.Sprintf("Installing %s...", pi.Pak.Name),
+			"--timeout", "-1"}
+		cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
+
+		var stdoutbuf, stderrbuf bytes.Buffer
+		cmd.Stdout = &stdoutbuf
+		cmd.Stderr = &stderrbuf
+
+		err = cmd.Start()
+		if err != nil && cmd.ProcessState.ExitCode() != -1 {
+			logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
+		}
+
+		err = utils.DownloadFile(dl, tmp)
+		if err != nil {
+			cancel()
+			return nil, -1, err
+		}
+
+		cancel()
+
+		pakDestination := ""
+
+		if pi.Pak.PakType == models.PakTypes.TOOL {
+			pakDestination = filepath.Join(models.ToolRoot, pi.Pak.Name+".pak")
+		} else if pi.Pak.PakType == models.PakTypes.EMULATOR {
+			pakDestination = filepath.Join(models.EmulatorRoot, pi.Pak.Name+".pak")
+		}
+
+		err = utils.Unzip(tmp, pakDestination)
+		if err != nil {
+			return nil, -1, err
+		}
+	}
+
+	return nil, code, nil
+}

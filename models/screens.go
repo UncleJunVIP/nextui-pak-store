@@ -4,13 +4,16 @@ import "qlova.tech/sum"
 
 type ScreenName struct {
 	MainMenu,
-	Installed,
-	Updates,
+
 	Browse,
 	PakList,
 	PakInfo,
 	DownloadPak,
+
+	Updates,
 	UpdatePak,
+
+	ManageInstalled,
 	UninstallPak sum.Int[ScreenName]
 }
 

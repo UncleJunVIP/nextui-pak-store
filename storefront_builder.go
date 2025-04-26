@@ -23,9 +23,9 @@ func main() {
 
 	for i, p := range sf.Paks {
 
-		repoName := strings.ReplaceAll(p.RepoURL, "https://github.com/", "")
+		repoName := strings.ReplaceAll(p.RepoURL, models.GitHubRoot, "")
 
-		pakJsonUrl, err := url.Parse(models.PakJsonGHUC + repoName + "/" + models.PakJsonStub) // TODO fix this bullshit
+		pakJsonUrl, err := url.Parse(models.RawGHUC + repoName + "/" + models.PakJsonStub) // TODO fix this bullshit
 		if err != nil {
 			log.Fatal("Unable to parse repo url")
 		}
