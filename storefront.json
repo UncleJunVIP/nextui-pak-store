@@ -5,7 +5,14 @@
     {
       "name": "Mortar",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
-      "version": "v1.6.1"
+      "version": "v1.6.1",
+      "categories": ["ROM Management"]
+    },
+    {
+      "name": "Game Manager",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
+      "version": "v1.1.0-prerelease",
+      "categories": ["ROM Management"]
     }
   ]
 }
