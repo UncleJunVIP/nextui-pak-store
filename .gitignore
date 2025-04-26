@@ -3,3 +3,5 @@
 *.log
 /.device_logs/
 /pak-store.db
+/pak-store
+/storefront.json
