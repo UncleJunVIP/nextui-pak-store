@@ -1,0 +1,10 @@
+{
+  "name": "NextUI Officially Unofficial",
+  "url": "https://github.com/UncleJunVIP/nextui-pak-store",
+  "paks": [
+    {
+      "name": "Mortar",
+      "repo_url": "https://github.com/UncleJunVIP/Mortar"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+/.idea/
+/*.iml
+*.log
+/.device_logs/
+/pak-store.db
