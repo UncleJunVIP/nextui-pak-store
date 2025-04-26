@@ -4,17 +4,18 @@ import (
 	"fmt"
 	shared "github.com/UncleJunVIP/nextui-pak-shared-functions/models"
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
-	"nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
 	"slices"
 	"strings"
 )
 
 type BrowseScreen struct {
-	AppState models.AppState
+	AppState state.AppState
 }
 
-func InitBrowseScreen(appState models.AppState) BrowseScreen {
+func InitBrowseScreen(appState state.AppState) BrowseScreen {
 	return BrowseScreen{
 		AppState: appState,
 	}

@@ -2,12 +2,17 @@ package utils
 
 import (
 	"archive/zip"
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"go.uber.org/zap"
 	"io"
 	"net/http"
-	"nextui-pak-store/models"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -38,6 +43,42 @@ func FetchPakJson(url string) (models.Pak, error) {
 	}
 
 	return pak, nil
+}
+
+func DownloadPakArchive(pak models.Pak, action string) (string, error) {
+	logger := common.GetLoggerInstance()
+
+	releasesStub := fmt.Sprintf("/releases/download/%s/", pak.Version)
+	dl := pak.RepoURL + releasesStub + pak.ReleaseFilename
+	tmp := filepath.Join("/tmp", pak.ReleaseFilename)
+
+	ctx := context.Background()
+	ctxWithCancel, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	args := []string{
+		"--message", fmt.Sprintf("%s %s %s...", action, pak.Name, pak.Version),
+		"--timeout", "-1"}
+	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
+
+	var stdoutbuf, stderrbuf bytes.Buffer
+	cmd.Stdout = &stdoutbuf
+	cmd.Stderr = &stderrbuf
+
+	err := cmd.Start()
+	if err != nil && cmd.ProcessState.ExitCode() != -1 {
+		logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
+	}
+
+	err = DownloadFile(dl, tmp)
+	if err != nil {
+		cancel()
+		return "", err
+	}
+
+	cancel()
+
+	return tmp, nil
 }
 
 func fetch(url string) ([]byte, error) {

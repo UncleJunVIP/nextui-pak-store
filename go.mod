@@ -1,4 +1,4 @@
-module nextui-pak-store
+module github.com/UncleJunVIP/nextui-pak-store
 
 go 1.24
 

@@ -1,15 +1,13 @@
 package ui
 
 import (
-	"bytes"
 	"context"
-	"fmt"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	"github.com/UncleJunVIP/nextui-pak-store/database"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
-	"nextui-pak-store/models"
-	"nextui-pak-store/utils"
-	"os/exec"
 	"path/filepath"
 	"qlova.tech/sum"
 	"strings"
@@ -65,34 +63,11 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 	}
 
 	if code == 0 {
-		dl := pi.Pak.RepoURL + models.ReleasesLatestStub + pi.Pak.ReleaseFilename
-		tmp := filepath.Join("/tmp", pi.Pak.ReleaseFilename)
-
-		ctx := context.Background()
-		ctxWithCancel, cancel := context.WithCancel(ctx)
-		defer cancel()
-
-		args := []string{
-			"--message", fmt.Sprintf("Installing %s...", pi.Pak.Name),
-			"--timeout", "-1"}
-		cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
-
-		var stdoutbuf, stderrbuf bytes.Buffer
-		cmd.Stdout = &stdoutbuf
-		cmd.Stderr = &stderrbuf
-
-		err = cmd.Start()
-		if err != nil && cmd.ProcessState.ExitCode() != -1 {
-			logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
-		}
-
-		err = utils.DownloadFile(dl, tmp)
+		tmp, err := utils.DownloadPakArchive(pi.Pak, "Installing")
 		if err != nil {
-			cancel()
+			logger.Error("Unable to download pak archive", zap.Error(err))
 			return nil, -1, err
 		}
-
-		cancel()
 
 		pakDestination := ""
 
@@ -105,6 +80,17 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		err = utils.Unzip(tmp, pakDestination)
 		if err != nil {
 			return nil, -1, err
+		}
+
+		info := database.InstallParams{
+			Name:    pi.Pak.Name,
+			Version: pi.Pak.Version,
+		}
+
+		ctx := context.Background()
+		err = database.DBQ().Install(ctx, info)
+		if err != nil {
+			// TODO wtf do I do here?
 		}
 	}
 

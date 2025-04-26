@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"log"
 	"net/url"
-	"nextui-pak-store/models"
-	"nextui-pak-store/utils"
 	"os"
 	"strings"
 )

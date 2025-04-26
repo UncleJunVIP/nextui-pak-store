@@ -4,16 +4,17 @@ import (
 	"fmt"
 	shared "github.com/UncleJunVIP/nextui-pak-shared-functions/models"
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
-	"nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
 	"strings"
 )
 
 type MainMenu struct {
-	AppState models.AppState
+	AppState state.AppState
 }
 
-func InitMainMenu(appState models.AppState) MainMenu {
+func InitMainMenu(appState state.AppState) MainMenu {
 	return MainMenu{
 		AppState: appState,
 	}
@@ -25,7 +26,11 @@ func (m MainMenu) Name() sum.Int[models.ScreenName] {
 
 func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) {
 	title := "Pak Store"
-	options := models.MenuItems{Items: []string{fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks))}}
+	options := models.MenuItems{}
+
+	if len(m.AppState.BrowsePaks) > 0 {
+		options.Items = append(options.Items, fmt.Sprintf("Browse Paks (%d)", len(m.AppState.BrowsePaks)))
+	}
 
 	if len(m.AppState.UpdatesAvailable) > 0 {
 		options.Items = append(options.Items, fmt.Sprintf("Available Updates (%d)",
@@ -45,7 +50,7 @@ func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) 
 	}
 
 	sel := s.Value().(shared.ListSelection).SelectedValue
-	trimmedCount := strings.Split(sel, " ")[0]
+	trimmedCount := strings.Split(sel, " (")[0] // TODO clean this up with regex
 
 	return models.WrappedString{Contents: trimmedCount}, s.ExitCode, nil
 }

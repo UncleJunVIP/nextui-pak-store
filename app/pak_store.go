@@ -3,68 +3,27 @@ package main
 import (
 	"bytes"
 	"context"
-	"database/sql"
 	_ "embed"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	"github.com/UncleJunVIP/nextui-pak-store/database"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/state"
+	"github.com/UncleJunVIP/nextui-pak-store/ui"
+	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
 	_ "modernc.org/sqlite"
-	"nextui-pak-store/database"
-	"nextui-pak-store/models"
-	"nextui-pak-store/ui"
-	"nextui-pak-store/utils"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"time"
 )
 
-//go:embed resources/schema.sql
-var ddl string
-
-var dbc *sql.DB
-var queries *database.Queries
-
-var appState models.AppState
+var appState state.AppState
 
 func init() {
 	common.SetLogLevel("ERROR")
 	logger := common.GetLoggerInstance()
 	ctx := context.Background()
-
-	var err error
-	dbPath := filepath.Join(models.PakStoreConfigRoot, "pak-store.db")
-
-	dbDir := filepath.Dir(dbPath)
-	if dbDir != "." && dbDir != "" {
-		err := os.MkdirAll(dbDir, 0755)
-		if err != nil {
-			_, _ = cui.ShowMessage(models.InitializationError, "3")
-			logger.Fatal("Unable to open database file", zap.Error(err))
-		}
-	}
-
-	dbc, err = sql.Open("sqlite", "file:"+dbPath)
-	if err != nil {
-		_, _ = cui.ShowMessage(models.InitializationError, "3")
-		logger.Fatal("Unable to open database file", zap.Error(err))
-	}
-
-	schemaExists, err := database.TableExists(dbc, "installed_paks")
-	if !schemaExists {
-		if _, err := dbc.ExecContext(ctx, ddl); err != nil {
-			_, _ = cui.ShowMessage(models.InitializationError, "3")
-			logger.Fatal("Unable to init schema", zap.Error(err))
-		}
-	}
-
-	queries = database.New(dbc)
-
-	installed, err := queries.ListInstalledPaks(ctx)
-	if err != nil {
-		_, _ = cui.ShowMessage(models.InitializationError, "3")
-		logger.Fatal("Unable to read installed paks table", zap.Error(err))
-	}
 
 	ctxWithCancel, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -80,7 +39,7 @@ func init() {
 	cmd.Stdout = &stdoutbuf
 	cmd.Stderr = &stderrbuf
 
-	err = cmd.Start()
+	err := cmd.Start()
 	if err != nil && cmd.ProcessState.ExitCode() != -1 {
 		logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
 	}
@@ -96,12 +55,12 @@ func init() {
 
 	cancel()
 
-	appState = models.NewAppState(installed, sf)
+	appState = state.NewAppState(sf)
 }
 
 func cleanup() {
+	database.CloseDB()
 	common.CloseLogger()
-	_ = dbc.Close()
 }
 
 func main() {
@@ -124,10 +83,13 @@ func main() {
 				case "Browse":
 					screen = ui.InitBrowseScreen(appState)
 				case "Available Updates":
-
+					screen = ui.InitUpdatesScreen(appState)
 				case "Manage Installed":
 
 				}
+			case 4:
+				appState = appState.Refresh()
+				screen = ui.InitMainMenu(appState)
 			case 1, 2:
 				os.Exit(0)
 			}
@@ -157,7 +119,7 @@ func main() {
 						avp = append(avp, p)
 					}
 				}
-				appState.AvailablePaks = avp
+				appState = appState.Refresh()
 				screen = ui.InitPakInfoScreen(screen.(ui.PakInfoScreen).Pak, screen.(ui.PakInfoScreen).Category, true)
 			case 1, 2, 4:
 				if len(appState.AvailablePaks) == 0 {
@@ -165,6 +127,16 @@ func main() {
 					break
 				}
 				screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
+			}
+
+		case models.ScreenNames.Updates:
+			switch code {
+			case 0:
+				appState = appState.Refresh()
+				screen = ui.InitUpdatesScreen(appState)
+			case 1, 2:
+				appState = appState.Refresh()
+				screen = ui.InitMainMenu(appState)
 			}
 
 		}

@@ -2,16 +2,17 @@ package ui
 
 import (
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
-	"nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
 )
 
 type PakList struct {
-	AppState models.AppState
+	AppState state.AppState
 	Category string
 }
 
-func InitPakList(appState models.AppState, category string) PakList {
+func InitPakList(appState state.AppState, category string) PakList {
 	return PakList{
 		AppState: appState,
 		Category: category,

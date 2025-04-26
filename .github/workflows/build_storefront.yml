@@ -16,7 +16,7 @@ jobs:
           go-version: '1.24.1'
 
       - name: Build Storefront.json
-        run: go run storefront_builder.go
+        run: go run app/storefront_builder.go
 
       - uses: softprops/action-gh-release@v2
         with:
