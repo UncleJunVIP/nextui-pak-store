@@ -20,6 +20,6 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: "Storefront.JSON"
+          tag_name: "storefront"
           make_latest: false
           files: storefront.json
