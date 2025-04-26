@@ -85,6 +85,7 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		info := database.InstallParams{
 			Name:    pi.Pak.Name,
 			Version: pi.Pak.Version,
+			Type:    models.PakTypeMap[pi.Pak.PakType],
 		}
 
 		ctx := context.Background()

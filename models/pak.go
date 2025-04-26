@@ -12,6 +12,7 @@ type Pak struct {
 	Author          string            `json:"author"`
 	RepoURL         string            `json:"repo_url"`
 	ReleaseFilename string            `json:"release_filename"`
+	UpdateIgnore    []string          `json:"update_ignore"`
 	Banners         map[string]string `json:"banners"`
 	Platforms       []string          `json:"platforms"`
 	Categories      []string          `json:"categories"`
@@ -20,6 +21,11 @@ type Pak struct {
 type PakType struct {
 	TOOL,
 	EMULATOR sum.Int[PakType]
+}
+
+var PakTypeMap map[sum.Int[PakType]]string = map[sum.Int[PakType]]string{
+	PakTypes.TOOL:     "TOOL",
+	PakTypes.EMULATOR: "EMULATOR",
 }
 
 var PakTypes = sum.Int[PakType]{}.Sum()

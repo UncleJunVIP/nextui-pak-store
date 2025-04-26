@@ -6,5 +6,6 @@ package database
 
 type InstalledPak struct {
 	Name    string
+	Type    string
 	Version string
 }

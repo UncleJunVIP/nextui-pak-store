@@ -67,7 +67,7 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 
 	err := cmd.Start()
 	if err != nil && cmd.ProcessState.ExitCode() != -1 {
-		logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
+		logger.Fatal("Error launching download screen... That's pretty dumb!", zap.Error(err))
 	}
 
 	err = DownloadFile(dl, tmp)

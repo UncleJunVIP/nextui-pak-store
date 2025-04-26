@@ -29,7 +29,7 @@ func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) 
 	options := models.MenuItems{}
 
 	if len(m.AppState.BrowsePaks) > 0 {
-		options.Items = append(options.Items, fmt.Sprintf("Browse Paks (%d)", len(m.AppState.BrowsePaks)))
+		options.Items = append(options.Items, fmt.Sprintf("Browse Paks (%d)", len(m.AppState.AvailablePaks)))
 	}
 
 	if len(m.AppState.UpdatesAvailable) > 0 {
@@ -42,9 +42,9 @@ func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) 
 	}
 
 	var extraArgs []string
-	extraArgs = append(extraArgs, "--cancel-text", "QUIT")
+	extraArgs = append(extraArgs, "--cancel-text", "EXIT")
 
-	s, err := cui.DisplayList(options, title, "REFRESH", extraArgs...)
+	s, err := cui.DisplayList(options, title, "", extraArgs...)
 	if err != nil {
 		return models.WrappedString{}, -1, err
 	}

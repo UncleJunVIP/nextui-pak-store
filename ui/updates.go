@@ -50,6 +50,10 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		return nil, -1, err
 	}
 
+	if s.ExitCode == 2 {
+		return nil, 2, nil
+	}
+
 	selectedPak := us.AppState.UpdatesAvailableMap[s.SelectedValue]
 
 	tmp, err := utils.DownloadPakArchive(selectedPak, "Updating")

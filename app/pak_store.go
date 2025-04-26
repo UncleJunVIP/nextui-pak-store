@@ -80,12 +80,12 @@ func main() {
 			switch code {
 			case 0:
 				switch res.(models.WrappedString).Contents {
-				case "Browse":
+				case "Browse Paks":
 					screen = ui.InitBrowseScreen(appState)
 				case "Available Updates":
 					screen = ui.InitUpdatesScreen(appState)
 				case "Manage Installed":
-
+					screen = ui.InitManageInstalledScreen(appState)
 				}
 			case 4:
 				appState = appState.Refresh()
@@ -134,6 +134,16 @@ func main() {
 			case 0:
 				appState = appState.Refresh()
 				screen = ui.InitUpdatesScreen(appState)
+			case 1, 2:
+				appState = appState.Refresh()
+				screen = ui.InitMainMenu(appState)
+			}
+
+		case models.ScreenNames.ManageInstalled:
+			switch code {
+			case 0:
+				appState = appState.Refresh()
+				screen = ui.InitManageInstalledScreen(appState)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)

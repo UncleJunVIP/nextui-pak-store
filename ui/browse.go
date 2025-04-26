@@ -41,6 +41,10 @@ func (bs BrowseScreen) Draw() (selection models.ScreenReturn, exitCode int, e er
 		return nil, -1, err
 	}
 
+	if s.ExitCode == 2 {
+		return nil, 2, nil
+	}
+
 	sel := s.Value().(shared.ListSelection).SelectedValue
 	trimmedCount := strings.Split(sel, " (")[0] // TODO clean this up with regex
 
