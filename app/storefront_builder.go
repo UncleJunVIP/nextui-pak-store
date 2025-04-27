@@ -36,6 +36,7 @@ func main() {
 		}
 
 		pak.Name = p.Name
+		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		sf.Paks[i] = pak
 	}

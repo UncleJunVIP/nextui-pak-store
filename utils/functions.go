@@ -72,6 +72,7 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 
 	err = DownloadFile(dl, tmp)
 	if err != nil {
+		logger.Error("Unable to download pak", zap.String("url", dl), zap.Error(err))
 		cancel()
 		return "", err
 	}
