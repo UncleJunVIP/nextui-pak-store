@@ -80,7 +80,7 @@ func main() {
 			switch code {
 			case 0:
 				switch res.(models.WrappedString).Contents {
-				case "Browse Paks":
+				case "Browse":
 					screen = ui.InitBrowseScreen(appState)
 				case "Available Updates":
 					screen = ui.InitUpdatesScreen(appState)

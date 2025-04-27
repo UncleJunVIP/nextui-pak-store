@@ -29,7 +29,7 @@ func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) 
 	options := models.MenuItems{}
 
 	if len(m.AppState.BrowsePaks) > 0 {
-		options.Items = append(options.Items, fmt.Sprintf("Browse Paks (%d)", len(m.AppState.AvailablePaks)))
+		options.Items = append(options.Items, fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks)))
 	}
 
 	if len(m.AppState.UpdatesAvailable) > 0 {

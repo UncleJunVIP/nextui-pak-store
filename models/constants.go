@@ -11,7 +11,7 @@ const (
 
 	PakStoreConfigRoot = "/mnt/SDCARD/.userdata/tg5040/nextui-pak-store"
 	ToolRoot           = "/mnt/SDCARD/Tools/tg5040"
-	EmulatorRoot       = "/mnt/SDCARD/Emu"
+	EmulatorRoot       = "/mnt/SDCARD/Emus/tg5040"
 
 	InitializationError  = "Error Initializing Pak Store! Check Logs. Quitting!"
 	BlankPresenterString = "　　　　　　　　　　　　　　　　　　　　　　　　　"

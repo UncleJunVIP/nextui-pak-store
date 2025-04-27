@@ -37,7 +37,7 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 	items := models.MenuItems{Items: []string{}}
 	for _, p := range us.AppState.UpdatesAvailable {
-		items.Items = append(items.Items, p.Name)
+		items.Items = append(items.Items, p.StorefrontName)
 	}
 
 	options := []string{

@@ -41,7 +41,7 @@ func refreshAppState(storefront models.Storefront) AppState {
 
 	installedPaksMap := make(map[string]database.InstalledPak)
 	for _, p := range installed {
-		installedPaksMap[p.Name] = p
+		installedPaksMap[p.DisplayName] = p
 	}
 
 	var availablePaks []models.Pak
@@ -50,22 +50,22 @@ func refreshAppState(storefront models.Storefront) AppState {
 	browsePaks := make(map[string]map[string]models.Pak)
 
 	for _, p := range storefront.Paks {
-		if _, ok := installedPaksMap[p.Name]; !ok {
+		if _, ok := installedPaksMap[p.StorefrontName]; !ok {
 			availablePaks = append(availablePaks, p)
 			for _, cat := range p.Categories {
 				if _, ok := browsePaks[cat]; !ok {
 					browsePaks[cat] = make(map[string]models.Pak)
 				}
-				browsePaks[cat][p.Name] = p
+				browsePaks[cat][p.StorefrontName] = p
 			}
-		} else if hasUpdate(installedPaksMap[p.Name].Version, p.Version) {
+		} else if hasUpdate(installedPaksMap[p.StorefrontName].Version, p.Version) {
 			updatesAvailable = append(updatesAvailable, p)
-			updatesAvailableMap[p.Name] = p
+			updatesAvailableMap[p.StorefrontName] = p
 		}
 	}
 
 	slices.SortFunc(updatesAvailable, func(a, b models.Pak) int {
-		return strings.Compare(a.Name, b.Name)
+		return strings.Compare(a.StorefrontName, b.StorefrontName)
 	})
 
 	return AppState{

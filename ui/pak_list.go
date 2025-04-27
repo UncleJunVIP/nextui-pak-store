@@ -5,6 +5,7 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
+	"slices"
 )
 
 type PakList struct {
@@ -27,8 +28,10 @@ func (pl PakList) Draw() (selection models.ScreenReturn, exitCode int, e error) 
 	title := pl.Category
 	options := models.MenuItems{Items: []string{}}
 	for _, p := range pl.AppState.BrowsePaks[pl.Category] {
-		options.Items = append(options.Items, p.Name)
+		options.Items = append(options.Items, p.StorefrontName)
 	}
+
+	slices.Sort(options.Items)
 
 	s, err := cui.DisplayList(options, title, "")
 	if err != nil {

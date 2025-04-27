@@ -4,8 +4,8 @@ FROM installed_paks
 ORDER BY name;
 
 -- name: Install :exec
-INSERT INTO installed_paks (name, version, type)
-VALUES (?, ?, ?);
+INSERT INTO installed_paks (display_name, name, version, type)
+VALUES (?, ?, ?, ?);
 
 -- name: UpdateVersion :exec
 UPDATE installed_paks

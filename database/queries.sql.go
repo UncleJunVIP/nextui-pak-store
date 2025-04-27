@@ -10,23 +10,29 @@ import (
 )
 
 const install = `-- name: Install :exec
-INSERT INTO installed_paks (name, version, type)
-VALUES (?, ?, ?)
+INSERT INTO installed_paks (display_name, name, version, type)
+VALUES (?, ?, ?, ?)
 `
 
 type InstallParams struct {
-	Name    string
-	Version string
-	Type    string
+	DisplayName string
+	Name        string
+	Version     string
+	Type        string
 }
 
 func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
-	_, err := q.db.ExecContext(ctx, install, arg.Name, arg.Version, arg.Type)
+	_, err := q.db.ExecContext(ctx, install,
+		arg.DisplayName,
+		arg.Name,
+		arg.Version,
+		arg.Type,
+	)
 	return err
 }
 
 const listInstalledPaks = `-- name: ListInstalledPaks :many
-SELECT name, type, version
+SELECT name, display_name, type, version
 FROM installed_paks
 ORDER BY name
 `
@@ -40,7 +46,12 @@ func (q *Queries) ListInstalledPaks(ctx context.Context) ([]InstalledPak, error)
 	var items []InstalledPak
 	for rows.Next() {
 		var i InstalledPak
-		if err := rows.Scan(&i.Name, &i.Type, &i.Version); err != nil {
+		if err := rows.Scan(
+			&i.Name,
+			&i.DisplayName,
+			&i.Type,
+			&i.Version,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

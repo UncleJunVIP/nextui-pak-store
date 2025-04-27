@@ -40,7 +40,7 @@ func (mis ManageInstalledScreen) Draw() (selection models.ScreenReturn, exitCode
 
 	items := models.MenuItems{Items: []string{}}
 	for _, p := range mis.AppState.InstalledPaks {
-		items.Items = append(items.Items, p.Name)
+		items.Items = append(items.Items, p.DisplayName)
 	}
 
 	options := []string{
@@ -81,7 +81,7 @@ func (mis ManageInstalledScreen) Draw() (selection models.ScreenReturn, exitCode
 
 	if selectedPak.Type == "TOOL" {
 		pakLocation = filepath.Join(models.ToolRoot, selectedPak.Name+".pak")
-	} else if selectedPak.Type == "EMULATOR" {
+	} else if selectedPak.Type == "EMU" {
 		pakLocation = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
 	}
 

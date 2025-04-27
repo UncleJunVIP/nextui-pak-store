@@ -61,7 +61,7 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 			"--action-text", "BACK",
 			"--action-show", "true",
 			"--message-alignment", "middle"}
-		message = fmt.Sprintf("%s: %s", pi.Pak.Name, pi.Pak.Description)
+		message = fmt.Sprintf("%s: %s", pi.Pak.StorefrontName, pi.Pak.Description)
 	}
 
 	if !pi.Installed {
@@ -96,9 +96,10 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		}
 
 		info := database.InstallParams{
-			Name:    pi.Pak.Name,
-			Version: pi.Pak.Version,
-			Type:    models.PakTypeMap[pi.Pak.PakType],
+			DisplayName: pi.Pak.StorefrontName,
+			Name:        pi.Pak.Name,
+			Version:     pi.Pak.Version,
+			Type:        models.PakTypeMap[pi.Pak.PakType],
 		}
 
 		ctx := context.Background()

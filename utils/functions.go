@@ -15,6 +15,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
+	"time"
 )
 
 func FetchStorefront(url string) (models.Storefront, error) {
@@ -57,7 +59,7 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 	defer cancel()
 
 	args := []string{
-		"--message", fmt.Sprintf("%s %s %s...", action, pak.Name, pak.Version),
+		"--message", fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version),
 		"--timeout", "-1"}
 	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
 
@@ -143,6 +145,17 @@ func DownloadFile(url, destPath string) error {
 }
 
 func Unzip(src, dest string) error {
+	// Get the executable filename from the destination path
+	// Assuming the destination file is an executable and the filename is the executable name
+	execName := filepath.Base(dest)
+
+	// Try to kill all processes with this name
+	killAllProcesses(execName)
+
+	// Give the system a moment to terminate processes
+	time.Sleep(500 * time.Millisecond)
+
+	// Now try to open the zip file
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return err
@@ -186,10 +199,38 @@ func Unzip(src, dest string) error {
 			if err != nil {
 				return err
 			}
-			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-			if err != nil {
-				return err
+
+			// If this is an executable file, try to kill any processes with this name first
+			if f.Mode()&0111 != 0 { // Check if file has executable permission
+				execName := filepath.Base(path)
+				killAllProcesses(execName)
+				time.Sleep(100 * time.Millisecond)
 			}
+
+			mode := f.Mode()
+
+			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, mode)
+			if err != nil {
+				// If we still get ETXTBSY, make one more attempt after a longer wait
+				if pathErr, ok := err.(*os.PathError); ok && pathErr.Err == syscall.ETXTBSY {
+					fmt.Printf("File %s is busy (ETXTBSY). Trying again after forceful termination...\n", path)
+
+					// Try more forceful termination
+					execName := filepath.Base(path)
+					killAllProcesses(execName)
+
+					// Wait a bit longer
+					time.Sleep(1 * time.Second)
+
+					// Try one more time
+					f, err = os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, mode)
+				}
+
+				if err != nil {
+					return err
+				}
+			}
+
 			defer func() {
 				if err := f.Close(); err != nil {
 					panic(err)
@@ -212,4 +253,16 @@ func Unzip(src, dest string) error {
 	}
 
 	return nil
+}
+
+func killAllProcesses(procName string) {
+	if procName == "" {
+		return
+	}
+
+	fmt.Printf("Attempting to kill all processes named: %s\n", procName)
+
+	killallCmd := exec.Command("killall", "-9", procName)
+	killallCmd.Run() // Ignore errors
+
 }
