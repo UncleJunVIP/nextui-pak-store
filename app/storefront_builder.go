@@ -35,7 +35,6 @@ func main() {
 			log.Fatal("Unable to fetch pak json for "+p.Name+" ("+p.RepoURL+")", err)
 		}
 
-		pak.Name = p.Name
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		sf.Paks[i] = pak

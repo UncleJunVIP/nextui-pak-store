@@ -127,6 +127,10 @@ func main() {
 					break
 				}
 				screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
+			case -1:
+				_, _ = cui.ShowMessage("Unable to download pak!", "3")
+				screen = ui.InitBrowseScreen(appState)
+				break
 			}
 
 		case models.ScreenNames.Updates:

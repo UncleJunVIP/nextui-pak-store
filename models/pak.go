@@ -5,6 +5,7 @@ import (
 )
 
 type Pak struct {
+	StorefrontName  string            `json:"storefront_name"`
 	Name            string            `json:"name"`
 	Version         string            `json:"version"`
 	PakType         sum.Int[PakType]  `json:"type"`

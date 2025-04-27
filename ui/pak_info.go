@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"fmt"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
@@ -41,15 +42,27 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		// TODO show presenter without image
 	}
 
-	options := []string{
-		"--background-image", bannerFile,
-		"--cancel-button", "Y",
-		"--action-button", "B",
-		"--action-text", "BACK",
-		"--action-show", "true",
-		"--message-alignment", "bottom"}
+	var message string
+	var options []string
 
-	message := models.BlankPresenterString
+	if len(pi.Pak.Banners) > 0 {
+		options = []string{
+			"--background-image", bannerFile,
+			"--cancel-button", "Y",
+			"--action-button", "B",
+			"--action-text", "BACK",
+			"--action-show", "true",
+			"--message-alignment", "bottom"}
+		message = models.BlankPresenterString
+	} else {
+		options = []string{
+			"--cancel-button", "Y",
+			"--action-button", "B",
+			"--action-text", "BACK",
+			"--action-show", "true",
+			"--message-alignment", "middle"}
+		message = fmt.Sprintf("%s: %s", pi.Pak.Name, pi.Pak.Description)
+	}
 
 	if !pi.Installed {
 		options = append(options, "--confirm-text", "INSTALL", "--confirm-show", "true", "--confirm-button", "X")
