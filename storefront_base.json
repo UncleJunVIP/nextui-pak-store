@@ -3,119 +3,119 @@
   "url": "https://github.com/UncleJunVIP/nextui-pak-store",
   "paks": [
     {
-      "name": "Mortar",
+      "storefront_name": "Mortar",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
       "categories": [
         "ROM Management"
       ]
     },
     {
-      "name": "Game Manager",
+      "storefront_name": "Game Manager",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
       "categories": [
         "ROM Management"
       ]
     },
     {
-      "name": "Screenshot Monitor",
+      "storefront_name": "Screenshot Monitor",
       "repo_url": "https://github.com/josegonzalez/minui-screenshot-monitor-pak",
       "categories": [
         "Media"
       ]
     },
     {
-      "name": "WiFi",
+      "storefront_name": "WiFi",
       "repo_url": "https://github.com/josegonzalez/minui-wifi-pak",
       "categories": [
         "System Configuration"
       ]
     },
     {
-      "name": "Dropbear Server (SSH)",
+      "storefront_name": "Dropbear Server (SSH)",
       "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "Dufs Server",
+      "storefront_name": "Dufs Server",
       "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "File Browser",
+      "storefront_name": "File Browser",
       "repo_url": "https://github.com/josegonzalez/minui-filebrowser-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "FTP Server",
+      "storefront_name": "FTP Server",
       "repo_url": "https://github.com/josegonzalez/minui-ftpserver-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "Syncthing",
+      "storefront_name": "Syncthing",
       "repo_url": "https://github.com/josegonzalez/minui-syncthing-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "USB Mass Storage",
+      "storefront_name": "USB Mass Storage",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "SFTPGO Server",
+      "storefront_name": "SFTPGO Server",
       "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
       "categories": [
         "File Management"
       ]
     },
     {
-      "name": "Developer",
+      "storefront_name": "Developer",
       "repo_url": "https://github.com/josegonzalez/minui-developer-pak",
       "categories": [
         "Developer Tools"
       ]
     },
     {
-      "name": "Remote Terminal",
+      "storefront_name": "Remote Terminal",
       "repo_url": "https://github.com/josegonzalez/minui-remote-terminal-pak",
       "categories": [
         "Developer Tools"
       ]
     },
     {
-      "name": "Report",
+      "storefront_name": "Report",
       "repo_url": "https://github.com/josegonzalez/minui-report-pak",
       "categories": [
         "Developer Tools"
       ]
     },
     {
-      "name": "Terminal",
+      "storefront_name": "Terminal",
       "repo_url": "https://github.com/josegonzalez/minui-terminal-pak",
       "categories": [
         "Developer Tools"
       ]
     },
     {
-      "name": "Simple Mode",
+      "storefront_name": "Simple Mode",
       "repo_url": "https://github.com/josegonzalez/minui-simple-mode-pak",
       "categories": [
         "Miscellaneous Tools"
       ]
     },
     {
-      "name": "Artwork Scraper",
+      "storefront_name": "Artwork Scraper",
       "repo_url": "https://github.com/josegonzalez/minui-artwork-scraper-pak",
       "categories": [
         "ROM Management",
@@ -123,63 +123,63 @@
       ]
     },
     {
-      "name": "Random Game",
+      "storefront_name": "Random Game",
       "repo_url": "https://github.com/josegonzalez/minui-random-game-pak",
       "categories": [
         "Miscellaneous Tools"
       ]
     },
     {
-      "name": "PICO-8",
+      "storefront_name": "PICO-8",
       "repo_url": "https://github.com/josegonzalez/minui-pico-8-pak",
       "categories": [
         "Emulators"
       ]
     },
     {
-      "name": "Nintendo DS (DraStic)",
+      "storefront_name": "Nintendo DS (DraStic)",
       "repo_url": "https://github.com/josegonzalez/minui-nintendo-ds-pak",
       "categories": [
         "Emulators"
       ]
     },
     {
-      "name": "Nintendo 64 (mupen64plus)",
+      "storefront_name": "Nintendo 64 (mupen64plus)",
       "repo_url": "https://github.com/josegonzalez/minui-n64-pak",
       "categories": [
         "Emulators"
       ]
     },
     {
-      "name": "Dreamcast (Flycast)",
+      "storefront_name": "Dreamcast (Flycast)",
       "repo_url": "https://github.com/josegonzalez/minui-dreamcast-pak",
       "categories": [
         "Emulators"
       ]
     },
     {
-      "name": "Moonlight",
+      "storefront_name": "Moonlight",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-moonlight-pak",
       "categories": [
         "Streaming Game Clients"
       ]
     },
     {
-      "name": "Media Player",
+      "storefront_name": "Media Player",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-media-player-pak",
       "categories": [
         "Media"
       ]
     },
     {
-      "name": "Gallery Pak",
+      "storefront_name": "Gallery Pak",
       "repo_url": "https://github.com/josegonzalez/minui-gallery-pak",
       "categories": [
         "Media"
       ]
     },
     {
-      "name": "Function Key Editor",
+      "storefront_name": "Function Key Editor",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
       "categories": [
         "System Configuration"
