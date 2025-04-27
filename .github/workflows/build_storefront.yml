@@ -2,6 +2,10 @@ name: Build Storefront.json
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - storefront_base.json
+
 
 jobs:
 

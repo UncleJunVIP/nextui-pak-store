@@ -20,12 +20,12 @@ type Pak struct {
 
 type PakType struct {
 	TOOL,
-	EMULATOR sum.Int[PakType]
+	EMU sum.Int[PakType]
 }
 
 var PakTypeMap map[sum.Int[PakType]]string = map[sum.Int[PakType]]string{
-	PakTypes.TOOL:     "TOOL",
-	PakTypes.EMULATOR: "EMULATOR",
+	PakTypes.TOOL: "TOOL",
+	PakTypes.EMU:  "EMU",
 }
 
 var PakTypes = sum.Int[PakType]{}.Sum()
