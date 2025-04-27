@@ -130,7 +130,7 @@
       ]
     },
     {
-      "name": "Pico",
+      "name": "PICO-8",
       "repo_url": "https://github.com/josegonzalez/minui-pico-8-pak",
       "categories": [
         "Emulators"

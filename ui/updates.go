@@ -66,7 +66,7 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 	if selectedPak.PakType == models.PakTypes.TOOL {
 		pakDestination = filepath.Join(models.ToolRoot, selectedPak.Name+".pak")
-	} else if selectedPak.PakType == models.PakTypes.EMULATOR {
+	} else if selectedPak.PakType == models.PakTypes.EMU {
 		pakDestination = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
 	}
 

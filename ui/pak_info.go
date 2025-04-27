@@ -73,7 +73,7 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 		if pi.Pak.PakType == models.PakTypes.TOOL {
 			pakDestination = filepath.Join(models.ToolRoot, pi.Pak.Name+".pak")
-		} else if pi.Pak.PakType == models.PakTypes.EMULATOR {
+		} else if pi.Pak.PakType == models.PakTypes.EMU {
 			pakDestination = filepath.Join(models.EmulatorRoot, pi.Pak.Name+".pak")
 		}
 
