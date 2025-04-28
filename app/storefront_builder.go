@@ -22,6 +22,9 @@ func main() {
 	}
 
 	for i, p := range sf.Paks {
+		if p.Disabled {
+			continue
+		}
 
 		repoName := strings.ReplaceAll(p.RepoURL, models.GitHubRoot, "")
 

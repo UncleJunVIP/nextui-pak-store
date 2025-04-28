@@ -188,7 +188,8 @@
       "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
       "categories": [
         "Customization"
-      ]
+      ],
+      "disable": true
     },
     {
       "storefront_name": "Portmaster",
@@ -197,7 +198,8 @@
         "Emulators",
         "Ports"
       ],
-      "large_pak": true
+      "large_pak": true,
+      "disable": true
     }
   ]
 }

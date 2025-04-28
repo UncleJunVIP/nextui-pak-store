@@ -18,6 +18,7 @@ type Pak struct {
 	Platforms       []string          `json:"platforms"`
 	Categories      []string          `json:"categories"`
 	LargePak        bool              `json:"large_pak"`
+	Disabled        bool              `json:"disabled"`
 }
 
 type PakType struct {
