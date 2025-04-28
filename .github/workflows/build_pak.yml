@@ -18,7 +18,7 @@ jobs:
           go-version: '1.24.1'
 
       - name: Build
-        run: env GOOS=linux GOARCH=arm64 go build -o pak-store app/pak-store.go
+        run: env GOOS=linux GOARCH=arm64 go build -o pak-store app/pak_store.go
 
       - name: Build Package Folder
         run: |
