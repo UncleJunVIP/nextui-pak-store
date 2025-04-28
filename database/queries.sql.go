@@ -36,7 +36,6 @@ func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
 const listInstalledPaks = `-- name: ListInstalledPaks :many
 SELECT name, display_name, type, version, can_uninstall
 FROM installed_paks
-WHERE can_uninstall = 1
 ORDER BY name
 `
 

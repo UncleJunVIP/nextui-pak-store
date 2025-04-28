@@ -68,6 +68,8 @@ func refreshAppState(storefront models.Storefront) AppState {
 		return strings.Compare(a.StorefrontName, b.StorefrontName)
 	})
 
+	delete(installedPaksMap, "Pak Store")
+
 	return AppState{
 		Storefront:          storefront,
 		InstalledPaks:       installedPaksMap,

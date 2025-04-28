@@ -1,7 +1,6 @@
 -- name: ListInstalledPaks :many
 SELECT *
 FROM installed_paks
-WHERE can_uninstall = 1
 ORDER BY name;
 
 -- name: Install :exec
