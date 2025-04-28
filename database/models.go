@@ -5,8 +5,9 @@
 package database
 
 type InstalledPak struct {
-	Name        string
-	DisplayName string
-	Type        string
-	Version     string
+	Name         string
+	DisplayName  string
+	Type         string
+	Version      string
+	CanUninstall int64
 }

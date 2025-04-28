@@ -17,6 +17,7 @@ type Pak struct {
 	Banners         map[string]string `json:"banners"`
 	Platforms       []string          `json:"platforms"`
 	Categories      []string          `json:"categories"`
+	LargePak        bool              `json:"large_pak"`
 }
 
 type PakType struct {

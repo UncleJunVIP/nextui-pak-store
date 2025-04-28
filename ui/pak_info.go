@@ -75,6 +75,15 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		return nil, -1, err
 	}
 
+	if pi.Pak.LargePak {
+		code, err = ui.ShowMessageWithOptions("Heads up! This is a very large download!", "0",
+			"--cancel-show", "true", "--cancel-button", "B", "--cancel-text", "CANCEL",
+			"--confirm-text", "I UNDERSTAND")
+		if err != nil {
+			return nil, -1, err
+		}
+	}
+
 	if code == 0 {
 		tmp, err := utils.DownloadPakArchive(pi.Pak, "Installing")
 		if err != nil {
@@ -96,10 +105,11 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		}
 
 		info := database.InstallParams{
-			DisplayName: pi.Pak.StorefrontName,
-			Name:        pi.Pak.Name,
-			Version:     pi.Pak.Version,
-			Type:        models.PakTypeMap[pi.Pak.PakType],
+			DisplayName:  pi.Pak.StorefrontName,
+			Name:         pi.Pak.Name,
+			Version:      pi.Pak.Version,
+			Type:         models.PakTypeMap[pi.Pak.PakType],
+			CanUninstall: int64(1),
 		}
 
 		ctx := context.Background()

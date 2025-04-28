@@ -10,15 +10,16 @@ import (
 )
 
 const install = `-- name: Install :exec
-INSERT INTO installed_paks (display_name, name, version, type)
-VALUES (?, ?, ?, ?)
+INSERT INTO installed_paks (display_name, name, version, type, can_uninstall)
+VALUES (?, ?, ?, ?, ?)
 `
 
 type InstallParams struct {
-	DisplayName string
-	Name        string
-	Version     string
-	Type        string
+	DisplayName  string
+	Name         string
+	Version      string
+	Type         string
+	CanUninstall int64
 }
 
 func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
@@ -27,13 +28,15 @@ func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
 		arg.Name,
 		arg.Version,
 		arg.Type,
+		arg.CanUninstall,
 	)
 	return err
 }
 
 const listInstalledPaks = `-- name: ListInstalledPaks :many
-SELECT name, display_name, type, version
+SELECT name, display_name, type, version, can_uninstall
 FROM installed_paks
+WHERE can_uninstall = 1
 ORDER BY name
 `
 
@@ -51,6 +54,7 @@ func (q *Queries) ListInstalledPaks(ctx context.Context) ([]InstalledPak, error)
 			&i.DisplayName,
 			&i.Type,
 			&i.Version,
+			&i.CanUninstall,
 		); err != nil {
 			return nil, err
 		}
