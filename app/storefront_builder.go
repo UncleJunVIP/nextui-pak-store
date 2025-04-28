@@ -38,6 +38,7 @@ func main() {
 		pak.StorefrontName = p.StorefrontName
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
+		pak.LargePak = p.LargePak
 		sf.Paks[i] = pak
 	}
 

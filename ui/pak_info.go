@@ -34,18 +34,20 @@ func (pi PakInfoScreen) Name() sum.Int[models.ScreenName] {
 
 func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e error) {
 	logger := common.GetLoggerInstance()
+
+	showBanner := true
+
 	banner := pi.Pak.RepoURL + models.RefMainStub + pi.Pak.Banners["BRICK"]
 	banner = strings.ReplaceAll(banner, models.GitHubRoot, models.RawGHUC)
-
 	bannerFile, err := utils.DownloadTempFile(banner)
 	if err != nil {
-		// TODO show presenter without image
+		showBanner = false
 	}
 
 	var message string
 	var options []string
 
-	if len(pi.Pak.Banners) > 0 {
+	if showBanner {
 		options = []string{
 			"--background-image", bannerFile,
 			"--cancel-button", "Y",
