@@ -29,13 +29,6 @@
       ]
     },
     {
-      "storefront_name": "WiFi",
-      "repo_url": "https://github.com/josegonzalez/minui-wifi-pak",
-      "categories": [
-        "System Configuration"
-      ]
-    },
-    {
       "storefront_name": "Dropbear Server (SSH)",
       "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
       "categories": [
@@ -187,7 +180,14 @@
       "storefront_name": "Function Key Editor",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
       "categories": [
-        "System Configuration"
+        "Customization"
+      ]
+    },
+    {
+      "storefront_name": "Theme Manager",
+      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
+      "categories": [
+        "Customization"
       ]
     },
     {

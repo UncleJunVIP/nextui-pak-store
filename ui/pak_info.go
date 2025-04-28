@@ -79,8 +79,8 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 	if pi.Pak.LargePak {
 		code, err = ui.ShowMessageWithOptions("Heads up! This is a very large download!", "0",
-			"--cancel-show", "true", "--cancel-button", "B", "--cancel-text", "CANCEL",
-			"--confirm-text", "I UNDERSTAND")
+			"--cancel-button", "B", "--cancel-show", "false", "--cancel-text", "CANCEL",
+			"--confirm-show", "--confirm-text", "I UNDERSTAND")
 		if err != nil {
 			return nil, -1, err
 		}
