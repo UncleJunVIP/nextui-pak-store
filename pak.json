@@ -1,0 +1,16 @@
+{
+  "name": "Pak Store",
+  "version": "v0.1.0",
+  "type": "TOOL",
+  "description": "A Pak Store in this economy?!",
+  "author": "K-Wall",
+  "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+  "release_filename": "Pak Store.pak.zip",
+  "banners": {
+    "BRICK": ".github/resources/banner.png"
+  },
+  "platforms": [
+    "tg5040"
+  ],
+  "launch": "launch.sh"
+}
