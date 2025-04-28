@@ -57,7 +57,7 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 	defer cancel()
 
 	args := []string{
-		"--message", fmt.Sprintf("%s %s %s...", action, pak.Name, pak.Version),
+		"--message", fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version),
 		"--timeout", "-1"}
 	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
 

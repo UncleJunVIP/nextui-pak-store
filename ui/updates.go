@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"fmt"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
@@ -9,6 +10,7 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
+	"os"
 	"path/filepath"
 	"qlova.tech/sum"
 )
@@ -86,6 +88,13 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 	err = database.DBQ().UpdateVersion(ctx, update)
 	if err != nil {
 		// TODO wtf do I do here?
+	}
+
+	if selectedPak.Name == "Pak Store" {
+		cui.ShowMessage(fmt.Sprintf("%s updated successfully! Exiting...", selectedPak.StorefrontName), "3")
+		os.Exit(0)
+	} else {
+		cui.ShowMessage(fmt.Sprintf("%s updated successfully!", selectedPak.StorefrontName), "3")
 	}
 
 	return nil, 0, nil
