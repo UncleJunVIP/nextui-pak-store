@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - storefront_base.json
+      - pak.json
+      - app/storefront_builder.go
 
 
 jobs:
