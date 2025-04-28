@@ -3,6 +3,11 @@
   "url": "https://github.com/UncleJunVIP/nextui-pak-store",
   "paks": [
     {
+      "storefront_name": "Pak Store",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+      "categories": []
+    },
+    {
       "storefront_name": "Mortar",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
       "categories": [
