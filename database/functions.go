@@ -9,7 +9,9 @@ import (
 	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	pakstore "github.com/UncleJunVIP/nextui-pak-store"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
+	"log"
 	_ "modernc.org/sqlite"
 	"os"
 	"path/filepath"
@@ -49,6 +51,21 @@ func init() {
 	}
 
 	queries = New(dbc)
+
+	if !schemaExists {
+		var pak models.Pak
+		err := utils.ParseJSONFile("pak.json", &pak)
+		if err != nil {
+			log.Fatalf("Error parsing JSON file: %v", err)
+		}
+
+		queries.Install(ctx, InstallParams{
+			DisplayName: "Pak Store",
+			Name:        "Pak Store",
+			Version:     pak.Version,
+			Type:        "TOOL",
+		})
+	}
 }
 
 func DBQ() *Queries {

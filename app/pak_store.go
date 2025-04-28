@@ -55,8 +55,6 @@ func init() {
 
 	cancel()
 
-	cui.ShowMessage("POO POO, PEE PEE", "3")
-
 	appState = state.NewAppState(sf)
 }
 

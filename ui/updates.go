@@ -75,7 +75,7 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 	// TODO handle update exclusions here
 
-	err = utils.Unzip(tmp, pakDestination)
+	err = utils.Unzip(tmp, pakDestination, selectedPak)
 	if err != nil {
 		return nil, -1, err
 	}

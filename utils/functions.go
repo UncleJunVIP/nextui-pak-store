@@ -45,6 +45,25 @@ func FetchPakJson(url string) (models.Pak, error) {
 	return pak, nil
 }
 
+func ParseJSONFile(filePath string, out *models.Pak) error {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to open file: %w", err)
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		return fmt.Errorf("failed to read file: %w", err)
+	}
+
+	if err := json.Unmarshal(data, out); err != nil {
+		return fmt.Errorf("failed to unmarshal JSON: %w", err)
+	}
+
+	return nil
+}
+
 func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 	logger := common.GetLoggerInstance()
 
@@ -150,7 +169,7 @@ func DownloadFile(url, destPath string) error {
 	return err
 }
 
-func Unzip(src, dest string) error {
+func Unzip(src, dest string, pak models.Pak) error {
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return err
@@ -160,6 +179,8 @@ func Unzip(src, dest string) error {
 			panic(err)
 		}
 	}()
+
+	// TODO handle update ignore here
 
 	err = os.MkdirAll(dest, 0755)
 	if err != nil {
