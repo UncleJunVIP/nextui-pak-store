@@ -60,6 +60,7 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 
 	tmp, err := utils.DownloadPakArchive(selectedPak, "Updating")
 	if err != nil {
+		cui.ShowMessage(fmt.Sprintf("%s failed to update!", selectedPak.StorefrontName), "3")
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return nil, -1, err
 	}
