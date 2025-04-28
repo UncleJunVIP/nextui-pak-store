@@ -189,6 +189,15 @@
       "categories": [
         "System Configuration"
       ]
+    },
+    {
+      "storefront_name": "Portmaster",
+      "repo_url": "https://github.com/ben16w/minui-portmaster",
+      "categories": [
+        "Emulators",
+        "Ports"
+      ],
+      "large_pak": true
     }
   ]
 }
