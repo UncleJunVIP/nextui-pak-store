@@ -75,8 +75,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
       "categories": [
         "File Management"
-      ],
-      "disabled": true
+      ]
     },
     {
       "storefront_name": "Developer",
@@ -198,8 +197,7 @@
         "Emulators",
         "Ports"
       ],
-      "large_pak": true,
-      "disable": true
+      "large_pak": true
     },
     {
       "storefront_name": "PPSSPP",

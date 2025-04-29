@@ -23,7 +23,7 @@ jobs:
       - name: Build Package Folder
         run: |
           mkdir "Pak Store.pak"
-          cp -R pak-store launch.sh README.md LICENSE pak.json resources/ "Pak Store.pak"
+          cp -R pak-store launch.sh README.md LICENSE pak.json resources/ bin/ certs/ "Pak Store.pak"
 
       - uses: actions/upload-artifact@v4
         with:
