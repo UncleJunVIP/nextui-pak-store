@@ -200,6 +200,35 @@
       ],
       "large_pak": true,
       "disable": true
+    },
+    {
+      "storefront_name": "PPSSPP",
+      "repo_url": "https://github.com/ben16w/minui-psp",
+      "categories": [
+        "Emulators"
+      ]
+    },
+    {
+      "storefront_name": "Cloud Backups",
+      "repo_url": "https://github.com/ben16w/minui-cloud-backups",
+      "categories": [
+        "File Management"
+      ]
+    },
+    {
+      "storefront_name": "Favorites",
+      "repo_url": "https://github.com/ben16w/minui-favorites",
+      "categories": [
+        "ROM Management"
+      ]
+    },
+    {
+      "storefront_name": "Tailscale",
+      "repo_url": "https://github.com/ben16w/minui-tailscale",
+      "categories": [
+        "Developer Tools",
+        "Miscellaneous Tools"
+      ]
     }
   ]
 }

@@ -73,9 +73,7 @@ func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 		pakDestination = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
 	}
 
-	// TODO handle update exclusions here
-
-	err = utils.Unzip(tmp, pakDestination, selectedPak)
+	err = utils.Unzip(tmp, pakDestination, selectedPak, true)
 	if err != nil {
 		return nil, -1, err
 	}

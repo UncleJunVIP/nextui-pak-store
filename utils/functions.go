@@ -169,7 +169,7 @@ func DownloadFile(url, destPath string) error {
 	return err
 }
 
-func Unzip(src, dest string, pak models.Pak) error {
+func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return err
@@ -180,14 +180,16 @@ func Unzip(src, dest string, pak models.Pak) error {
 		}
 	}()
 
-	// TODO handle update ignore here
-
 	err = os.MkdirAll(dest, 0755)
 	if err != nil {
 		return err
 	}
 
 	extractAndWriteFile := func(f *zip.File) error {
+		if isUpdate && ShouldIgnoreFile(f.Name, pak) {
+			return nil
+		}
+
 		rc, err := f.Open()
 		if err != nil {
 			return err
@@ -249,4 +251,28 @@ func Unzip(src, dest string, pak models.Pak) error {
 	}
 
 	return nil
+}
+
+func ShouldIgnoreFile(filePath string, pak models.Pak) bool {
+	for _, ignorePattern := range pak.UpdateIgnore {
+		match, err := filepath.Match(ignorePattern, filePath)
+		if err == nil && match {
+			return true
+		}
+
+		parts := strings.Split(filePath, string(os.PathSeparator))
+		for i := 0; i < len(parts); i++ {
+			if i > 0 && strings.HasSuffix(parts[i-1], ".pak") {
+				break
+			}
+
+			partialPath := strings.Join(parts[:i+1], string(os.PathSeparator))
+			match, err := filepath.Match(ignorePattern, partialPath)
+			if err == nil && match {
+				return true
+			}
+		}
+	}
+
+	return false
 }

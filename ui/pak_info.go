@@ -101,7 +101,7 @@ func (pi PakInfoScreen) Draw() (selection models.ScreenReturn, exitCode int, e e
 			pakDestination = filepath.Join(models.EmulatorRoot, pi.Pak.Name+".pak")
 		}
 
-		err = utils.Unzip(tmp, pakDestination, pi.Pak)
+		err = utils.Unzip(tmp, pakDestination, pi.Pak, false)
 		if err != nil {
 			return nil, -1, err
 		}
