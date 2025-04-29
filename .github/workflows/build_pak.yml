@@ -17,6 +17,9 @@ jobs:
         with:
           go-version: '1.24.1'
 
+      - name: Init Resources
+        run: go run app/init_resources.go
+
       - name: Build
         run: env GOOS=linux GOARCH=arm64 go build -o pak-store app/pak_store.go
 
