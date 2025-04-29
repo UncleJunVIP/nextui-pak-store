@@ -233,7 +233,8 @@
       "repo_url": "https://github.com/LanderN/nextui-updater-pak",
       "categories": [
         "System"
-      ]
+      ],
+      "disabled": true
     }
   ]
 }
