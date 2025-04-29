@@ -227,6 +227,13 @@
         "Developer Tools",
         "Miscellaneous Tools"
       ]
+    },
+    {
+      "storefront_name": "Over The Air Updater",
+      "repo_url": "https://github.com/LanderN/nextui-updater-pak",
+      "categories": [
+        "System"
+      ]
     }
   ]
 }
