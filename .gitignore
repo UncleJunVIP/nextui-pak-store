@@ -10,3 +10,5 @@
 /bin/tg5040/minui-presenter
 /certs/certificates.crt
 /data/systems-mapping.json
+.DS_Store
+**/.DS_Store
