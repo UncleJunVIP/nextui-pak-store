@@ -132,6 +132,8 @@ func DownloadTempFile(url string) (string, error) {
 
 	if resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("bad status: %s", resp.Status)
+	} else if resp.ContentLength <= 0 {
+		return "", fmt.Errorf("empty response")
 	}
 
 	tempFile, err := os.CreateTemp("", "download-*")

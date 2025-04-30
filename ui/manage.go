@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"qlova.tech/sum"
+	"slices"
 	"time"
 )
 
@@ -44,8 +45,10 @@ func (mis ManageInstalledScreen) Draw() (selection models.ScreenReturn, exitCode
 		items.Items = append(items.Items, p.DisplayName)
 	}
 
+	slices.Sort(items.Items)
+
 	options := []string{
-		"--confirm-button", "A",
+		"--confirm-button", "X",
 		"--confirm-text", "UNINSTALL",
 	}
 
@@ -54,19 +57,19 @@ func (mis ManageInstalledScreen) Draw() (selection models.ScreenReturn, exitCode
 		return nil, -1, err
 	}
 
-	if s.ExitCode == 2 {
+	if s.ExitCode != 0 {
 		return nil, 2, nil
 	}
 
 	code, err := cui.ShowMessageWithOptions(fmt.Sprintf("Are you sure that you want to uninstall %s?", s.SelectedValue), "0",
 		"--cancel-button", "B", "--cancel-show", "false", "--cancel-text", "NEVERMIND",
-		"--confirm-show", "--confirm-text", "YES")
+		"--confirm-show", "true", "--confirm-text", "YES", "--confirm-button", "X")
 	if err != nil {
 		return nil, -1, err
 	}
 
 	if code == 2 {
-		return nil, 2, nil
+		return nil, 12, nil
 	}
 
 	selectedPak := mis.AppState.InstalledPaks[s.SelectedValue]

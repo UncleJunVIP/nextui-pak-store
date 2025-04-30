@@ -145,7 +145,7 @@ func main() {
 
 		case models.ScreenNames.ManageInstalled:
 			switch code {
-			case 0:
+			case 0, 11, 12:
 				appState = appState.Refresh()
 				screen = ui.InitManageInstalledScreen(appState)
 			case 1, 2:

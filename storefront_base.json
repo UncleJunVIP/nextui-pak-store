@@ -233,8 +233,14 @@
       "repo_url": "https://github.com/LanderN/nextui-updater-pak",
       "categories": [
         "System"
-      ],
-      "disabled": true
+      ]
+    },
+    {
+      "storefront_name": "Search Pak",
+      "repo_url": "https://github.com/laesetuc/minui-search-pak",
+      "categories": [
+        "ROM Management"
+      ]
     }
   ]
 }
