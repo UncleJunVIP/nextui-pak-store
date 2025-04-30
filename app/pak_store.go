@@ -49,7 +49,7 @@ func init() {
 	sf, err := utils.FetchStorefront(models.StorefrontJson)
 	if err != nil {
 		cancel()
-		_, _ = cui.ShowMessage(models.InitializationError, "3")
+		_, _ = cui.ShowMessage("Could not fetch the Storefront! Quitting...", "3")
 		logger.Fatal("Unable to fetch storefront", zap.Error(err))
 	}
 

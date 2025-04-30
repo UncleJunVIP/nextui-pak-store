@@ -1,14 +1,24 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
-	"github.com/UncleJunVIP/nextui-pak-store/utils"
+	"io"
 	"log"
-	"net/url"
+	"net/http"
 	"os"
 	"strings"
 )
+
+type GitHubContent struct {
+	Name        string `json:"name"`
+	Path        string `json:"path"`
+	Encoding    string `json:"encoding"`
+	Content     string `json:"content"`
+	DownloadUrl string `json:"download_url"`
+}
 
 func main() {
 	data, err := os.ReadFile("storefront_base.json")
@@ -26,14 +36,19 @@ func main() {
 			continue
 		}
 
-		repoName := strings.ReplaceAll(p.RepoURL, models.GitHubRoot, "")
-
-		pakJsonUrl, err := url.Parse(models.RawGHUC + repoName + "/" + models.PakJsonStub) // TODO fix this bullshit
-		if err != nil {
-			log.Fatal("Unable to parse repo url")
+		repoPath := strings.ReplaceAll(p.RepoURL, models.GitHubRoot, "")
+		parts := strings.Split(repoPath, "/")
+		if len(parts) < 2 {
+			log.Fatal("Invalid repository URL format:", p.RepoURL)
 		}
 
-		pak, err := utils.FetchPakJson(pakJsonUrl.String())
+		owner := parts[0]
+		repo := parts[1]
+
+		apiURL := fmt.Sprintf("https://api.github.com/repos/%s/%s/contents/%s",
+			owner, repo, models.PakJsonStub)
+
+		pak, err := fetchPakJsonFromGitHubAPI(apiURL)
 		if err != nil {
 			log.Fatal("Unable to fetch pak json for "+p.Name+" ("+p.RepoURL+")", err)
 		}
@@ -54,4 +69,50 @@ func main() {
 	if err != nil {
 		log.Fatal("Unable to write storefront.json", err)
 	}
+}
+
+func fetchPakJsonFromGitHubAPI(apiURL string) (models.Pak, error) {
+	var pak models.Pak
+
+	req, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return pak, fmt.Errorf("error creating HTTP request: %w", err)
+	}
+
+	req.Header.Add("Accept", "application/vnd.github.v3+json")
+
+	req.Header.Add("Authorization", "Bearer "+os.Getenv("GH_TOKEN"))
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return pak, fmt.Errorf("error making HTTP request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return pak, fmt.Errorf("GitHub API error: %s - %s", resp.Status, string(body))
+	}
+
+	var content GitHubContent
+	if err := json.NewDecoder(resp.Body).Decode(&content); err != nil {
+		return pak, fmt.Errorf("error decoding GitHub API response: %w", err)
+	}
+
+	if content.Encoding == "base64" {
+		contentBytes, err := base64.StdEncoding.DecodeString(
+			strings.ReplaceAll(content.Content, "\n", ""))
+		if err != nil {
+			return pak, fmt.Errorf("error decoding base64 content: %w", err)
+		}
+
+		if err := json.Unmarshal(contentBytes, &pak); err != nil {
+			return pak, fmt.Errorf("error parsing pak.json: %w", err)
+		}
+	} else {
+		return pak, fmt.Errorf("unexpected content encoding: %s", content.Encoding)
+	}
+
+	return pak, nil
 }
