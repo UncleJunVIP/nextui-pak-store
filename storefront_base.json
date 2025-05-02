@@ -36,6 +36,13 @@
       ]
     },
     {
+       "storefront_name": "SFTPGO Server",
+       "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
+       "categories": [
+         "File Management"
+       ]
+     },
+    {
       "storefront_name": "Dufs Server",
       "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
       "categories": [
