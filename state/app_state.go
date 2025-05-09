@@ -81,5 +81,13 @@ func refreshAppState(storefront models.Storefront) AppState {
 }
 
 func hasUpdate(installed string, latest string) bool {
+	if !strings.HasPrefix(installed, "v") {
+		installed = "v" + installed
+	}
+
+	if !strings.HasPrefix(latest, "v") {
+		latest = "v" + latest
+	}
+
 	return semver.Compare(installed, latest) == -1
 }
