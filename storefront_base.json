@@ -241,6 +241,13 @@
       "categories": [
         "ROM Management"
       ]
+    },
+    {
+      "storefront_name": "Collections Editor",
+      "repo_url": "https://github.com/laesetuc/minui-collections-editor",
+      "categories": [
+        "ROM Management"
+      ]
     }
   ]
 }
