@@ -31,7 +31,9 @@ func main() {
 		log.Fatal("Unable to unmarshal storefront", err)
 	}
 
-	for i, p := range sf.Paks {
+	var paks []models.Pak
+
+	for _, p := range sf.Paks {
 		if p.Disabled {
 			continue
 		}
@@ -57,8 +59,11 @@ func main() {
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		pak.LargePak = p.LargePak
-		sf.Paks[i] = pak
+
+		paks = append(paks, pak)
 	}
+
+	sf.Paks = paks
 
 	jsonData, err := json.MarshalIndent(sf, "", "  ")
 	if err != nil {
