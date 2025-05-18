@@ -248,6 +248,13 @@
       "categories": [
         "ROM Management"
       ]
+    },
+    {
+      "storefront_name": "Dot File Cleaner",
+      "repo_url": "https://github.com/laesetuc/minui-dotclean-pak",
+      "categories": [
+        "System"
+      ]
     }
   ]
 }
