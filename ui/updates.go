@@ -29,7 +29,7 @@ func (us UpdatesScreen) Name() sum.Int[models.ScreenName] {
 	return models.ScreenNames.Updates
 }
 
-func (us UpdatesScreen) Draw() (selection models.ScreenReturn, exitCode int, e error) {
+func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 	if len(us.AppState.UpdatesAvailable) == 0 {
 		return nil, 2, nil
 	}

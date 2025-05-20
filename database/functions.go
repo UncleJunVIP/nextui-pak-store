@@ -6,7 +6,6 @@ import (
 	_ "embed"
 	"errors"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	pakstore "github.com/UncleJunVIP/nextui-pak-store"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
@@ -27,25 +26,29 @@ func init() {
 	var err error
 	dbPath := filepath.Join(models.PakStoreConfigRoot, "pak-store.db")
 
+	if os.Getenv("ENVIRONMENT") == "DEV" {
+		dbPath = "pak-store.db"
+	}
+
 	dbDir := filepath.Dir(dbPath)
 	if dbDir != "." && dbDir != "" {
 		err := os.MkdirAll(dbDir, 0755)
 		if err != nil {
-			_, _ = cui.ShowMessage(models.InitializationError, "3")
+			//_, _ = cui.ShowMessage(models.InitializationError, "3")
 			logger.Fatal("Unable to open database file", zap.Error(err))
 		}
 	}
 
 	dbc, err = sql.Open("sqlite", "file:"+dbPath)
 	if err != nil {
-		_, _ = cui.ShowMessage(models.InitializationError, "3")
+		//_, _ = cui.ShowMessage(models.InitializationError, "3")
 		logger.Fatal("Unable to open database file", zap.Error(err))
 	}
 
 	schemaExists, err := TableExists(dbc, "installed_paks")
 	if !schemaExists {
 		if _, err := dbc.ExecContext(ctx, pakstore.DDL); err != nil {
-			_, _ = cui.ShowMessage(models.InitializationError, "3")
+			//_, _ = cui.ShowMessage(models.InitializationError, "3")
 			logger.Fatal("Unable to init schema", zap.Error(err))
 		}
 	}

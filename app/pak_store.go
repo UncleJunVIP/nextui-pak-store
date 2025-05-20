@@ -1,61 +1,40 @@
 package main
 
 import (
-	"bytes"
-	"context"
 	_ "embed"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"github.com/UncleJunVIP/nextui-pak-store/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
-	"go.uber.org/zap"
 	_ "modernc.org/sqlite"
 	"os"
-	"os/exec"
 	"time"
 )
 
 var appState state.AppState
 
 func init() {
+	gaba.InitSDL(gaba.GabagoolOptions{
+		WindowTitle:    "Pak Store",
+		ShowBackground: true,
+	})
 	common.SetLogLevel("ERROR")
-	logger := common.GetLoggerInstance()
-	ctx := context.Background()
 
-	ctxWithCancel, cancel := context.WithCancel(ctx)
-	defer cancel()
+	sf, err := gaba.ProcessMessage("",
+		gaba.ProcessMessageOptions{Image: "resources/splash.png"}, func() (interface{}, error) {
+			time.Sleep(1500 * time.Millisecond)
+			return utils.FetchStorefront(models.StorefrontJson)
+		})
 
-	args := []string{
-		"--message", models.BlankPresenterString,
-		"--timeout", "-1",
-		"--background-image", models.SplashScreen,
-		"--message-alignment", "bottom"}
-	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
-
-	var stdoutbuf, stderrbuf bytes.Buffer
-	cmd.Stdout = &stdoutbuf
-	cmd.Stderr = &stderrbuf
-
-	err := cmd.Start()
-	if err != nil && cmd.ProcessState.ExitCode() != -1 {
-		logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
-	}
-
-	time.Sleep(1500 * time.Millisecond)
-
-	sf, err := utils.FetchStorefront(models.StorefrontJson)
 	if err != nil {
-		cancel()
-		_, _ = cui.ShowMessage("Could not fetch the Storefront! Quitting...", "3")
-		logger.Fatal("Unable to fetch storefront", zap.Error(err))
+		defer gaba.CloseSDL()
+		common.LogStandardFatal("Could not load Storefront!", err)
 	}
 
-	cancel()
-
-	appState = state.NewAppState(sf)
+	appState = state.NewAppState(sf.Result.(models.Storefront))
 }
 
 func cleanup() {
@@ -64,6 +43,7 @@ func cleanup() {
 }
 
 func main() {
+	defer gaba.CloseSDL()
 	defer cleanup()
 
 	logger := common.GetLoggerInstance()
@@ -79,7 +59,7 @@ func main() {
 		case models.ScreenNames.MainMenu:
 			switch code {
 			case 0:
-				switch res.(models.WrappedString).Contents {
+				switch res.(string) {
 				case "Browse":
 					screen = ui.InitBrowseScreen(appState)
 				case "Available Updates":
@@ -97,7 +77,7 @@ func main() {
 		case models.ScreenNames.Browse:
 			switch code {
 			case 0:
-				screen = ui.InitPakList(appState, res.(models.WrappedString).Contents)
+				screen = ui.InitPakList(appState, res.(string))
 			case 1, 2:
 				screen = ui.InitMainMenu(appState)
 			}
@@ -113,12 +93,6 @@ func main() {
 		case models.ScreenNames.PakInfo:
 			switch code {
 			case 0:
-				var avp []models.Pak
-				for _, p := range appState.AvailablePaks {
-					if p.Name != screen.(ui.PakInfoScreen).Pak.Name {
-						avp = append(avp, p)
-					}
-				}
 				appState = appState.Refresh()
 				screen = ui.InitPakInfoScreen(screen.(ui.PakInfoScreen).Pak, screen.(ui.PakInfoScreen).Category, true)
 			case 1, 2, 4:
@@ -128,7 +102,10 @@ func main() {
 				}
 				screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
 			case -1:
-				_, _ = cui.ShowMessage("Unable to download pak!", "3")
+				gaba.ProcessMessage("Unable to Download Pak!", gaba.ProcessMessageOptions{ShowThemeBackground: true}, func() (interface{}, error) {
+					time.Sleep(1750 * time.Millisecond)
+					return nil, nil
+				})
 				screen = ui.InitBrowseScreen(appState)
 				break
 			}

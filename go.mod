@@ -2,7 +2,14 @@ module github.com/UncleJunVIP/nextui-pak-store
 
 go 1.24
 
+replace github.com/UncleJunVIP/gabagool => ../gabagool
+
+// 	github.com/UncleJunVIP/gabagool v0.0.0-00010101000000-000000000000
+
+//replace github.com/UncleJunVIP/nextui-pak-shared-functions => ../nextui-pak-shared-functions
+
 require (
+	github.com/UncleJunVIP/gabagool v0.0.0-00010101000000-000000000000
 	github.com/UncleJunVIP/nextui-pak-shared-functions v1.3.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/mod v0.24.0
@@ -17,15 +24,18 @@ require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/kettek/apng v0.0.0-20220823221153-ff692776a607 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
+	github.com/patrickhuber/go-types v0.6.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	github.com/veandco/go-sdl2 v0.4.40 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
+	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6 // indirect
 	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
-	modernc.org/libc v1.62.1 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	modernc.org/libc v1.65.6 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
-	modernc.org/memory v1.9.1 // indirect
+	modernc.org/memory v1.10.0 // indirect
 )

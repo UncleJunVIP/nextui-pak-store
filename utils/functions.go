@@ -2,25 +2,33 @@ package utils
 
 import (
 	"archive/zip"
-	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"go.uber.org/zap"
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
 
 func FetchStorefront(url string) (models.Storefront, error) {
-	data, err := fetch(url)
-	if err != nil {
-		return models.Storefront{}, err
+	var data []byte
+	var err error
+
+	if os.Getenv("ENVIRONMENT") == "DEV" {
+		data, err = os.ReadFile("storefront.json")
+		if err != nil {
+			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
+		}
+	} else {
+		data, err = fetch(url)
+		if err != nil {
+			return models.Storefront{}, err
+		}
 	}
 
 	var sf models.Storefront
@@ -71,10 +79,6 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 	dl := pak.RepoURL + releasesStub + pak.ReleaseFilename
 	tmp := filepath.Join("/tmp", pak.ReleaseFilename)
 
-	ctx := context.Background()
-	ctxWithCancel, cancel := context.WithCancel(ctx)
-	defer cancel()
-
 	message := ""
 
 	if action == "Updating" {
@@ -83,28 +87,15 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 		message = fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version)
 	}
 
-	args := []string{
-		"--message", message,
-		"--timeout", "-1"}
-	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
-
-	var stdoutbuf, stderrbuf bytes.Buffer
-	cmd.Stdout = &stdoutbuf
-	cmd.Stderr = &stderrbuf
-
-	err := cmd.Start()
-	if err != nil && cmd.ProcessState.ExitCode() != -1 {
-		logger.Fatal("Error launching download screen... That's pretty dumb!", zap.Error(err))
-	}
-
-	err = DownloadFile(dl, tmp)
+	_, err := gabagool.DownloadManager([]gabagool.Download{{
+		URL:         dl,
+		Location:    tmp,
+		DisplayName: message,
+	}}, make(map[string]string))
 	if err != nil {
-		logger.Error("Unable to download pak", zap.String("url", dl), zap.Error(err))
-		cancel()
+		logger.Error("Error downloading", zap.Error(err))
 		return "", err
 	}
-
-	cancel()
 
 	return tmp, nil
 }

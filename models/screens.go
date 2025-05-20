@@ -16,7 +16,7 @@ var ScreenNames = sum.Int[ScreenName]{}.Sum()
 
 type Screen interface {
 	Name() sum.Int[ScreenName]
-	Draw() (value ScreenReturn, exitCode int, e error)
+	Draw() (value interface{}, exitCode int, e error)
 }
 
 type ScreenReturn interface {

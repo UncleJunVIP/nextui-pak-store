@@ -1,9 +1,7 @@
 package ui
 
 import (
-	"fmt"
-	shared "github.com/UncleJunVIP/nextui-pak-shared-functions/models"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -25,28 +23,37 @@ func (bs BrowseScreen) Name() sum.Int[models.ScreenName] {
 	return models.ScreenNames.Browse
 }
 
-func (bs BrowseScreen) Draw() (selection models.ScreenReturn, exitCode int, e error) {
-	title := "Browse Paks"
+func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
+	var menuItems []gaba.MenuItem
 
-	options := models.MenuItems{Items: []string{}}
-	for cat, _ := range bs.AppState.BrowsePaks {
-		options.Items = append(options.Items,
-			fmt.Sprintf("%s (%d)", cat, len(bs.AppState.BrowsePaks[cat])))
+	for cat := range bs.AppState.BrowsePaks {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     cat,
+			Selected: false,
+			Focused:  false,
+			Metadata: nil,
+		})
 	}
 
-	slices.Sort(options.Items)
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+		return strings.Compare(a.Text, b.Text)
+	})
 
-	s, err := cui.DisplayList(options, title, "")
+	options := gaba.DefaultListOptions("Browse Paks", menuItems)
+	options.EnableAction = true
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		{ButtonName: "B", HelpText: "Back"},
+		{ButtonName: "A", HelpText: "Select"},
+	}
+
+	sel, err := gaba.List(options)
 	if err != nil {
 		return nil, -1, err
 	}
 
-	if s.ExitCode == 2 {
+	if sel.IsNone() {
 		return nil, 2, nil
 	}
 
-	sel := s.Value().(shared.ListSelection).SelectedValue
-	trimmedCount := strings.Split(sel, " (")[0] // TODO clean this up with regex
-
-	return models.WrappedString{Contents: trimmedCount}, s.ExitCode, nil
+	return sel.Unwrap().SelectedItem.Text, 0, nil
 }

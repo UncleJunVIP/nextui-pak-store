@@ -3,7 +3,6 @@ package state
 import (
 	"context"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"go.uber.org/zap"
@@ -35,7 +34,7 @@ func refreshAppState(storefront models.Storefront) AppState {
 
 	installed, err := database.DBQ().ListInstalledPaks(ctx)
 	if err != nil {
-		_, _ = cui.ShowMessage(models.InitializationError, "3")
+		//_, _ = cui.ShowMessage(models.InitializationError, "3")
 		logger.Fatal("Unable to read installed paks table", zap.Error(err))
 	}
 

@@ -15,6 +15,7 @@ type Pak struct {
 	ReleaseFilename string            `json:"release_filename"`
 	UpdateIgnore    []string          `json:"update_ignore"`
 	Banners         map[string]string `json:"banners"`
+	Screenshots     []string          `json:"screenshots"`
 	Platforms       []string          `json:"platforms"`
 	Categories      []string          `json:"categories"`
 	LargePak        bool              `json:"large_pak"`

@@ -2,8 +2,7 @@ package ui
 
 import (
 	"fmt"
-	shared "github.com/UncleJunVIP/nextui-pak-shared-functions/models"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -24,33 +23,55 @@ func (m MainMenu) Name() sum.Int[models.ScreenName] {
 	return models.ScreenNames.MainMenu
 }
 
-func (m MainMenu) Draw() (selection models.ScreenReturn, exitCode int, e error) {
+func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 	title := "Pak Store"
-	options := models.MenuItems{}
+
+	var menuItems []gaba.MenuItem
 
 	if len(m.AppState.UpdatesAvailable) > 0 {
-		options.Items = append(options.Items, fmt.Sprintf("Available Updates (%d)",
-			len(m.AppState.UpdatesAvailable)))
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Available Updates (%d)", len(m.AppState.UpdatesAvailable)),
+			Selected: false,
+			Focused:  false,
+			Metadata: "Available Updates",
+		})
 	}
 
 	if len(m.AppState.BrowsePaks) > 0 {
-		options.Items = append(options.Items, fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks)))
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Browse (%d)", len(m.AppState.BrowsePaks)),
+			Selected: false,
+			Focused:  false,
+			Metadata: "Browse",
+		})
 	}
 
 	if len(m.AppState.InstalledPaks) > 0 {
-		options.Items = append(options.Items, fmt.Sprintf("Manage Installed (%d)", len(m.AppState.InstalledPaks)))
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Manage Installed (%d)", len(m.AppState.InstalledPaks)),
+			Selected: false,
+			Focused:  false,
+			Metadata: "Manage Installed",
+		})
 	}
 
-	var extraArgs []string
-	extraArgs = append(extraArgs, "--cancel-text", "EXIT")
+	options := gaba.DefaultListOptions(title, menuItems)
+	options.EnableAction = true
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		{ButtonName: "B", HelpText: "Quit"},
+		{ButtonName: "A", HelpText: "Select"},
+	}
 
-	s, err := cui.DisplayList(options, title, "", extraArgs...)
+	sel, err := gaba.List(options)
 	if err != nil {
-		return models.WrappedString{}, -1, err
+		return nil, -1, err
 	}
 
-	sel := s.Value().(shared.ListSelection).SelectedValue
-	trimmedCount := strings.Split(sel, " (")[0] // TODO clean this up with regex
+	if sel.IsNone() {
+		return nil, 2, nil
+	}
 
-	return models.WrappedString{Contents: trimmedCount}, s.ExitCode, nil
+	trimmedCount := strings.Split(sel.Unwrap().SelectedItem.Text, " (")[0] // TODO clean this up with regex
+
+	return trimmedCount, 0, nil
 }

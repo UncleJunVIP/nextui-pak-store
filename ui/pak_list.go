@@ -1,11 +1,12 @@
 package ui
 
 import (
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
 	"slices"
+	"strings"
 )
 
 type PakList struct {
@@ -24,21 +25,36 @@ func (pl PakList) Name() sum.Int[models.ScreenName] {
 	return models.ScreenNames.PakList
 }
 
-func (pl PakList) Draw() (selection models.ScreenReturn, exitCode int, e error) {
-	title := pl.Category
-	options := models.MenuItems{Items: []string{}}
+func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
+	var menuItems []gaba.MenuItem
 	for _, p := range pl.AppState.BrowsePaks[pl.Category] {
-		options.Items = append(options.Items, p.StorefrontName)
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     p.StorefrontName,
+			Selected: false,
+			Focused:  false,
+			Metadata: p,
+		})
 	}
 
-	slices.Sort(options.Items)
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+		return strings.Compare(a.Text, b.Text)
+	})
 
-	s, err := cui.DisplayList(options, title, "")
+	options := gaba.DefaultListOptions(pl.Category, menuItems)
+	options.EnableAction = true
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		{ButtonName: "B", HelpText: "Back"},
+		{ButtonName: "A", HelpText: "View"},
+	}
+
+	sel, err := gaba.List(options)
 	if err != nil {
 		return nil, -1, err
 	}
 
-	selectedPak := pl.AppState.BrowsePaks[pl.Category][s.SelectedValue]
+	if sel.IsNone() {
+		return nil, 2, nil
+	}
 
-	return selectedPak, s.ExitCode, nil
+	return sel.Unwrap().SelectedItem.Metadata, 0, nil
 }

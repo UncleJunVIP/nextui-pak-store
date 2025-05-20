@@ -32,7 +32,7 @@ func (mis ManageInstalledScreen) Name() sum.Int[models.ScreenName] {
 	return models.ScreenNames.ManageInstalled
 }
 
-func (mis ManageInstalledScreen) Draw() (selection models.ScreenReturn, exitCode int, e error) {
+func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e error) {
 	if len(mis.AppState.InstalledPaks) == 0 {
 		return nil, 2, nil
 	}
