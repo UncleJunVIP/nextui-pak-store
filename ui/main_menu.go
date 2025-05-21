@@ -39,7 +39,7 @@ func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 
 	if len(m.AppState.BrowsePaks) > 0 {
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     fmt.Sprintf("Browse (%d)", len(m.AppState.BrowsePaks)),
+			Text:     fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks)),
 			Selected: false,
 			Focused:  false,
 			Metadata: "Browse",

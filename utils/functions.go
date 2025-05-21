@@ -4,22 +4,27 @@ import (
 	"archive/zip"
 	"encoding/json"
 	"fmt"
-	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/skip2/go-qrcode"
 	"go.uber.org/zap"
+	"image/color"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func FetchStorefront(url string) (models.Storefront, error) {
+	logger := common.GetLoggerInstance()
+
 	var data []byte
 	var err error
 
-	if os.Getenv("ENVIRONMENT") == "DEV" {
+	if os.Getenv("ENVIRONMENT") == "DEV!" {
 		data, err = os.ReadFile("storefront.json")
 		if err != nil {
 			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
@@ -36,21 +41,9 @@ func FetchStorefront(url string) (models.Storefront, error) {
 		return models.Storefront{}, err
 	}
 
+	logger.Info("Fetched storefront", zap.String("name", sf.Name))
+
 	return sf, nil
-}
-
-func FetchPakJson(url string) (models.Pak, error) {
-	data, err := fetch(url)
-	if err != nil {
-		return models.Pak{}, err
-	}
-
-	var pak models.Pak
-	if err := json.Unmarshal(data, &pak); err != nil {
-		return models.Pak{}, err
-	}
-
-	return pak, nil
 }
 
 func ParseJSONFile(filePath string, out *models.Pak) error {
@@ -87,7 +80,7 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 		message = fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version)
 	}
 
-	_, err := gabagool.DownloadManager([]gabagool.Download{{
+	_, err := gaba.DownloadManager([]gaba.Download{{
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
@@ -98,6 +91,38 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 	}
 
 	return tmp, nil
+}
+
+func UnzipPakArchive(pak models.Pak, tmp string) error {
+	logger := common.GetLoggerInstance()
+
+	pakDestination := ""
+
+	if pak.PakType == models.PakTypes.TOOL {
+		pakDestination = filepath.Join(models.ToolRoot, pak.Name+".pak")
+	} else if pak.PakType == models.PakTypes.EMU {
+		pakDestination = filepath.Join(models.EmulatorRoot, pak.Name+".pak")
+	}
+
+	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Unzipping", pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+		err := Unzip(tmp, pakDestination, pak, false)
+		if err != nil {
+			return nil, err
+		}
+
+		return nil, nil
+	})
+
+	if err != nil {
+		gaba.ProcessMessage(fmt.Sprintf("Unable to unzip %s", pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			time.Sleep(3 * time.Second)
+			return nil, nil
+		})
+		logger.Error("Unable to unzip pak", zap.Error(err))
+		return err
+	}
+
+	return nil
 }
 
 func fetch(url string) ([]byte, error) {
@@ -141,25 +166,27 @@ func DownloadTempFile(url string) (string, error) {
 	return tempFile.Name(), nil
 }
 
-func DownloadFile(url, destPath string) error {
-	resp, err := http.Get(url)
+func CreateTempQRCode(content string, size int) (string, error) {
+	qr, err := qrcode.New(content, qrcode.Medium)
+
 	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("bad status: %s", resp.Status)
+		return "", err
 	}
 
-	out, err := os.Create(destPath)
+	qr.BackgroundColor = color.Black
+	qr.ForegroundColor = color.White
+	qr.DisableBorder = true
+
+	tempFile, err := os.CreateTemp("", "qrcode-*")
+
+	err = qr.Write(size, tempFile)
+
 	if err != nil {
-		return err
+		return "", err
 	}
-	defer out.Close()
+	defer tempFile.Close()
 
-	_, err = io.Copy(out, resp.Body)
-	return err
+	return tempFile.Name(), err
 }
 
 func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {

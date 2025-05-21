@@ -3,16 +3,18 @@ package ui
 import (
 	"context"
 	"fmt"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
 	"os"
-	"path/filepath"
 	"qlova.tech/sum"
+	"slices"
+	"strings"
+	"time"
 )
 
 type UpdatesScreen struct {
@@ -35,45 +37,51 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 	}
 
 	logger := common.GetLoggerInstance()
-	title := "Available Pak Updates"
 
-	items := models.MenuItems{Items: []string{}}
-	for _, p := range us.AppState.UpdatesAvailable {
-		items.Items = append(items.Items, p.StorefrontName)
+	var menuItems []gaba.MenuItem
+
+	for _, pak := range us.AppState.UpdatesAvailable {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     pak.StorefrontName,
+			Selected: false,
+			Focused:  false,
+			Metadata: pak,
+		})
 	}
 
-	options := []string{
-		"--confirm-button", "X",
-		"--confirm-text", "UPDATE",
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+		return strings.Compare(a.Text, b.Text)
+	})
+
+	options := gaba.DefaultListOptions("Available Pak Updates", menuItems)
+	options.EnableAction = true
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		{ButtonName: "B", HelpText: "Back"},
+		{ButtonName: "A", HelpText: "Update"},
 	}
 
-	s, err := cui.DisplayList(items, title, "", options...)
+	sel, err := gaba.List(options)
 	if err != nil {
 		return nil, -1, err
 	}
 
-	if s.ExitCode == 2 {
+	if sel.IsNone() {
 		return nil, 2, nil
 	}
 
-	selectedPak := us.AppState.UpdatesAvailableMap[s.SelectedValue]
+	selectedPak := sel.Unwrap().SelectedItem.Metadata.(models.Pak)
 
 	tmp, err := utils.DownloadPakArchive(selectedPak, "Updating")
 	if err != nil {
-		cui.ShowMessage(fmt.Sprintf("%s failed to update!", selectedPak.StorefrontName), "3")
+		gaba.ProcessMessage(fmt.Sprintf("%s failed to update!", selectedPak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			time.Sleep(3 * time.Second)
+			return nil, nil
+		})
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return nil, -1, err
 	}
 
-	pakDestination := ""
-
-	if selectedPak.PakType == models.PakTypes.TOOL {
-		pakDestination = filepath.Join(models.ToolRoot, selectedPak.Name+".pak")
-	} else if selectedPak.PakType == models.PakTypes.EMU {
-		pakDestination = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
-	}
-
-	err = utils.Unzip(tmp, pakDestination, selectedPak, true)
+	err = utils.UnzipPakArchive(selectedPak, tmp)
 	if err != nil {
 		return nil, -1, err
 	}
@@ -89,11 +97,17 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		// TODO wtf do I do here?
 	}
 
-	if selectedPak.Name == "Pak Store" {
-		cui.ShowMessage(fmt.Sprintf("%s updated successfully! Exiting...", selectedPak.StorefrontName), "3")
+	if selectedPak.StorefrontName == "Pak Store" {
+		gaba.ProcessMessage(fmt.Sprintf("%s updated successfully! Exiting...", selectedPak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			time.Sleep(3 * time.Second)
+			return nil, nil
+		})
 		os.Exit(0)
 	} else {
-		cui.ShowMessage(fmt.Sprintf("%s updated successfully!", selectedPak.StorefrontName), "3")
+		gaba.ProcessMessage(fmt.Sprintf("%s updated successfully!", selectedPak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			time.Sleep(3 * time.Second)
+			return nil, nil
+		})
 	}
 
 	return nil, 0, nil

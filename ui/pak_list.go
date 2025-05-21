@@ -41,6 +41,11 @@ func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
 	})
 
 	options := gaba.DefaultListOptions(pl.Category, menuItems)
+
+	selectedIndex := state.LastSelectedIndex
+
+	options.SelectedIndex = selectedIndex
+	options.VisibleStartIndex = max(0, state.LastSelectedIndex-state.LastSelectedPosition)
 	options.EnableAction = true
 	options.FooterHelpItems = []gaba.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
@@ -55,6 +60,9 @@ func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
 	if sel.IsNone() {
 		return nil, 2, nil
 	}
+
+	state.LastSelectedIndex = sel.Unwrap().SelectedIndex
+	state.LastSelectedPosition = sel.Unwrap().VisiblePosition
 
 	return sel.Unwrap().SelectedItem.Metadata, 0, nil
 }

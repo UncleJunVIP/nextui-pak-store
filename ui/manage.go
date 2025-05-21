@@ -1,20 +1,19 @@
 package ui
 
 import (
-	"bytes"
 	"context"
 	"fmt"
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	cui "github.com/UncleJunVIP/nextui-pak-shared-functions/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"go.uber.org/zap"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"qlova.tech/sum"
 	"slices"
+	"strings"
 	"time"
 )
 
@@ -38,83 +37,83 @@ func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e 
 	}
 
 	logger := common.GetLoggerInstance()
-	title := "Manage Installed Paks"
 
-	items := models.MenuItems{Items: []string{}}
-	for _, p := range mis.AppState.InstalledPaks {
-		items.Items = append(items.Items, p.DisplayName)
+	var menuItems []gaba.MenuItem
+
+	for _, pak := range mis.AppState.InstalledPaks {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     pak.DisplayName,
+			Selected: false,
+			Focused:  false,
+			Metadata: pak,
+		})
 	}
 
-	slices.Sort(items.Items)
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+		return strings.Compare(a.Text, b.Text)
+	})
 
-	options := []string{
-		"--confirm-button", "X",
-		"--confirm-text", "UNINSTALL",
+	options := gaba.DefaultListOptions("Manage Installed Paks", menuItems)
+	options.EnableAction = true
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		{ButtonName: "B", HelpText: "Back"},
+		{ButtonName: "A", HelpText: "Uninstall"},
 	}
 
-	s, err := cui.DisplayList(items, title, "", options...)
+	sel, err := gaba.List(options)
 	if err != nil {
 		return nil, -1, err
 	}
 
-	if s.ExitCode != 0 {
+	if sel.IsNone() {
 		return nil, 2, nil
 	}
 
-	code, err := cui.ShowMessageWithOptions(fmt.Sprintf("Are you sure that you want to uninstall %s?", s.SelectedValue), "0",
-		"--cancel-button", "B", "--cancel-show", "false", "--cancel-text", "NEVERMIND",
-		"--confirm-show", "true", "--confirm-text", "YES", "--confirm-button", "X")
+	selectedPak := sel.Unwrap().SelectedItem.Metadata.(database.InstalledPak)
+
+	confirm, err := gaba.Message("Please Confirm!", fmt.Sprintf("Are you sure that you want to uninstall %s?", selectedPak.DisplayName),
+		[]gaba.FooterHelpItem{
+			{ButtonName: "B", HelpText: "Nevermind"},
+			{ButtonName: "A", HelpText: "Yes"},
+		}, gaba.MessageOptions{})
+
 	if err != nil {
 		return nil, -1, err
 	}
 
-	if code == 2 {
+	if confirm.IsNone() {
 		return nil, 12, nil
 	}
 
-	selectedPak := mis.AppState.InstalledPaks[s.SelectedValue]
+	_, err = gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Uninstalling", selectedPak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+		pakLocation := ""
 
-	ctx := context.Background()
-	ctxWithCancel, cancel := context.WithCancel(ctx)
-	defer cancel()
+		if selectedPak.Type == "TOOL" {
+			pakLocation = filepath.Join(models.ToolRoot, selectedPak.Name+".pak")
+		} else if selectedPak.Type == "EMU" {
+			pakLocation = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
+		}
 
-	args := []string{
-		"--message", fmt.Sprintf("%s %s...", "Uninstalling", selectedPak.Name),
-		"--timeout", "-1"}
-	cmd := exec.CommandContext(ctxWithCancel, "minui-presenter", args...)
+		err = os.RemoveAll(pakLocation)
 
-	var stdoutbuf, stderrbuf bytes.Buffer
-	cmd.Stdout = &stdoutbuf
-	cmd.Stderr = &stderrbuf
+		time.Sleep(1750 * time.Millisecond)
 
-	err = cmd.Start()
-	if err != nil && cmd.ProcessState.ExitCode() != -1 {
-		logger.Fatal("Error launching splash screen... That's pretty dumb!", zap.Error(err))
-	}
+		return nil, err
+	})
 
-	time.Sleep(1750 * time.Millisecond)
-
-	pakLocation := ""
-
-	if selectedPak.Type == "TOOL" {
-		pakLocation = filepath.Join(models.ToolRoot, selectedPak.Name+".pak")
-	} else if selectedPak.Type == "EMU" {
-		pakLocation = filepath.Join(models.EmulatorRoot, selectedPak.Name+".pak")
-	}
-
-	err = os.RemoveAll(pakLocation)
 	if err != nil {
-		cancel()
-		_, _ = cui.ShowMessage(fmt.Sprintf("Unable to uninstall %s", selectedPak.Name), "3")
+		gaba.ProcessMessage(fmt.Sprintf("Unable to uninstall %s", selectedPak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			time.Sleep(3 * time.Second)
+			return nil, nil
+		})
 		logger.Error("Unable to remove pak", zap.Error(err))
 	}
 
+	ctx := context.Background()
 	err = database.DBQ().Uninstall(ctx, selectedPak.Name)
 	if err != nil {
 		// TODO wtf do I do here?
 	}
-
-	cancel()
 
 	return nil, 0, nil
 }

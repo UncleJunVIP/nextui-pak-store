@@ -2,15 +2,17 @@ module github.com/UncleJunVIP/nextui-pak-store
 
 go 1.24
 
-replace github.com/UncleJunVIP/gabagool => ../gabagool
+//replace github.com/UncleJunVIP/gabagool => ../gabagool
 
 // 	github.com/UncleJunVIP/gabagool v0.0.0-00010101000000-000000000000
 
 //replace github.com/UncleJunVIP/nextui-pak-shared-functions => ../nextui-pak-shared-functions
 
 require (
-	github.com/UncleJunVIP/gabagool v0.0.0-00010101000000-000000000000
-	github.com/UncleJunVIP/nextui-pak-shared-functions v1.3.0
+	github.com/UncleJunVIP/certifiable v1.0.0
+	github.com/UncleJunVIP/gabagool v0.0.23
+	github.com/UncleJunVIP/nextui-pak-shared-functions v1.6.1
+	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	go.uber.org/zap v1.27.0
 	golang.org/x/mod v0.24.0
 	modernc.org/sqlite v1.37.0
@@ -19,7 +21,6 @@ require (
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.3 // indirect
-	github.com/UncleJunVIP/certifiable v1.0.0 // indirect
 	github.com/activcoding/HTML-Table-to-JSON v0.0.4 // indirect
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect

@@ -27,7 +27,7 @@ type PakType struct {
 	EMU sum.Int[PakType]
 }
 
-var PakTypeMap map[sum.Int[PakType]]string = map[sum.Int[PakType]]string{
+var PakTypeMap = map[sum.Int[PakType]]string{
 	PakTypes.TOOL: "TOOL",
 	PakTypes.EMU:  "EMU",
 }

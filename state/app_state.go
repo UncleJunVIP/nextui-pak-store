@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+var LastSelectedIndex, LastSelectedPosition int
+
 type AppState struct {
 	Storefront          models.Storefront
 	InstalledPaks       map[string]database.InstalledPak

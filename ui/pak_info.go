@@ -8,8 +8,9 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
-	"path/filepath"
 	"qlova.tech/sum"
+	"strings"
+	"sync"
 )
 
 type PakInfoScreen struct {
@@ -33,24 +34,84 @@ func (pi PakInfoScreen) Name() sum.Int[models.ScreenName] {
 func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	logger := common.GetLoggerInstance()
 
-	var screenshots []string
+	// Pre-allocate the screenshots slice with the correct size
+	screenshots := make([]string, len(pi.Pak.Screenshots))
+	var wg sync.WaitGroup
 
-	for _, s := range pi.Pak.Screenshots {
-		screenshot, _ := utils.DownloadTempFile(s)
-		screenshots = append(screenshots, screenshot)
+	// Launch a goroutine for each screenshot download
+	for i, s := range pi.Pak.Screenshots {
+		wg.Add(1)
+		go func(index int, screenshot string) {
+			defer wg.Done()
+			uri := pi.Pak.RepoURL + models.RefMainStub + screenshot
+			uri = strings.ReplaceAll(uri, models.GitHubRoot, models.RawGHUC)
+			downloadedScreenshot, err := utils.DownloadTempFile(uri)
+			if err == nil {
+				// Store directly in the correct position in the slice
+				screenshots[index] = downloadedScreenshot
+			} else {
+				logger.Error("Failed to download screenshot", zap.Error(err), zap.String("uri", uri))
+				// Set empty string for failed downloads to maintain correct indices
+				screenshots[index] = ""
+			}
+		}(i, s)
 	}
 
-	metadata := []gaba.MetadataItem{
-		{Label: "Author", Value: pi.Pak.Author},
-		{Label: "Version", Value: pi.Pak.Version},
-		{Label: "Repo URL", Value: pi.Pak.RepoURL},
+	// Wait for all downloads to complete
+	wg.Wait()
+
+	// Remove any empty strings (failed downloads) from the result
+	filteredScreenshots := make([]string, 0, len(screenshots))
+	for _, s := range screenshots {
+		if s != "" {
+			filteredScreenshots = append(filteredScreenshots, s)
+		}
+	}
+	screenshots = filteredScreenshots
+
+	var sections []gaba.Section
+
+	sections = append(sections, gaba.NewInfoSection(
+		"Pak Info",
+		[]gaba.MetadataItem{
+			{Label: "Author", Value: pi.Pak.Author},
+			{Label: "Version", Value: pi.Pak.Version},
+		},
+	))
+
+	if pi.Pak.Description != "" {
+		sections = append(sections, gaba.NewDescriptionSection(
+			"Description",
+			pi.Pak.Description,
+		))
+	}
+
+	if len(screenshots) > 0 {
+		sections = append(sections, gaba.NewSlideshowSection(
+			"Screenshots",
+			screenshots,
+			int32(float64(gaba.GetWindow().Width)/2),
+			int32(float64(gaba.GetWindow().Height)/2),
+		))
+	}
+
+	qrcode, err := utils.CreateTempQRCode(pi.Pak.RepoURL, 256)
+	if err == nil {
+		sections = append(sections, gaba.NewImageSection(
+			"Pak Repository",
+			qrcode,
+			int32(256),
+			int32(256),
+			gaba.AlignCenter, // Left alignment
+		))
+
+	} else {
+		logger.Error("Unable to generate QR code", zap.Error(err))
 	}
 
 	options := gaba.DefaultInfoScreenOptions()
-	options.InfoLabel = "Pak Info"
-	options.ImagePaths = screenshots
-	options.Description = pi.Pak.Description
-	options.Metadata = metadata
+	options.Sections = sections
+	options.ShowThemeBackground = false
 
 	footerItems := []gaba.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
@@ -63,6 +124,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, -1, err
 	}
 
+	// Rest of the function remains the same...
 	if sel.IsNone() {
 		return nil, 2, nil
 	}
@@ -73,15 +135,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, -1, err
 	}
 
-	pakDestination := ""
-
-	if pi.Pak.PakType == models.PakTypes.TOOL {
-		pakDestination = filepath.Join(models.ToolRoot, pi.Pak.Name+".pak")
-	} else if pi.Pak.PakType == models.PakTypes.EMU {
-		pakDestination = filepath.Join(models.EmulatorRoot, pi.Pak.Name+".pak")
-	}
-
-	err = utils.Unzip(tmp, pakDestination, pi.Pak, false)
+	err = utils.UnzipPakArchive(pi.Pak, tmp)
 	if err != nil {
 		return nil, -1, err
 	}
@@ -99,6 +153,8 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	if err != nil {
 		// TODO wtf do I do here?
 	}
+
+	// ... rest of function ...
 
 	return nil, 0, nil
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	_ "github.com/UncleJunVIP/certifiable"
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
@@ -77,6 +78,8 @@ func main() {
 		case models.ScreenNames.Browse:
 			switch code {
 			case 0:
+				state.LastSelectedIndex = 0
+				state.LastSelectedPosition = 0
 				screen = ui.InitPakList(appState, res.(string))
 			case 1, 2:
 				screen = ui.InitMainMenu(appState)

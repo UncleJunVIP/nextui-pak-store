@@ -6,6 +6,7 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
 	"slices"
+	"strconv"
 	"strings"
 )
 
@@ -28,10 +29,10 @@ func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	for cat := range bs.AppState.BrowsePaks {
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     cat,
+			Text:     cat + " (" + strconv.Itoa(len(bs.AppState.BrowsePaks[cat])) + ")",
 			Selected: false,
 			Focused:  false,
-			Metadata: nil,
+			Metadata: cat,
 		})
 	}
 
@@ -55,5 +56,5 @@ func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, 2, nil
 	}
 
-	return sel.Unwrap().SelectedItem.Text, 0, nil
+	return sel.Unwrap().SelectedItem.Metadata, 0, nil
 }
