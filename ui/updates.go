@@ -71,7 +71,7 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	selectedPak := sel.Unwrap().SelectedItem.Metadata.(models.Pak)
 
-	tmp, err := utils.DownloadPakArchive(selectedPak, "Updating")
+	tmp, completed, err := utils.DownloadPakArchive(selectedPak, "Updating")
 	if err != nil {
 		gaba.ProcessMessage(fmt.Sprintf("%s failed to update!", selectedPak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
 			time.Sleep(3 * time.Second)
@@ -79,6 +79,8 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		})
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return nil, -1, err
+	} else if completed {
+		return nil, 86, nil
 	}
 
 	err = utils.UnzipPakArchive(selectedPak, tmp)

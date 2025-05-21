@@ -25,7 +25,7 @@ func init() {
 	common.SetLogLevel("ERROR")
 
 	sf, err := gaba.ProcessMessage("",
-		gaba.ProcessMessageOptions{Image: "resources/splash.png"}, func() (interface{}, error) {
+		gaba.ProcessMessageOptions{Image: "resources/splash.png", ShowThemeBackground: false}, func() (interface{}, error) {
 			time.Sleep(1500 * time.Millisecond)
 			return utils.FetchStorefront(models.StorefrontJson)
 		})
@@ -95,10 +95,8 @@ func main() {
 
 		case models.ScreenNames.PakInfo:
 			switch code {
-			case 0:
+			case 0, 1, 2, 4:
 				appState = appState.Refresh()
-				screen = ui.InitPakInfoScreen(screen.(ui.PakInfoScreen).Pak, screen.(ui.PakInfoScreen).Category, true)
-			case 1, 2, 4:
 				if len(appState.AvailablePaks) == 0 {
 					screen = ui.InitBrowseScreen(appState)
 					break

@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"fmt"
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
@@ -11,6 +12,7 @@ import (
 	"qlova.tech/sum"
 	"strings"
 	"sync"
+	"time"
 )
 
 type PakInfoScreen struct {
@@ -36,23 +38,42 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	// Pre-allocate the screenshots slice with the correct size
 	screenshots := make([]string, len(pi.Pak.Screenshots))
+
+	// Create a semaphore to limit concurrent downloads
+	const maxConcurrentDownloads = 4 // Adjust based on your network and API capabilities
+	sem := make(chan struct{}, maxConcurrentDownloads)
+
 	var wg sync.WaitGroup
 
-	// Launch a goroutine for each screenshot download
 	for i, s := range pi.Pak.Screenshots {
 		wg.Add(1)
 		go func(index int, screenshot string) {
-			defer wg.Done()
+			sem <- struct{}{}
+			defer func() {
+				<-sem
+				wg.Done()
+			}()
+
 			uri := pi.Pak.RepoURL + models.RefMainStub + screenshot
 			uri = strings.ReplaceAll(uri, models.GitHubRoot, models.RawGHUC)
+
 			downloadedScreenshot, err := utils.DownloadTempFile(uri)
 			if err == nil {
-				// Store directly in the correct position in the slice
 				screenshots[index] = downloadedScreenshot
 			} else {
-				logger.Error("Failed to download screenshot", zap.Error(err), zap.String("uri", uri))
-				// Set empty string for failed downloads to maintain correct indices
-				screenshots[index] = ""
+				logger.Error("Failed to download screenshot",
+					zap.Error(err),
+					zap.String("uri", uri),
+					zap.Int("attempt", 1))
+
+				downloadedScreenshot, err = utils.DownloadTempFile(uri)
+				if err == nil {
+					screenshots[index] = downloadedScreenshot
+				} else {
+					logger.Error("Failed to download screenshot after retry",
+						zap.Error(err),
+						zap.String("uri", uri))
+				}
 			}
 		}(i, s)
 	}
@@ -69,6 +90,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	}
 	screenshots = filteredScreenshots
 
+	// Rest of the function remains unchanged
 	var sections []gaba.Section
 
 	sections = append(sections, gaba.NewInfoSection(
@@ -90,8 +112,8 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		sections = append(sections, gaba.NewSlideshowSection(
 			"Screenshots",
 			screenshots,
-			int32(float64(gaba.GetWindow().Width)/2),
-			int32(float64(gaba.GetWindow().Height)/2),
+			int32(float64(gaba.GetWindow().Width)/1.2),
+			int32(float64(gaba.GetWindow().Height)/1.2),
 		))
 	}
 
@@ -124,15 +146,16 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, -1, err
 	}
 
-	// Rest of the function remains the same...
 	if sel.IsNone() {
 		return nil, 2, nil
 	}
 
-	tmp, err := utils.DownloadPakArchive(pi.Pak, "Installing")
+	tmp, completed, err := utils.DownloadPakArchive(pi.Pak, "Installing")
 	if err != nil {
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return nil, -1, err
+	} else if !completed {
+		return nil, 86, nil
 	}
 
 	err = utils.UnzipPakArchive(pi.Pak, tmp)
@@ -154,7 +177,10 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		// TODO wtf do I do here?
 	}
 
-	// ... rest of function ...
+	gaba.ProcessMessage(fmt.Sprintf("%s installed successfully!", pi.Pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+		time.Sleep(3 * time.Second)
+		return nil, nil
+	})
 
 	return nil, 0, nil
 }

@@ -65,7 +65,7 @@ func ParseJSONFile(filePath string, out *models.Pak) error {
 	return nil
 }
 
-func DownloadPakArchive(pak models.Pak, action string) (string, error) {
+func DownloadPakArchive(pak models.Pak, action string) (tempFile string, completed bool, error error) {
 	logger := common.GetLoggerInstance()
 
 	releasesStub := fmt.Sprintf("/releases/download/%s/", pak.Version)
@@ -80,17 +80,19 @@ func DownloadPakArchive(pak models.Pak, action string) (string, error) {
 		message = fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version)
 	}
 
-	_, err := gaba.DownloadManager([]gaba.Download{{
+	res, err := gaba.DownloadManager([]gaba.Download{{
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
 	}}, make(map[string]string))
 	if err != nil {
 		logger.Error("Error downloading", zap.Error(err))
-		return "", err
+		return "", false, err
+	} else if res.Cancelled {
+		return "", false, nil
 	}
 
-	return tmp, nil
+	return tmp, true, nil
 }
 
 func UnzipPakArchive(pak models.Pak, tmp string) error {
