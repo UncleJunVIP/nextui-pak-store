@@ -25,7 +25,7 @@ func init() {
 	common.SetLogLevel("ERROR")
 
 	sf, err := gaba.ProcessMessage("",
-		gaba.ProcessMessageOptions{Image: "resources/splash.png", ShowThemeBackground: false}, func() (interface{}, error) {
+		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
 			time.Sleep(1500 * time.Millisecond)
 			return utils.FetchStorefront(models.StorefrontJson)
 		})
@@ -55,7 +55,7 @@ func main() {
 	screen = ui.InitMainMenu(appState)
 
 	for {
-		res, code, _ := screen.Draw() // TODO figure out error handling
+		res, code, _ := screen.Draw()
 		switch screen.Name() {
 		case models.ScreenNames.MainMenu:
 			switch code {
@@ -97,11 +97,22 @@ func main() {
 			switch code {
 			case 0, 1, 2, 4:
 				appState = appState.Refresh()
-				if len(appState.AvailablePaks) == 0 {
-					screen = ui.InitBrowseScreen(appState)
-					break
+
+				if res.(bool) {
+					if len(appState.UpdatesAvailable) == 0 {
+						screen = ui.InitBrowseScreen(appState)
+						break
+					}
+
+					screen = ui.InitUpdatesScreen(appState)
+				} else {
+					if len(appState.AvailablePaks) == 0 {
+						screen = ui.InitBrowseScreen(appState)
+						break
+					}
+
+					screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
 				}
-				screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
 			case -1:
 				gaba.ProcessMessage("Unable to Download Pak!", gaba.ProcessMessageOptions{ShowThemeBackground: true}, func() (interface{}, error) {
 					time.Sleep(1750 * time.Millisecond)
@@ -115,7 +126,7 @@ func main() {
 			switch code {
 			case 0:
 				appState = appState.Refresh()
-				screen = ui.InitUpdatesScreen(appState)
+				screen = ui.InitPakInfoScreen(res.(models.Pak), "", true)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)

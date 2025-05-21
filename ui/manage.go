@@ -71,11 +71,13 @@ func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e 
 
 	selectedPak := sel.Unwrap().SelectedItem.Metadata.(database.InstalledPak)
 
-	confirm, err := gaba.Message("Please Confirm!", fmt.Sprintf("Are you sure that you want to uninstall %s?", selectedPak.DisplayName),
+	confirm, err := gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", selectedPak.DisplayName),
 		[]gaba.FooterHelpItem{
 			{ButtonName: "B", HelpText: "Nevermind"},
-			{ButtonName: "A", HelpText: "Yes"},
-		}, gaba.MessageOptions{})
+			{ButtonName: "X", HelpText: "Yes"},
+		}, gaba.MessageOptions{
+			ConfirmButton: gaba.ButtonX,
+		})
 
 	if err != nil {
 		return nil, -1, err

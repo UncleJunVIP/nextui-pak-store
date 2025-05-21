@@ -16,16 +16,16 @@ import (
 )
 
 type PakInfoScreen struct {
-	Pak       models.Pak
-	Category  string
-	Installed bool
+	Pak      models.Pak
+	Category string
+	IsUpdate bool
 }
 
-func InitPakInfoScreen(pak models.Pak, category string, installed bool) PakInfoScreen {
+func InitPakInfoScreen(pak models.Pak, category string, isUpdate bool) PakInfoScreen {
 	return PakInfoScreen{
-		Pak:       pak,
-		Category:  category,
-		Installed: installed,
+		Pak:      pak,
+		Category: category,
+		IsUpdate: isUpdate,
 	}
 }
 
@@ -93,13 +93,13 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	// Rest of the function remains unchanged
 	var sections []gaba.Section
 
-	sections = append(sections, gaba.NewInfoSection(
-		"Pak Info",
-		[]gaba.MetadataItem{
-			{Label: "Author", Value: pi.Pak.Author},
-			{Label: "Version", Value: pi.Pak.Version},
-		},
-	))
+	if _, ok := pi.Pak.Changelog[pi.Pak.Version]; ok && pi.IsUpdate {
+		sections = append(sections,
+			gaba.NewDescriptionSection(
+				fmt.Sprintf("What's new in %s?", pi.Pak.Version),
+				pi.Pak.Changelog[pi.Pak.Version],
+			))
+	}
 
 	if pi.Pak.Description != "" {
 		sections = append(sections, gaba.NewDescriptionSection(
@@ -117,6 +117,14 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		))
 	}
 
+	sections = append(sections, gaba.NewInfoSection(
+		"Pak Info",
+		[]gaba.MetadataItem{
+			{Label: "Author", Value: pi.Pak.Author},
+			{Label: "Version", Value: pi.Pak.Version},
+		},
+	))
+
 	qrcode, err := utils.CreateTempQRCode(pi.Pak.RepoURL, 256)
 	if err == nil {
 		sections = append(sections, gaba.NewImageSection(
@@ -124,7 +132,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 			qrcode,
 			int32(256),
 			int32(256),
-			gaba.AlignCenter, // Left alignment
+			gaba.AlignCenter,
 		))
 
 	} else {
@@ -134,53 +142,68 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	options := gaba.DefaultInfoScreenOptions()
 	options.Sections = sections
 	options.ShowThemeBackground = false
+	options.ConfirmButton = gaba.ButtonX
+
+	confirmLabel := "Install"
+
+	if pi.IsUpdate {
+		confirmLabel = "Update"
+	}
 
 	footerItems := []gaba.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "A", HelpText: "Install"},
+		{ButtonName: "X", HelpText: confirmLabel},
 	}
 
 	sel, err := gaba.DetailScreen(pi.Pak.StorefrontName, options, footerItems)
 	if err != nil {
 		logger.Error("Unable to display pak info screen", zap.Error(err))
-		return nil, -1, err
+		return pi.IsUpdate, -1, err
 	}
 
 	if sel.IsNone() {
-		return nil, 2, nil
+		return pi.IsUpdate, 2, nil
 	}
 
-	tmp, completed, err := utils.DownloadPakArchive(pi.Pak, "Installing")
+	action := "Installing"
+	if pi.IsUpdate {
+		action = "Updating"
+	}
+
+	tmp, completed, err := utils.DownloadPakArchive(pi.Pak, action)
 	if err != nil {
 		logger.Error("Unable to download pak archive", zap.Error(err))
-		return nil, -1, err
+		return pi.IsUpdate, -1, err
 	} else if !completed {
-		return nil, 86, nil
+		return pi.IsUpdate, 86, nil
 	}
 
 	err = utils.UnzipPakArchive(pi.Pak, tmp)
 	if err != nil {
-		return nil, -1, err
+		return pi.IsUpdate, -1, err
 	}
 
-	info := database.InstallParams{
-		DisplayName:  pi.Pak.StorefrontName,
-		Name:         pi.Pak.Name,
-		Version:      pi.Pak.Version,
-		Type:         models.PakTypeMap[pi.Pak.PakType],
-		CanUninstall: int64(1),
+	if !pi.IsUpdate {
+		info := database.InstallParams{
+			DisplayName:  pi.Pak.StorefrontName,
+			Name:         pi.Pak.Name,
+			Version:      pi.Pak.Version,
+			Type:         models.PakTypeMap[pi.Pak.PakType],
+			CanUninstall: int64(1),
+		}
+		database.DBQ().Install(context.Background(), info)
+	} else {
+		update := database.UpdateVersionParams{
+			Name:    pi.Pak.Name,
+			Version: pi.Pak.Version,
+		}
+		database.DBQ().UpdateVersion(context.Background(), update)
 	}
 
-	ctx := context.Background()
-	err = database.DBQ().Install(ctx, info)
-	if err != nil {
-		// TODO wtf do I do here?
-	}
-
-	gaba.ProcessMessage(fmt.Sprintf("%s installed successfully!", pi.Pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pi.Pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
 		time.Sleep(3 * time.Second)
 		return nil, nil
 	})
 
-	return nil, 0, nil
+	return pi.IsUpdate, 0, nil
 }

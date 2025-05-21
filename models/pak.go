@@ -13,6 +13,7 @@ type Pak struct {
 	Author          string            `json:"author"`
 	RepoURL         string            `json:"repo_url"`
 	ReleaseFilename string            `json:"release_filename"`
+	Changelog       map[string]string `json:"changelog"`
 	UpdateIgnore    []string          `json:"update_ignore"`
 	Banners         map[string]string `json:"banners"`
 	Screenshots     []string          `json:"screenshots"`
