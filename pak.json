@@ -24,7 +24,7 @@
     "tg5040"
   ],
   "changelog": {
-    "v2.1.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!"
+    "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!"
   },
   "launch": "launch.sh"
 }
