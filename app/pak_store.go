@@ -100,7 +100,7 @@ func main() {
 
 				if res.(bool) {
 					if len(appState.UpdatesAvailable) == 0 {
-						screen = ui.InitBrowseScreen(appState)
+						screen = ui.InitMainMenu(appState)
 						break
 					}
 
@@ -140,6 +140,12 @@ func main() {
 			switch code {
 			case 0, 11, 12:
 				appState = appState.Refresh()
+
+				if len(appState.InstalledPaks) == 0 {
+					screen = ui.InitMainMenu(appState)
+					break
+				}
+
 				screen = ui.InitManageInstalledScreen(appState)
 			case 1, 2:
 				appState = appState.Refresh()
