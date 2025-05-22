@@ -12,13 +12,13 @@ tasks:
   build:
     cmds:
       - rm -rf build
+      - mkdir -p build
+      - mkdir -p build/lib
       - docker buildx build --platform=linux/arm64 -t retro-console-arm64 -f Dockerfile .
     silent: true
 
   package:
     cmds:
-      - mkdir -p build
-      - mkdir -p build/lib
       - docker create --name extract retro-console-arm64 || true
       - docker cp extract:/build/pak-store build/pak-store
       - docker cp extract:/usr/lib/aarch64-linux-gnu/libSDL2_gfx-1.0.so.0.0.2 build/lib/libSDL2_gfx-1.0.so.0
