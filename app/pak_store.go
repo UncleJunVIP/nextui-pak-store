@@ -111,6 +111,10 @@ func main() {
 						break
 					}
 
+					if len(appState.BrowsePaks[screen.(ui.PakInfoScreen).Category]) == 0 {
+						screen = ui.InitBrowseScreen(appState)
+						break
+					}
 					screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
 				}
 			case -1:
