@@ -25,13 +25,8 @@ jobs:
       - name: Init Resources
         run: go run app/init_resources.go
 
-      - name: Build
-        run: env GOOS=linux GOARCH=arm64 go build -o pak-store app/pak_store.go
-
-      - name: Build Package Folder
-        run: |
-          mkdir "Pak Store.pak"
-          cp -R pak-store launch.sh README.md LICENSE pak.json resources/ bin/ certs/ "Pak Store.pak"
+      - name: Build and Package
+        run: task build package
 
       - uses: actions/upload-artifact@v4
         with:

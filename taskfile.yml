@@ -12,21 +12,22 @@ tasks:
   build:
     cmds:
       - rm -rf build
-      - mkdir -p build
-      - mkdir -p build/lib
       - docker buildx build --platform=linux/arm64 -t retro-console-arm64 -f Dockerfile .
     silent: true
 
   package:
     cmds:
-      - docker create --name extract retro-console-arm64
+      - mkdir -p build
+      - mkdir -p build/lib
+      - docker create --name extract retro-console-arm64 || true
       - docker cp extract:/build/pak-store build/pak-store
       - docker cp extract:/usr/lib/aarch64-linux-gnu/libSDL2_gfx-1.0.so.0.0.2 build/lib/libSDL2_gfx-1.0.so.0
-      - rm -rf build/Mortar.pak || true
-      - mkdir -p build/Pak Store.pak
-      - mkdir -p build/Pak Store.pak/resources/lib
-      - cp build/pak-store launch.sh README.md LICENSE pak.json build/Pak Store.pak
-      - cp -R build/lib build/Pak Store.pak/resources
+      - rm -rf "build/Pak Store.pak" || true
+      - mkdir -p "build/Pak Store.pak"
+      - mkdir -p "build/Pak Store.pak/resources/lib"
+      - cp build/pak-store launch.sh README.md LICENSE pak.json "build/Pak Store.pak"
+      - cp resources/splash.png "build/Pak Store.pak/resources"
+      - cp -R build/lib "build/Pak Store.pak/resources"
     silent: true
 
   cleanup:
@@ -36,8 +37,8 @@ tasks:
 
   adb:
     cmds:
-      - adb shell rm -rf /mnt/SDCARD/Tools/tg5040/Pak Store.pak || true
-      - adb push build/Pak Store.pak /mnt/SDCARD/Tools/tg5040
+      - adb shell rm -rf "/mnt/SDCARD/Tools/tg5040/Pak Store.pak" || true
+      - adb push "build/Pak Store.pak" /mnt/SDCARD/Tools/tg5040
       - say Finished deploying Pak Store!
     silent: true
 

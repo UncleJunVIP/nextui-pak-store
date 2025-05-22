@@ -13,5 +13,4 @@
 .DS_Store
 **/.DS_Store
 /resources/fonts/
-/build/lib/libSDL2_gfx-1.0.so.0
-/build/pak-store
+/build/*
