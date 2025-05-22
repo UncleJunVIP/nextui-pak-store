@@ -22,9 +22,6 @@ jobs:
         with:
           go-version: '1.24.1'
 
-      - name: Init Resources
-        run: go run app/init_resources.go
-
       - name: Build and Package
         run: task build package
 
