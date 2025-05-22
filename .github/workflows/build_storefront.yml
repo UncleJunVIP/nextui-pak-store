@@ -25,6 +25,7 @@ jobs:
       - name: Build Storefront.json
         run: go run app/storefront_builder.go
         env:
+          GOWORK: off
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Configure AWS credentials

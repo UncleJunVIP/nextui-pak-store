@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 golang:1.24-bullseye
+FROM golang:1.24-bullseye
 
 RUN apt-get update && apt-get install -y \
     libsdl2-dev \
@@ -10,9 +10,9 @@ WORKDIR /build
 
 COPY go.mod go.sum* ./
 
-RUN go mod download
+RUN GOWORK=off go mod download
 
 COPY . .
-RUN go build -v -gcflags="all=-N -l" -o pak-store app/pak_store.go
+RUN GOWORK=off go build -v -gcflags="all=-N -l" -o pak-store app/pak_store.go
 
 CMD ["/bin/bash"]
