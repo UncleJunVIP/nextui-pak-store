@@ -200,6 +200,11 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		database.DBQ().UpdateVersion(context.Background(), update)
 	}
 
+	action = "Installed"
+	if pi.IsUpdate {
+		action = "Updated"
+	}
+
 	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pi.Pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
 		time.Sleep(3 * time.Second)
 		return nil, nil
