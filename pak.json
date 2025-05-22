@@ -9,8 +9,22 @@
   "banners": {
     "BRICK": ".github/resources/banner.png"
   },
+  "screenshots": [
+    ".github/resources/screenshots/main_menu.jpg",
+    ".github/resources/screenshots/browse.jpg",
+    ".github/resources/screenshots/ports.jpg",
+    ".github/resources/screenshots/portmaster_1.jpg",
+    ".github/resources/screenshots/portmaster_2.jpg",
+    ".github/resources/screenshots/updates.jpg",
+    ".github/resources/screenshots/mortar_1.jpg",
+    ".github/resources/screenshots/mortar_2.jpg",
+    ".github/resources/screenshots/mortar_3.jpg"
+  ],
   "platforms": [
     "tg5040"
   ],
+  "changelog": {
+    "v2.1.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!"
+  },
   "launch": "launch.sh"
 }
