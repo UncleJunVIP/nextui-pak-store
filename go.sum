@@ -28,6 +28,10 @@ github.com/UncleJunVIP/gabagool v0.0.31 h1:+Fk+LXD+PLqPGIZSYG/SkauzhmgmnsKtkGo3K
 github.com/UncleJunVIP/gabagool v0.0.31/go.mod h1:AwCrrFLlQwwCQo0eVbPPF2dSEKqxOAyGGVS3tKFfIAk=
 github.com/UncleJunVIP/gabagool v0.0.36 h1:s3KIcNZolgB54h+19ORNlsT8Cnx75krzadQ+CXc5uKM=
 github.com/UncleJunVIP/gabagool v0.0.36/go.mod h1:AwCrrFLlQwwCQo0eVbPPF2dSEKqxOAyGGVS3tKFfIAk=
+github.com/UncleJunVIP/gabagool v0.0.37 h1:Bd92G60UF6ZwkrdgCcJP6QRkVbPLl+IMR0gRa4Sp0q4=
+github.com/UncleJunVIP/gabagool v0.0.37/go.mod h1:AwCrrFLlQwwCQo0eVbPPF2dSEKqxOAyGGVS3tKFfIAk=
+github.com/UncleJunVIP/gabagool v0.0.38 h1:w/M3aCuTKxFP7DE1R/H5ei3r0XT0P6DbwmiPjWeVpPA=
+github.com/UncleJunVIP/gabagool v0.0.38/go.mod h1:AwCrrFLlQwwCQo0eVbPPF2dSEKqxOAyGGVS3tKFfIAk=
 github.com/UncleJunVIP/nextui-pak-shared-functions v1.6.1 h1:hKmgw2V9AaSrEdyhsAk+daW2RLE6Dh/VqZYier2MOmI=
 github.com/UncleJunVIP/nextui-pak-shared-functions v1.6.1/go.mod h1:sXHrQmYySc2DVrGkhpoAoqDxb3lq3AS1HRbuHKCLnDE=
 github.com/activcoding/HTML-Table-to-JSON v0.0.4 h1:6xQvdHFFMHHW8ubDS+xUW/USUx25kZtC6nfVnY8tZQU=
