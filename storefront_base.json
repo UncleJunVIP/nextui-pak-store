@@ -255,6 +255,13 @@
       "categories": [
         "System"
       ]
+    },
+    {
+      "storefront_name": "ScummVM",
+      "repo_url": "https://github.com/laesetuc/minui-scummvm",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
