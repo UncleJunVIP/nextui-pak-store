@@ -15,7 +15,7 @@
 1. Own a TrimUI Brick or Smart Pro and have a SD Card with NextUI configured.
 2. Connect your device to a Wi-Fi network.
 3. Download the latest Pak Store release from this repo.
-4. Unzip the release download. If the unzipped folder name is `Pak.Store.pak` please rename it to `Pak Store.pak'
+4. Unzip the release download. If the unzipped folder name is `Pak.Store.pak` please rename it to `Pak Store.pak`
 5. Copy the entire `Pak Store.pak` folder to `SD_ROOT/Tools/tg5040`.
 6. Reinsert your SD Card into your device.
 7. Launch `Pak Store` from the `Tools` menu and enjoy all the amazing Paks made by the community!
