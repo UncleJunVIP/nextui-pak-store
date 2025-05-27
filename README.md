@@ -12,7 +12,7 @@
 
 ## How do I setup Pak Store?
 
-1. Own a TrimUI Brick and have a SD Card with NextUI configured.
+1. Own a TrimUI Brick or Smart Pro and have a SD Card with NextUI configured.
 2. Connect your device to a Wi-Fi network.
 3. Download the latest Pak Store release from this repo.
 4. Unzip the release download. If the unzipped folder name is `Pak.Store.pak` please rename it to `Pak Store.pak'
