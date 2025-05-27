@@ -65,7 +65,7 @@ func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e 
 		return nil, -1, err
 	}
 
-	if sel.IsNone() {
+	if sel.IsNone() || sel.Unwrap().SelectedIndex == -1 {
 		return nil, 2, nil
 	}
 
