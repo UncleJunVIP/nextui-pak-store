@@ -216,6 +216,10 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		action = "Updated"
 	}
 
+	if pi.Pak.Name == "Pak Store" {
+		return pi.IsUpdate, 23, nil
+	}
+
 	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pi.Pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
 		time.Sleep(3 * time.Second)
 		return nil, nil

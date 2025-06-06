@@ -67,6 +67,14 @@ func main() {
 
 	for {
 		res, code, _ := screen.Draw()
+
+		if code == 23 {
+			gaba.ProcessMessage("Pak Store Updated! Exiting...", gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+				time.Sleep(3 * time.Second)
+				return nil, nil
+			})
+		}
+
 		switch screen.Name() {
 		case models.ScreenNames.MainMenu:
 			switch code {
