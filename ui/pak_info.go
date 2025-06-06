@@ -172,6 +172,11 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	tmp, completed, err := utils.DownloadPakArchive(pi.Pak, action)
 	if err != nil {
+
+		if err.Error() == "download cancelled by user" {
+			return pi.IsUpdate, 86, nil
+		}
+
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return pi.IsUpdate, -1, err
 	} else if !completed {
@@ -181,6 +186,12 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	err = utils.UnzipPakArchive(pi.Pak, tmp)
 	if err != nil {
 		return pi.IsUpdate, -1, err
+	}
+
+	if pi.Pak.HasScripts() {
+		if !pi.IsUpdate {
+
+		}
 	}
 
 	if !pi.IsUpdate {

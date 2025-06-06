@@ -24,13 +24,24 @@ func init() {
 	})
 	common.SetLogLevel("ERROR")
 
+	if !utils.IsConnectedToInternet() {
+		gaba.ConfirmationMessage("No Internet Connection!\nMake sure you are connected to Wi-Fi.", []gaba.FooterHelpItem{
+			{ButtonName: "B", HelpText: "Quit"},
+		}, gaba.MessageOptions{})
+		defer cleanup()
+		common.LogStandardFatal("No Internet Connection", nil)
+	}
+
 	sf, err := gaba.ProcessMessage("",
 		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
-			time.Sleep(1500 * time.Millisecond)
+			time.Sleep(1250 * time.Millisecond)
 			return utils.FetchStorefront(models.StorefrontJson)
 		})
 
 	if err != nil {
+		gaba.ConfirmationMessage("Could not load the Storefront!\nPlease check the logs for more info.", []gaba.FooterHelpItem{
+			{ButtonName: "B", HelpText: "Quit"},
+		}, gaba.MessageOptions{})
 		defer gaba.CloseSDL()
 		common.LogStandardFatal("Could not load Storefront!", err)
 	}
@@ -122,7 +133,8 @@ func main() {
 					time.Sleep(1750 * time.Millisecond)
 					return nil, nil
 				})
-				screen = ui.InitBrowseScreen(appState)
+				break
+			case 86:
 				break
 			}
 

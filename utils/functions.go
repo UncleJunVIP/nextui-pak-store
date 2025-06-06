@@ -2,6 +2,7 @@ package utils
 
 import (
 	"archive/zip"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
@@ -11,8 +12,10 @@ import (
 	"go.uber.org/zap"
 	"image/color"
 	"io"
+	"net"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -24,7 +27,7 @@ func FetchStorefront(url string) (models.Storefront, error) {
 	var data []byte
 	var err error
 
-	if os.Getenv("ENVIRONMENT") == "DEV!" {
+	if os.Getenv("ENVIRONMENT") == "DEV" {
 		data, err = os.ReadFile("storefront.json")
 		if err != nil {
 			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
@@ -85,6 +88,11 @@ func DownloadPakArchive(pak models.Pak, action string) (tempFile string, complet
 		Location:    tmp,
 		DisplayName: message,
 	}}, make(map[string]string))
+
+	if err == nil && len(res.Errors) > 0 {
+		err = res.Errors[0]
+	}
+
 	if err != nil {
 		logger.Error("Error downloading", zap.Error(err))
 		return "", false, err
@@ -93,6 +101,54 @@ func DownloadPakArchive(pak models.Pak, action string) (tempFile string, complet
 	}
 
 	return tmp, true, nil
+}
+
+func RunScript(script models.Script, scriptName string) error {
+	logger := common.GetLoggerInstance()
+
+	if script.Path == "" {
+		logger.Info("No script to run")
+		return nil
+	}
+
+	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s %s...", "Running", scriptName, "Script"), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+		logger.Info("Running script", zap.String("path", script.Path), zap.Strings("args", script.Args))
+
+		cmd := exec.Command(script.Path, script.Args...)
+
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout = &stdout
+		cmd.Stderr = &stderr
+
+		err := cmd.Run()
+		if err != nil {
+			logger.Error("Failed to execute script",
+				zap.String("path", script.Path),
+				zap.Strings("args", script.Args),
+				zap.String("stderr", stderr.String()),
+				zap.Error(err))
+			return nil, fmt.Errorf("failed to execute script %s: %w", script.Path, err)
+		}
+
+		if cmd.ProcessState.ExitCode() != 0 {
+			logger.Error("Script returned non-zero exit code",
+				zap.String("path", script.Path),
+				zap.Strings("args", script.Args),
+				zap.Int("exitCode", cmd.ProcessState.ExitCode()),
+				zap.String("stderr", stderr.String()))
+			return nil, fmt.Errorf("script %s exited with code %d: %s",
+				script.Path, cmd.ProcessState.ExitCode(), stderr.String())
+		}
+
+		logger.Info("Script executed successfully",
+			zap.String("path", script.Path),
+			zap.Strings("args", script.Args),
+			zap.String("stdout", stdout.String()))
+
+		return nil, nil
+	})
+
+	return err
 }
 
 func UnzipPakArchive(pak models.Pak, tmp string) error {
@@ -297,4 +353,10 @@ func ShouldIgnoreFile(filePath string, pak models.Pak) bool {
 	}
 
 	return false
+}
+
+func IsConnectedToInternet() bool {
+	timeout := 5 * time.Second
+	_, err := net.DialTimeout("tcp", "8.8.8.8:53", timeout)
+	return err == nil
 }

@@ -14,13 +14,23 @@ type Pak struct {
 	RepoURL         string            `json:"repo_url"`
 	ReleaseFilename string            `json:"release_filename"`
 	Changelog       map[string]string `json:"changelog"`
+	Scripts         Scripts           `json:"scripts"`
 	UpdateIgnore    []string          `json:"update_ignore"`
-	Banners         map[string]string `json:"banners"`
 	Screenshots     []string          `json:"screenshots"`
 	Platforms       []string          `json:"platforms"`
 	Categories      []string          `json:"categories"`
 	LargePak        bool              `json:"large_pak"`
 	Disabled        bool              `json:"disabled"`
+}
+
+type Scripts struct {
+	PostInstall Script `json:"post_install"`
+	PostUpdate  Script `json:"post_update"`
+}
+
+type Script struct {
+	Path string   `json:"path"`
+	Args []string `json:"args"`
 }
 
 type PakType struct {
@@ -37,4 +47,8 @@ var PakTypes = sum.Int[PakType]{}.Sum()
 
 func (p Pak) Value() interface{} {
 	return p
+}
+
+func (p Pak) HasScripts() bool {
+	return p.Scripts.PostInstall.Path != "" || p.Scripts.PostUpdate.Path != ""
 }
