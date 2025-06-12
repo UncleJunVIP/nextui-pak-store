@@ -1,0 +1,1249 @@
+{
+  "name": "NextUI Officially Unofficial",
+  "url": "https://github.com/UncleJunVIP/nextui-pak-store",
+  "paks": [
+    {
+      "storefront_name": "Pak Store",
+      "name": "Pak Store",
+      "version": "v1.0.3",
+      "type": "TOOL",
+      "description": "A Pak Store in this economy?!",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+      "release_filename": "Pak.Store.pak.zip",
+      "changelog": {
+        "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!",
+        "v1.0.2": "Added a message when device is not connected to Wi-Fi.",
+        "v1.0.3": "Make sure Pak Store exits when updating itself."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main_menu.jpg",
+        ".github/resources/screenshots/browse.jpg",
+        ".github/resources/screenshots/ports.jpg",
+        ".github/resources/screenshots/portmaster_1.jpg",
+        ".github/resources/screenshots/portmaster_2.jpg",
+        ".github/resources/screenshots/updates.jpg",
+        ".github/resources/screenshots/mortar_1.jpg",
+        ".github/resources/screenshots/mortar_2.jpg",
+        ".github/resources/screenshots/mortar_3.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Mortar",
+      "name": "Mortar",
+      "version": "v2.3.1",
+      "type": "TOOL",
+      "description": "ROM Downloader for RomM and Megathread",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/Mortar",
+      "release_filename": "Mortar.pak.zip",
+      "changelog": {
+        "v2.1.1": "Upgraded the UI Library Dependency which brings system theme consistency and a new parallel download manager.",
+        "v2.2.0": "A quick fix that should address the weird ROM folder discovery issue. Fingers crossed!",
+        "v2.2.1": "Fix for a small bug in the fixed ROM folder discovery code.",
+        "v2.3.1": "Added a setting to unzip ROM archive after download."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main_menu.jpg",
+        ".github/resources/screenshots/settings.jpg",
+        ".github/resources/screenshots/platforms.jpg",
+        ".github/resources/screenshots/games_list.jpg",
+        ".github/resources/screenshots/search.jpg",
+        ".github/resources/screenshots/search_results.jpg",
+        ".github/resources/screenshots/download.jpg",
+        ".github/resources/screenshots/art_download.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Game Manager",
+      "name": "Game Manager",
+      "version": "v1.2.0",
+      "type": "TOOL",
+      "description": "A one-stop pak for all your game management needs.",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
+      "release_filename": "Game.Manager.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Power Menu",
+      "name": "Power Menu",
+      "version": "0.1.0",
+      "type": "TOOL",
+      "description": "Quick options to reboot or shutdown your device.",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
+      "release_filename": "Power.pak.zip",
+      "changelog": {
+        "v0.1.0": "Initial release!."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/1.png"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "System"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Screenshot Monitor",
+      "name": "Screenshot Monitor",
+      "version": "0.7.1",
+      "type": "TOOL",
+      "description": "Launches a daemon that allows users to take screenshots",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-screenshot-monitor-pak",
+      "release_filename": "Screenshot.Monitor.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Dropbear Server (SSH)",
+      "name": "SSH Server",
+      "version": "0.6.2",
+      "type": "TOOL",
+      "description": "Manages the Dropbear SSH Server",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
+      "release_filename": "SSH.Server.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "SFTPGO Server",
+      "name": "FTP Server",
+      "version": "0.5.3",
+      "type": "TOOL",
+      "description": "Manages the FTP Server",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
+      "release_filename": "FTP.Server.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Dufs Server",
+      "name": "HTTP Server",
+      "version": "0.8.2",
+      "type": "TOOL",
+      "description": "Manages the Dufs HTTP Server",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
+      "release_filename": "HTTP.Server.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "miyoomini",
+        "my282",
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "File Browser",
+      "name": "HTTP Filebrowser",
+      "version": "0.7.1",
+      "type": "TOOL",
+      "description": "Manages the HTTP Filebrowser",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-filebrowser-pak",
+      "release_filename": "HTTP.Filebrowser.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "FTP Server",
+      "name": "FTP Server",
+      "version": "0.3.1",
+      "type": "TOOL",
+      "description": "Manages the FTP Server",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-ftpserver-pak",
+      "release_filename": "FTP.Server.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Syncthing",
+      "name": "Syncthing",
+      "version": "0.4.2",
+      "type": "TOOL",
+      "description": "Manages Syncthing",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-syncthing-pak",
+      "release_filename": "Syncthing.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "USB Mass Storage",
+      "name": "USB Mass Storage",
+      "version": "0.4.1",
+      "type": "TOOL",
+      "description": "Enables USB Mass Storage",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
+      "release_filename": "USB.Mass.Storage.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Developer",
+      "name": "Developer",
+      "version": "0.7.0",
+      "type": "TOOL",
+      "description": "Keeps the screen awake for development purposes",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-developer-pak",
+      "release_filename": "Developer.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Developer Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Remote Terminal",
+      "name": "Remote Terminal",
+      "version": "0.6.1",
+      "type": "TOOL",
+      "description": "Manages the Remote Terminal",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-remote-terminal-pak",
+      "release_filename": "Remote.Terminal.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Developer Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Report",
+      "name": "Report",
+      "version": "0.8.1",
+      "type": "TOOL",
+      "description": "Generates a report for development purposes",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-report-pak",
+      "release_filename": "Report.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040",
+        "trimuismart"
+      ],
+      "categories": [
+        "Developer Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Terminal",
+      "name": "Terminal",
+      "version": "0.7.0",
+      "type": "TOOL",
+      "description": "Manages the Terminal",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-terminal-pak",
+      "release_filename": "Terminal.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Developer Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Simple Mode",
+      "name": "Simple Mode",
+      "version": "0.3.0",
+      "type": "TOOL",
+      "description": "Manages MinUI's Simple Mode",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-simple-mode-pak",
+      "release_filename": "Simple.Mode.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Miscellaneous Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Artwork Scraper",
+      "name": "Artwork Scraper",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Scrapes artwork from the internet",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-artwork-scraper-pak",
+      "release_filename": "Artwork.Scraper.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management",
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Random Game",
+      "name": "Random Game",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Randomly selects a game from the ROMs folder and launches it",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-random-game-pak",
+      "release_filename": "Random.Game.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Miscellaneous Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "PICO-8",
+      "name": "PICO",
+      "version": "0.6.0",
+      "type": "EMU",
+      "description": "Runs pico-8 in standalone mode",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-pico-8-pak",
+      "release_filename": "PICO.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Nintendo DS (DraStic)",
+      "name": "NDS",
+      "version": "0.5.0",
+      "type": "EMU",
+      "description": "Runs drastic in standalone mode for the specified rom",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-nintendo-ds-pak",
+      "release_filename": "NDS.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Nintendo 64 (mupen64plus)",
+      "name": "N64",
+      "version": "0.5.0",
+      "type": "EMU",
+      "description": "Runs mupen64plus in standalone mode for the specified rom",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-n64-pak",
+      "release_filename": "N64.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Dreamcast (Flycast)",
+      "name": "DC",
+      "version": "0.5.0",
+      "type": "EMU",
+      "description": "Runs Flycast in standalone mode for the specified rom",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-dreamcast-pak",
+      "release_filename": "DC.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Moonlight",
+      "name": "Moonlight",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Game streaming server via Moonlight",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-moonlight-pak",
+      "release_filename": "Moonlight.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Streaming Game Clients"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Media Player",
+      "name": "Media Player",
+      "version": "0.2.1",
+      "type": "TOOL",
+      "description": "Media Player",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-media-player-pak",
+      "release_filename": "Media.Player.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Gallery Pak",
+      "name": "Gallery",
+      "version": "0.2.0",
+      "type": "TOOL",
+      "description": "Launches a Gallery to view screenshots",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-gallery-pak",
+      "release_filename": "Gallery.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "rg35xxplus",
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Function Key Editor",
+      "name": "FN Editor",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Function Key Editor",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
+      "release_filename": "FN.Editor.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Customization"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Theme Manager",
+      "name": "Theme Manager",
+      "version": "v1.4",
+      "type": "TOOL",
+      "description": "A tool that manages, downloads, and deploys customization presets for NextUI",
+      "author": "Leviathan",
+      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
+      "release_filename": "Theme.Manager.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Customization"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Portmaster",
+      "name": "PORTS",
+      "version": "1.2.0",
+      "type": "EMU",
+      "description": "A Emu Pak for PortMaster which includes everything needed and requires no additional software.",
+      "author": "ben16w",
+      "repo_url": "https://github.com/ben16w/minui-portmaster",
+      "release_filename": "PORTS.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [
+        "PortMaster"
+      ],
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators",
+        "Ports"
+      ],
+      "large_pak": true,
+      "disabled": false
+    },
+    {
+      "storefront_name": "PPSSPP",
+      "name": "PSP",
+      "version": "2.3.0",
+      "type": "EMU",
+      "description": "A Emu Pak for PSP, wrapping the standalone PPSSPP emulator.",
+      "author": "ben16w",
+      "repo_url": "https://github.com/ben16w/minui-psp",
+      "release_filename": "PSP.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [
+        "PPSSPPSDL/.config/ppsspp/PSP/SYSTEM/controls.ini",
+        "PPSSPPSDL/.config/ppsspp/PSP/SYSTEM/ppsspp.ini"
+      ],
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Cloud Backups",
+      "name": "Cloud Backups",
+      "version": "1.1.0",
+      "type": "TOOL",
+      "description": "A Pak to to back up saves, screenshots and other folders to cloud storage providers like Google Drive and Dropbox.",
+      "author": "ben16w",
+      "repo_url": "https://github.com/ben16w/minui-cloud-backups",
+      "release_filename": "Cloud.Backups.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [
+        "config.json"
+      ],
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Favorites",
+      "name": "Favorites",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "A Pak to manage a Favorites collection.",
+      "author": "ben16w",
+      "repo_url": "https://github.com/ben16w/minui-favorites",
+      "release_filename": "Favorites.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [
+        "config.json"
+      ],
+      "screenshots": null,
+      "platforms": [
+        "tg5040",
+        "rg35xxplus",
+        "my282",
+        "miyoomini"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Tailscale",
+      "name": "Tailscale",
+      "version": "1.1.0",
+      "type": "TOOL",
+      "description": "A Pak wrapping Tailscale, a secure and easy-to-use VPN.",
+      "author": "ben16w",
+      "repo_url": "https://github.com/ben16w/minui-tailscale",
+      "release_filename": "Tailscale.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [
+        "config.json"
+      ],
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Developer Tools",
+        "Miscellaneous Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Over The Air Updater",
+      "name": "Updater",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Update NextUI over-the-air!",
+      "author": "LanderN",
+      "repo_url": "https://github.com/LanderN/nextui-updater-pak",
+      "release_filename": "Updater.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [],
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "System"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Search Pak",
+      "name": "Search",
+      "version": "0.5.0",
+      "type": "TOOL",
+      "description": "An app for searching your ROM collection.",
+      "author": "Cuteseal",
+      "repo_url": "https://github.com/laesetuc/minui-search-pak",
+      "release_filename": "Search.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Collections Editor",
+      "name": "Collections Editor",
+      "version": "0.2.0",
+      "type": "TOOL",
+      "description": "A utility for editing MinUI game collections.",
+      "author": "Cuteseal",
+      "repo_url": "https://github.com/laesetuc/minui-collections-editor",
+      "release_filename": "Collections.Editor.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Dot File Cleaner",
+      "name": "DotClean",
+      "version": "0.2.0",
+      "type": "TOOL",
+      "description": "Small utility to clean the filesystem of Mac operating system files.",
+      "author": "Cuteseal",
+      "repo_url": "https://github.com/laesetuc/minui-dotclean-pak",
+      "release_filename": "Dotclean.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "System"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "ScummVM",
+      "name": "ScummVM",
+      "version": "0.2.0",
+      "type": "EMU",
+      "description": "ScummVM emulator for NextUI.",
+      "author": "Cuteseal",
+      "repo_url": "https://github.com/laesetuc/minui-scummvm",
+      "release_filename": "ScummVM.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    }
+  ]
+}
