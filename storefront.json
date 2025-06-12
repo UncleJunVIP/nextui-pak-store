@@ -3,6 +3,51 @@
   "url": "https://github.com/UncleJunVIP/nextui-pak-store",
   "paks": [
     {
+      "storefront_name": "Fake Pak",
+      "name": "Pak Store",
+      "version": "v1.0.3",
+      "type": "TOOL",
+      "description": "A Pak Store in this economy?!",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+      "release_filename": "Pak.Store.pak.zip",
+      "changelog": {
+        "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!",
+        "v1.0.2": "Added a message when device is not connected to Wi-Fi.",
+        "v1.0.3": "Make sure Pak Store exits when updating itself."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main_menu.jpg",
+        ".github/resources/screenshots/browse.jpg",
+        ".github/resources/screenshots/ports.jpg",
+        ".github/resources/screenshots/portmaster_1.jpg",
+        ".github/resources/screenshots/portmaster_2.jpg",
+        ".github/resources/screenshots/updates.jpg",
+        ".github/resources/screenshots/mortar_1.jpg",
+        ".github/resources/screenshots/mortar_2.jpg",
+        ".github/resources/screenshots/mortar_3.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Fake"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
       "version": "v1.0.3",
