@@ -3,11 +3,6 @@
   "url": "https://github.com/UncleJunVIP/nextui-pak-store",
   "paks": [
     {
-      "storefront_name": "Fake Pak",
-      "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
-      "categories": ["Fake"]
-    },
-    {
       "storefront_name": "Pak Store",
       "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
       "categories": []
