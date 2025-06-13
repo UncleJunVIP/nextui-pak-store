@@ -48,7 +48,7 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v2.3.1",
+      "version": "v2.4.0",
       "type": "TOOL",
       "description": "ROM Downloader for RomM and Megathread",
       "author": "K-Wall",
@@ -58,7 +58,8 @@
         "v2.1.1": "Upgraded the UI Library Dependency which brings system theme consistency and a new parallel download manager.",
         "v2.2.0": "A quick fix that should address the weird ROM folder discovery issue. Fingers crossed!",
         "v2.2.1": "Fix for a small bug in the fixed ROM folder discovery code.",
-        "v2.3.1": "Added a setting to unzip ROM archive after download."
+        "v2.3.1": "Added a setting to unzip ROM archive after download.",
+        "v2.4.0": "New settings to automagically group multi-disc games and BIN/CUE games. \u003c3"
       },
       "scripts": {
         "post_install": {
