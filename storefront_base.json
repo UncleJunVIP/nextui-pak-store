@@ -269,6 +269,14 @@
       "categories": [
         "Emulators"
       ]
+    },
+    {
+      "storefront_name": "Rom Inspector",
+      "repo_url": "https://github.com/gabrielpsp/Rom-Inspector-pak",
+      "categories": [
+        "ROM Management",
+        "File Management"
+      ]
     }
   ]
 }
