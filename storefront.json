@@ -1245,6 +1245,38 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "Rom Inspector",
+      "name": "Rom Inspector",
+      "version": "V0.0.1-beta",
+      "type": "TOOL",
+      "description": "This script manages ROM files with some tools",
+      "author": "Gabrielpsp",
+      "repo_url": "https://github.com/gabrielpsp/Rom-Inspector-pak",
+      "release_filename": "Rom.Inspector.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management",
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
