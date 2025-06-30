@@ -28,9 +28,19 @@
 Awesome! To get added to Pak Store you have to complete the following steps:
 
 1. Create a `pak.json` file at the root of your repo. An example can be seen below.
-2. Make sure your release is tagged properly and matches the version number in `pak.json`.
-3. Make sure the file name of the release artifact matches what is in `pak.json`.
-4. Once all of these steps are complete, please file an issue with a link to your repo.
+   - The following fields are **required**
+     - `name`
+     - `version`
+     - `type`
+     - `description`
+     - `author`
+     - `repo_url`
+     - `release_filename`
+     - `platforms`
+2. Prepare your Pak for distribution by making a zip file. The contents of the zip file must the contents present in the root of your Pak directory.
+3. Ensure your release is tagged properly and matches the `version` field in `pak.json`.
+4. Make sure the file name of the release artifact matches what is in `pak.json`.
+5. Once all of these steps are complete, please file an issue with a link to your repo.
 
 ---
 
