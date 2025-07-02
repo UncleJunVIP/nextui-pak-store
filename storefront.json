@@ -384,37 +384,6 @@
       "disabled": false
     },
     {
-      "storefront_name": "USB Mass Storage",
-      "name": "USB Mass Storage",
-      "version": "0.4.1",
-      "type": "TOOL",
-      "description": "Enables USB Mass Storage",
-      "author": "josegonzalez",
-      "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
-      "release_filename": "USB.Mass.Storage.pak.zip",
-      "changelog": null,
-      "scripts": {
-        "post_install": {
-          "path": "",
-          "args": null
-        },
-        "post_update": {
-          "path": "",
-          "args": null
-        }
-      },
-      "update_ignore": null,
-      "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
-      "categories": [
-        "File Management"
-      ],
-      "large_pak": false,
-      "disabled": false
-    },
-    {
       "storefront_name": "Developer",
       "name": "Developer",
       "version": "0.7.0",
