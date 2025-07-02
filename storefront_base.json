@@ -78,13 +78,6 @@
       ]
     },
     {
-      "storefront_name": "USB Mass Storage",
-      "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
-      "categories": [
-        "File Management"
-      ]
-    },
-    {
       "storefront_name": "Developer",
       "repo_url": "https://github.com/josegonzalez/minui-developer-pak",
       "categories": [
