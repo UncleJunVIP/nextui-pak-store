@@ -94,13 +94,15 @@
     {
       "storefront_name": "Game Manager",
       "name": "Game Manager",
-      "version": "v1.2.0",
+      "version": "v2.0.0",
       "type": "TOOL",
       "description": "A one-stop pak for all your game management needs.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
       "release_filename": "Game.Manager.pak.zip",
-      "changelog": null,
+      "changelog": {
+        "v2.0.0": "Huge UI refresh along with long requested bugfixes."
+      },
       "scripts": {
         "post_install": {
           "path": "",
