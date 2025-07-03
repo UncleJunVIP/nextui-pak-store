@@ -29,6 +29,13 @@
       ]
     },
     {
+      "storefront_name": "S3 SaveSync",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
+      "categories": [
+        "File Manager"
+      ]
+    },
+    {
       "storefront_name": "Screenshot Monitor",
       "repo_url": "https://github.com/josegonzalez/minui-screenshot-monitor-pak",
       "categories": [
