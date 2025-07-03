@@ -48,7 +48,6 @@ func init() {
 	schemaExists, err := TableExists(dbc, "installed_paks")
 	if !schemaExists {
 		if _, err := dbc.ExecContext(ctx, pakstore.DDL); err != nil {
-			//_, _ = cui.ShowMessage(models.InitializationError, "3")
 			logger.Fatal("Unable to init schema", zap.Error(err))
 		}
 	}

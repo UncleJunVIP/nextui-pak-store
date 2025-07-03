@@ -36,11 +36,9 @@ func (pi PakInfoScreen) Name() sum.Int[models.ScreenName] {
 func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	logger := common.GetLoggerInstance()
 
-	// Pre-allocate the screenshots slice with the correct size
 	screenshots := make([]string, len(pi.Pak.Screenshots))
 
-	// Create a semaphore to limit concurrent downloads
-	const maxConcurrentDownloads = 4 // Adjust based on your network and API capabilities
+	const maxConcurrentDownloads = 4
 	sem := make(chan struct{}, maxConcurrentDownloads)
 
 	var wg sync.WaitGroup
@@ -78,10 +76,8 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		}(i, s)
 	}
 
-	// Wait for all downloads to complete
 	wg.Wait()
 
-	// Remove any empty strings (failed downloads) from the result
 	filteredScreenshots := make([]string, 0, len(screenshots))
 	for _, s := range screenshots {
 		if s != "" {
@@ -90,7 +86,6 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	}
 	screenshots = filteredScreenshots
 
-	// Rest of the function remains unchanged
 	var sections []gaba.Section
 
 	if _, ok := pi.Pak.Changelog[pi.Pak.Version]; ok && pi.IsUpdate {
