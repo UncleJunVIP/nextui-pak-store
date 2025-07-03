@@ -162,6 +162,39 @@
       "disabled": false
     },
     {
+      "storefront_name": "S3 SaveSync",
+      "name": "Save Sync",
+      "version": "1.0.0",
+      "type": "TOOL",
+      "description": "Sync your save files to a versioned S3 Bucket.",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
+      "release_filename": "SaveSync.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release!"
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "File Manager"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
       "storefront_name": "Screenshot Monitor",
       "name": "Screenshot Monitor",
       "version": "0.7.1",
