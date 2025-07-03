@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.0.3",
+      "version": "v1.0.4",
       "type": "TOOL",
       "description": "A Pak Store in this economy?!",
       "author": "K-Wall",
@@ -14,7 +14,8 @@
       "changelog": {
         "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!",
         "v1.0.2": "Added a message when device is not connected to Wi-Fi.",
-        "v1.0.3": "Make sure Pak Store exits when updating itself."
+        "v1.0.3": "Make sure Pak Store exits when updating itself.",
+        "v1.0.4": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it."
       },
       "scripts": {
         "post_install": {
