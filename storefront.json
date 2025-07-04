@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.0.4",
+      "version": "v1.0.5",
       "type": "TOOL",
       "description": "A Pak Store in this economy?!",
       "author": "K-Wall",
@@ -15,7 +15,8 @@
         "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!",
         "v1.0.2": "Added a message when device is not connected to Wi-Fi.",
         "v1.0.3": "Make sure Pak Store exits when updating itself.",
-        "v1.0.4": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it."
+        "v1.0.4": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
+        "v1.0.5": "Small fix in UI library for artifacts that appeared when no bg.png is present. And actually quit Pak Store when it updates itself."
       },
       "scripts": {
         "post_install": {
@@ -49,7 +50,7 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v2.4.1",
+      "version": "v2.4.2",
       "type": "TOOL",
       "description": "ROM Downloader for RomM and Megathread",
       "author": "K-Wall",
@@ -61,7 +62,8 @@
         "v2.2.1": "Fix for a small bug in the fixed ROM folder discovery code.",
         "v2.3.1": "Added a setting to unzip ROM archive after download.",
         "v2.4.0": "New settings to automagically group multi-disc games and BIN/CUE games. \u003c3",
-        "v2.4.1": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it."
+        "v2.4.1": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
+        "v2.4.2": "Small fix in UI library for artifacts that appeared when no bg.png is present."
       },
       "scripts": {
         "post_install": {
@@ -96,14 +98,15 @@
     {
       "storefront_name": "Game Manager",
       "name": "Game Manager",
-      "version": "v2.0.0",
+      "version": "v2.0.1",
       "type": "TOOL",
       "description": "A one-stop pak for all your game management needs.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
       "release_filename": "Game.Manager.pak.zip",
       "changelog": {
-        "v2.0.0": "Huge UI refresh along with long requested bugfixes."
+        "v2.0.0": "Huge UI refresh along with long requested bugfixes.",
+        "v2.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present."
       },
       "scripts": {
         "post_install": {
@@ -164,14 +167,15 @@
     {
       "storefront_name": "S3 SaveSync",
       "name": "SaveSync",
-      "version": "v1.0.0",
+      "version": "v1.0.1",
       "type": "TOOL",
       "description": "Sync your save files to a versioned S3 Bucket.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
       "release_filename": "SaveSync.pak.zip",
       "changelog": {
-        "v1.0.0": "Initial release!"
+        "v1.0.0": "Initial release!",
+        "v1.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present."
       },
       "scripts": {
         "post_install": {
