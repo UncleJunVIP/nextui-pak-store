@@ -21,6 +21,22 @@ import (
 	"time"
 )
 
+func GetToolRoot() string {
+	if os.Getenv("ENVIRONMENT") == "DEV" {
+		return os.Getenv("TOOL_ROOT")
+	}
+
+	return models.ToolRoot
+}
+
+func GetEmulatorRoot() string {
+	if os.Getenv("ENVIRONMENT") == "DEV" {
+		return os.Getenv("EMULATOR_ROOT")
+	}
+
+	return models.EmulatorRoot
+}
+
 func FetchStorefront(url string) (models.Storefront, error) {
 	logger := common.GetLoggerInstance()
 
@@ -157,9 +173,9 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 	pakDestination := ""
 
 	if pak.PakType == models.PakTypes.TOOL {
-		pakDestination = filepath.Join(models.ToolRoot, pak.Name+".pak")
+		pakDestination = filepath.Join(GetToolRoot(), pak.Name+".pak")
 	} else if pak.PakType == models.PakTypes.EMU {
-		pakDestination = filepath.Join(models.EmulatorRoot, pak.Name+".pak")
+		pakDestination = filepath.Join(GetEmulatorRoot(), pak.Name+".pak")
 	}
 
 	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Unzipping", pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
@@ -286,19 +302,19 @@ func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {
 		}
 
 		if f.FileInfo().IsDir() {
-			err := os.MkdirAll(path, f.Mode())
+			err := os.MkdirAll(path, 0755)
 			if err != nil {
 				return err
 			}
 		} else {
-			err := os.MkdirAll(filepath.Dir(path), f.Mode())
+			err := os.MkdirAll(filepath.Dir(path), 0755)
 			if err != nil {
 				return err
 			}
 
 			// Use a temporary file to avoid ETXTBSY error
 			tempPath := path + ".tmp"
-			tempFile, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+			tempFile, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
 			if err != nil {
 				return err
 			}

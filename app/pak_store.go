@@ -73,6 +73,7 @@ func main() {
 				time.Sleep(3 * time.Second)
 				return nil, nil
 			})
+			os.Exit(0)
 		}
 
 		switch screen.Name() {
