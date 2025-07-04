@@ -22,13 +22,6 @@
       ]
     },
     {
-      "storefront_name": "Power Menu",
-      "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
-      "categories": [
-        "System"
-      ]
-    },
-    {
       "storefront_name": "S3 SaveSync",
       "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
       "categories": [
