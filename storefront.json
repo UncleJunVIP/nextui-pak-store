@@ -130,41 +130,6 @@
       "disabled": false
     },
     {
-      "storefront_name": "Power Menu",
-      "name": "Power Menu",
-      "version": "0.1.0",
-      "type": "TOOL",
-      "description": "Quick options to reboot or shutdown your device.",
-      "author": "K-Wall",
-      "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
-      "release_filename": "Power.pak.zip",
-      "changelog": {
-        "v0.1.0": "Initial release!."
-      },
-      "scripts": {
-        "post_install": {
-          "path": "",
-          "args": null
-        },
-        "post_update": {
-          "path": "",
-          "args": null
-        }
-      },
-      "update_ignore": null,
-      "screenshots": [
-        ".github/resources/screenshots/1.png"
-      ],
-      "platforms": [
-        "tg5040"
-      ],
-      "categories": [
-        "System"
-      ],
-      "large_pak": false,
-      "disabled": false
-    },
-    {
       "storefront_name": "S3 SaveSync",
       "name": "SaveSync",
       "version": "v1.0.1",
