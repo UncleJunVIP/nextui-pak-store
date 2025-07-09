@@ -101,12 +101,13 @@
       "version": "v2.0.1",
       "type": "TOOL",
       "description": "A one-stop pak for all your game management needs.",
-      "author": "K-Wall",
+      "author": "K-Wall \u0026 redria7",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
       "release_filename": "Game.Manager.pak.zip",
       "changelog": {
         "v2.0.0": "Huge UI refresh along with long requested bugfixes.",
-        "v2.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present."
+        "v2.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present.",
+        "v2.1.0": "Enhanced archiving features courtesy of redria7!"
       },
       "scripts": {
         "post_install": {
