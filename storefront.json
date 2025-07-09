@@ -1225,7 +1225,7 @@
     {
       "storefront_name": "Rom Inspector",
       "name": "Rom Inspector",
-      "version": "V0.4.1-beta",
+      "version": "V0.4.2-beta",
       "type": "TOOL",
       "description": "This script manages ROM files with some tools",
       "author": "Gabrielpsp",
