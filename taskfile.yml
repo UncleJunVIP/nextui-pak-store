@@ -6,6 +6,7 @@ tasks:
       - task: cleanup
       - task: build
       - task: package
+      - task: package-pakz
       - task: adb
     silent: true
 
@@ -22,19 +23,21 @@ tasks:
       - docker create --name extract retro-console-arm64 || true
       - docker cp extract:/build/pak-store build/pak-store
       - docker cp extract:/usr/lib/aarch64-linux-gnu/libSDL2_gfx-1.0.so.0.0.2 build/lib/libSDL2_gfx-1.0.so.0
-
       - rm -rf "build/Pak Store.pak" || true
-      - rm -rf "build/Tools" || true
-
       - mkdir -p "build/Pak Store.pak"
       - mkdir -p "build/Pak Store.pak/resources/lib"
       - cp build/pak-store launch.sh README.md LICENSE pak.json "build/Pak Store.pak"
       - cp resources/splash.png "build/Pak Store.pak/resources"
       - cp -R build/lib "build/Pak Store.pak/resources"
-
+      - rm -rf "build/Tools" || true
       - mkdir -p "build/Tools/tg5040"
       - cp -R "build/Pak Store.pak" "build/Tools/tg5040"
     silent: true
+
+  package-pakz:
+    dir: build/
+    cmds:
+      - zip -r "Pak.Store.pakz" "Tools/"
 
   cleanup:
     cmds:

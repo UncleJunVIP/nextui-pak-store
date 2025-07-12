@@ -1,6 +1,6 @@
 {
   "name": "Pak Store",
-  "version": "v1.0.5",
+  "version": "v1.1.0",
   "type": "TOOL",
   "description": "A Pak Store in this economy?!",
   "author": "K-Wall",
@@ -21,6 +21,7 @@
     "tg5040"
   ],
   "changelog": {
+    "v1.1.0": "Prepping Pak Store for bundling with NextUI!",
     "v1.0.5": "Small fix in UI library for artifacts that appeared when no bg.png is present. And actually quit Pak Store when it updates itself.",
     "v1.0.4": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
     "v1.0.3": "Make sure Pak Store exits when updating itself.",
