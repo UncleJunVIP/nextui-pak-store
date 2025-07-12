@@ -36,3 +36,4 @@ jobs:
           if-no-files-found: error
           retention-days: 3
           overwrite: true
+          compression-level: 0
