@@ -19,7 +19,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Package
-        run: task build package
+        run: task build package package-pakz
 
       - uses: actions/upload-artifact@v4
         with:
