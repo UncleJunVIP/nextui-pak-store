@@ -1,10 +1,10 @@
 <div align="center">
 <img src=".github/resources/banner.png" width="auto" alt="Mortar wordmark">
 
-![GitHub License](https://img.shields.io/github/license/UncleJunVip/nextui-pak-store?style=for-the-badge)
-![GitHub Release](https://img.shields.io/github/v/release/UncleJunVIP/nextui-pak-store?sort=semver&style=for-the-badge)
-![GitHub Repo stars](https://img.shields.io/github/stars/UncleJunVip/nextui-pak-store?style=for-the-badge)
-![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/UncleJunVIP/nextui-pak-store/Pak.Store.pak.zip?style=for-the-badge&label=Downloads)
+![GitHub License](https://img.shields.io/github/license/UncleJunVip/nextui-pak-store?style=for-the-badge&color=007C77)
+![GitHub Release](https://img.shields.io/github/v/release/UncleJunVIP/nextui-pak-store?sort=semver&style=for-the-badge&color=007C77)
+![GitHub Repo stars](https://img.shields.io/github/stars/UncleJunVip/nextui-pak-store?style=for-the-badge&color=007C77)
+![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/UncleJunVIP/nextui-pak-store/total?style=for-the-badge&label=Downloads&color=007C77)
 
 </div>
 
