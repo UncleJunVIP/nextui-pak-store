@@ -54,18 +54,23 @@ func init() {
 
 	queries = New(dbc)
 
-	if !schemaExists {
-		var pak models.Pak
-		err := utils.ParseJSONFile("pak.json", &pak)
-		if err != nil {
-			log.Fatalf("Error parsing JSON file: %v", err)
-		}
+	var pak models.Pak
+	err = utils.ParseJSONFile("pak.json", &pak)
+	if err != nil {
+		log.Fatalf("Error parsing JSON file: %v", err)
+	}
 
+	if !schemaExists {
 		queries.Install(ctx, InstallParams{
 			DisplayName: "Pak Store",
 			Name:        "Pak Store",
 			Version:     pak.Version,
 			Type:        "TOOL",
+		})
+	} else {
+		queries.UpdateVersion(ctx, UpdateVersionParams{
+			Name:    "Pak Store",
+			Version: pak.Version,
 		})
 	}
 }

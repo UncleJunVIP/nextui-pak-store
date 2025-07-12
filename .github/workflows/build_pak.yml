@@ -4,6 +4,11 @@ on:
   release:
     types: [ published ]
   workflow_dispatch:
+    inputs:
+      version_tag:
+        description: 'Version tag for the release'
+        required: true
+        type: string
 
 jobs:
 
@@ -28,3 +33,21 @@ jobs:
           if-no-files-found: error
           retention-days: 3
           overwrite: true
+
+      - name: Create pakz archive
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          cd build
+          zip -r "Pak.Store.pakz" Tools/
+
+      - name: Upload to Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ inputs.version_tag }}
+          files: |
+            build/Pak Store.pak
+            build/Pak.Store.pakz
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
