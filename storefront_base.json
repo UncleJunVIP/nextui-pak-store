@@ -277,6 +277,13 @@
         "ROM Management",
         "File Management"
       ]
+    },
+    {
+      "storefront_name": "Rockbox",
+      "repo_url": "https://github.com/IncognitoMan/rockbox",
+      "categories": [
+        "Media"
+      ]
     }
   ]
 }
