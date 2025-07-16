@@ -99,7 +99,7 @@
     {
       "storefront_name": "Game Manager",
       "name": "Game Manager",
-      "version": "v2.4.0",
+      "version": "v2.4.1",
       "type": "TOOL",
       "description": "A one-stop pak for all your game management needs.",
       "author": "K-Wall \u0026 redria7",
@@ -113,7 +113,7 @@
         "v2.2.0": "Nice little update for y'all. Added art images to the games list, added a global action menu for downloading all missing art and now art can be found for nested folders. Also three bugfixes; bulk adding games to collections should be more reliable, redria7 added a robust system for keeping track of the last selected list item and toastd figured out why art could not be found for some games.",
         "v2.2.2": "Archiving / Unarchiving Multi Disk and BIN/CUE games now works as intended. Nested folders now work with the Global Actions Missing Art tool. Shoved Global Actions into a Tool Menu for future Pak expansion.",
         "v2.3.0": "Enhanced art searching that uses a fallback Jaccard Similarity with configurable threshold when art with an exact filename match does not exist.",
-        "v2.4.0": "Added clear recently played to the global actions tool. Thanks madeleineostoja for the suggestion!"
+        "v2.4.1": "Added clear recently played to the global actions tool. Thanks madeleineostoja for the suggestion!"
       },
       "scripts": {
         "post_install": {
