@@ -27,6 +27,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -72,6 +76,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -123,6 +131,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -155,6 +167,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -191,6 +207,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -220,6 +240,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -254,6 +278,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -286,6 +314,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -316,6 +348,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -352,6 +388,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -382,6 +422,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -416,6 +460,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -446,6 +494,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -480,6 +532,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -510,6 +566,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -545,6 +605,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -575,6 +639,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -609,6 +677,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -639,6 +711,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -673,6 +749,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -703,6 +783,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -736,6 +820,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -765,6 +853,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -798,6 +890,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -829,6 +925,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -858,6 +958,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -892,6 +996,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -923,6 +1031,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -952,6 +1064,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -988,6 +1104,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": [
@@ -1022,6 +1142,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": [
@@ -1053,6 +1177,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -1091,6 +1219,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": [
@@ -1125,6 +1257,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": [],
@@ -1154,6 +1290,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -1187,6 +1327,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -1216,6 +1360,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -1249,6 +1397,10 @@
         "post_update": {
           "path": "",
           "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
         }
       },
       "update_ignore": null,
@@ -1278,6 +1430,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
@@ -1312,6 +1468,10 @@
           "args": null
         },
         "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
           "path": "",
           "args": null
         }
