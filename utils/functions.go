@@ -103,20 +103,14 @@ func ParseJSONFile(filePath string, out *models.Pak) error {
 	return nil
 }
 
-func DownloadPakArchive(pak models.Pak, action string) (tempFile string, completed bool, error error) {
+func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error error) {
 	logger := common.GetLoggerInstance()
 
 	releasesStub := fmt.Sprintf("/releases/download/%s/", pak.Version)
 	dl := pak.RepoURL + releasesStub + pak.ReleaseFilename
 	tmp := filepath.Join("/tmp", pak.ReleaseFilename)
 
-	message := ""
-
-	if action == "Updating" {
-		message = fmt.Sprintf("%s %s to %s...", action, pak.StorefrontName, pak.Version)
-	} else {
-		message = fmt.Sprintf("%s %s %s...", action, pak.StorefrontName, pak.Version)
-	}
+	message := fmt.Sprintf("Downloading %s %s...", pak.StorefrontName, pak.Version)
 
 	res, err := gaba.DownloadManager([]gaba.Download{{
 		URL:         dl,

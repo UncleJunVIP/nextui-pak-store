@@ -149,7 +149,7 @@ func main() {
 				})
 				break
 			case 12:
-				// Uninstall cancel no-op
+				// Action confirmation cancel
 			case 86:
 				appState = appState.Refresh()
 				screen = ui.InitManageInstalledScreen(appState)

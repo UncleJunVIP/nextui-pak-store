@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"qlova.tech/sum"
+	"slices"
 	"strings"
 	"sync"
 	"time"
@@ -124,17 +125,25 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		},
 	))
 
-	if (pi.IsInstalled || !pi.IsUpdate) && len(pi.Pak.Changelog) > 0 {
-		var changelog []string
-		for k, v := range pi.Pak.Changelog {
-			changelog = append(changelog, fmt.Sprintf("%s: %s", k, v))
-		}
+	var changelog []string
 
-		sections = append(sections, gaba.NewDescriptionSection(
-			"Changelog",
-			strings.Join(changelog, "\n\n"),
-		))
+	var versions []string
+	for k, _ := range pi.Pak.Changelog {
+		versions = append(versions, k)
 	}
+
+	slices.SortFunc(versions, func(a, b string) int {
+		return strings.Compare(b, a)
+	})
+
+	for _, v := range versions {
+		changelog = append(changelog, fmt.Sprintf("%s: %s", v, pi.Pak.Changelog[v]))
+	}
+
+	sections = append(sections, gaba.NewDescriptionSection(
+		"Changelog",
+		strings.Join(changelog, "\n\n"),
+	))
 
 	qrcode, err := utils.CreateTempQRCode(pi.Pak.RepoURL, 256)
 	if err == nil {
@@ -228,22 +237,17 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, 86, nil
 	}
 
-	action := "Installing"
-	if pi.IsUpdate {
-		action = "Updating"
-	}
-
-	tmp, completed, err := utils.DownloadPakArchive(pi.Pak, action)
+	tmp, completed, err := utils.DownloadPakArchive(pi.Pak)
 	if err != nil {
 
 		if err.Error() == "download cancelled by user" {
-			return pi.IsUpdate, 86, nil
+			return pi.IsUpdate, 12, nil
 		}
 
 		logger.Error("Unable to download pak archive", zap.Error(err))
 		return pi.IsUpdate, -1, err
 	} else if !completed {
-		return pi.IsUpdate, 86, nil
+		return pi.IsUpdate, 12, nil
 	}
 
 	err = utils.UnzipPakArchive(pi.Pak, tmp)
@@ -274,7 +278,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		database.DBQ().UpdateVersion(context.Background(), update)
 	}
 
-	action = "Installed"
+	action := "Installed"
 	if pi.IsUpdate {
 		action = "Updated"
 	}
