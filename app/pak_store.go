@@ -108,7 +108,7 @@ func main() {
 		case models.ScreenNames.PakList:
 			switch code {
 			case 0:
-				screen = ui.InitPakInfoScreen(res.(models.Pak), screen.(ui.PakList).Category, false)
+				screen = ui.InitPakInfoScreen(res.(models.Pak), screen.(ui.PakList).Category, false, false)
 			case 1, 2:
 				screen = ui.InitBrowseScreen(appState)
 			}
@@ -117,6 +117,11 @@ func main() {
 			switch code {
 			case 0, 1, 2, 4:
 				appState = appState.Refresh()
+
+				if screen.(ui.PakInfoScreen).IsInstalled {
+					screen = ui.InitManageInstalledScreen(appState)
+					break
+				}
 
 				if res.(bool) {
 					if len(appState.UpdatesAvailable) == 0 {
@@ -143,15 +148,18 @@ func main() {
 					return nil, nil
 				})
 				break
+			case 12:
+				// Uninstall cancel no-op
 			case 86:
-				break
+				appState = appState.Refresh()
+				screen = ui.InitManageInstalledScreen(appState)
 			}
 
 		case models.ScreenNames.Updates:
 			switch code {
 			case 0:
 				appState = appState.Refresh()
-				screen = ui.InitPakInfoScreen(res.(models.Pak), "", true)
+				screen = ui.InitPakInfoScreen(res.(models.Pak), "", true, false)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)
@@ -159,15 +167,8 @@ func main() {
 
 		case models.ScreenNames.ManageInstalled:
 			switch code {
-			case 0, 11, 12:
-				appState = appState.Refresh()
-
-				if len(appState.InstalledPaks) == 0 {
-					screen = ui.InitMainMenu(appState)
-					break
-				}
-
-				screen = ui.InitManageInstalledScreen(appState)
+			case 0:
+				screen = ui.InitPakInfoScreen(res.(models.Pak), "", false, true)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)

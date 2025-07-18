@@ -9,6 +9,8 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	"go.uber.org/zap"
+	"os"
+	"path/filepath"
 	"qlova.tech/sum"
 	"strings"
 	"sync"
@@ -16,16 +18,18 @@ import (
 )
 
 type PakInfoScreen struct {
-	Pak      models.Pak
-	Category string
-	IsUpdate bool
+	Pak         models.Pak
+	Category    string
+	IsUpdate    bool
+	IsInstalled bool
 }
 
-func InitPakInfoScreen(pak models.Pak, category string, isUpdate bool) PakInfoScreen {
+func InitPakInfoScreen(pak models.Pak, category string, isUpdate bool, isInstalled bool) PakInfoScreen {
 	return PakInfoScreen{
-		Pak:      pak,
-		Category: category,
-		IsUpdate: isUpdate,
+		Pak:         pak,
+		Category:    category,
+		IsUpdate:    isUpdate,
+		IsInstalled: isInstalled,
 	}
 }
 
@@ -120,6 +124,18 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		},
 	))
 
+	if (pi.IsInstalled || !pi.IsUpdate) && len(pi.Pak.Changelog) > 0 {
+		var changelog []string
+		for k, v := range pi.Pak.Changelog {
+			changelog = append(changelog, fmt.Sprintf("%s: %s", k, v))
+		}
+
+		sections = append(sections, gaba.NewDescriptionSection(
+			"Changelog",
+			strings.Join(changelog, "\n\n"),
+		))
+	}
+
 	qrcode, err := utils.CreateTempQRCode(pi.Pak.RepoURL, 256)
 	if err == nil {
 		sections = append(sections, gaba.NewImageSection(
@@ -143,6 +159,8 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	if pi.IsUpdate {
 		confirmLabel = "Update"
+	} else if pi.IsInstalled {
+		confirmLabel = "Uninstall"
 	}
 
 	footerItems := []gaba.FooterHelpItem{
@@ -158,6 +176,56 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 
 	if sel.IsNone() {
 		return pi.IsUpdate, 2, nil
+	}
+
+	if pi.IsInstalled {
+		confirm, err := gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", pi.Pak.Name),
+			[]gaba.FooterHelpItem{
+				{ButtonName: "B", HelpText: "Nevermind"},
+				{ButtonName: "X", HelpText: "Yes"},
+			}, gaba.MessageOptions{
+				ConfirmButton: gaba.ButtonX,
+			})
+
+		if err != nil {
+			return nil, -1, err
+		}
+
+		if confirm.IsNone() {
+			return nil, 12, nil
+		}
+
+		_, err = gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Uninstalling", pi.Pak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+			pakLocation := ""
+
+			if pi.Pak.PakType == models.PakTypes.TOOL {
+				pakLocation = filepath.Join(utils.GetToolRoot(), pi.Pak.Name+".pak")
+			} else if pi.Pak.PakType == models.PakTypes.EMU {
+				pakLocation = filepath.Join(utils.GetEmulatorRoot(), pi.Pak.Name+".pak")
+			}
+
+			err = os.RemoveAll(pakLocation)
+
+			time.Sleep(1750 * time.Millisecond)
+
+			return nil, err
+		})
+
+		if err != nil {
+			gaba.ProcessMessage(fmt.Sprintf("Unable to uninstall %s", pi.Pak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+				time.Sleep(3 * time.Second)
+				return nil, nil
+			})
+			logger.Error("Unable to remove pak", zap.Error(err))
+		}
+
+		ctx := context.Background()
+		err = database.DBQ().Uninstall(ctx, pi.Pak.Name)
+		if err != nil {
+			// TODO wtf do I do here?
+		}
+
+		return nil, 86, nil
 	}
 
 	action := "Installing"

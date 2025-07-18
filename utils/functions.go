@@ -21,6 +21,14 @@ import (
 	"time"
 )
 
+func GetSDRoot() string {
+	if os.Getenv("ENVIRONMENT") == "DEV" {
+		return os.Getenv("SD_ROOT")
+	}
+
+	return models.SDRoot
+}
+
 func GetToolRoot() string {
 	if os.Getenv("ENVIRONMENT") == "DEV" {
 		return os.Getenv("TOOL_ROOT")
@@ -43,7 +51,12 @@ func FetchStorefront(url string) (models.Storefront, error) {
 	var data []byte
 	var err error
 
-	if os.Getenv("ENVIRONMENT") == "DEV" {
+	if override := os.Getenv("STOREFRONT_OVERRIDE"); override != "" {
+		data, err = fetch(override)
+		if err != nil {
+			return models.Storefront{}, err
+		}
+	} else if os.Getenv("ENVIRONMENT") == "DEV" {
 		data, err = os.ReadFile("storefront.json")
 		if err != nil {
 			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
@@ -58,6 +71,12 @@ func FetchStorefront(url string) (models.Storefront, error) {
 	var sf models.Storefront
 	if err := json.Unmarshal(data, &sf); err != nil {
 		return models.Storefront{}, err
+	}
+
+	for _, p := range sf.Paks {
+		if filepath.Ext(p.ReleaseFilename) == ".pakz" {
+			p.IsPakZ = true
+		}
 	}
 
 	logger.Info("Fetched storefront", zap.String("name", sf.Name))
@@ -172,7 +191,9 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 
 	pakDestination := ""
 
-	if pak.PakType == models.PakTypes.TOOL {
+	if pak.IsPakZ {
+		pakDestination = GetSDRoot()
+	} else if pak.PakType == models.PakTypes.TOOL {
 		pakDestination = filepath.Join(GetToolRoot(), pak.Name+".pak")
 	} else if pak.PakType == models.PakTypes.EMU {
 		pakDestination = filepath.Join(GetEmulatorRoot(), pak.Name+".pak")

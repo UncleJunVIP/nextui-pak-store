@@ -21,11 +21,15 @@ type Pak struct {
 	Categories      []string          `json:"categories"`
 	LargePak        bool              `json:"large_pak"`
 	Disabled        bool              `json:"disabled"`
+
+	IsPakZ       bool `json:"-"`
+	CanUninstall bool `json:"-"`
 }
 
 type Scripts struct {
-	PostInstall Script `json:"post_install"`
-	PostUpdate  Script `json:"post_update"`
+	PostInstall   Script `json:"post_install"`
+	PostUpdate    Script `json:"post_update"`
+	PostUninstall Script `json:"post_uninstall"`
 }
 
 type Script struct {

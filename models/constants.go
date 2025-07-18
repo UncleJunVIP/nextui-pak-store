@@ -10,6 +10,7 @@ const (
 	PakJsonStub    = "pak.json"
 
 	PakStoreConfigRoot = "/mnt/SDCARD/.userdata/tg5040/nextui-pak-store"
+	SDRoot             = "/mnt/SDCARD"
 	ToolRoot           = "/mnt/SDCARD/Tools/tg5040"
 	EmulatorRoot       = "/mnt/SDCARD/Emus/tg5040"
 
