@@ -1489,6 +1489,43 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "Zelda Classic",
+      "name": "ZQUEST",
+      "version": "v1.0.0",
+      "type": "EMU",
+      "description": "libretro core for playing Zelda Classic v2.10-compatible quests",
+      "author": "Cobalt",
+      "repo_url": "https://github.com/cobaltgit/Zelda-Classic-MinUI",
+      "release_filename": "ZQUEST.pakz",
+      "changelog": {
+        "v1.0.0": "Initial release"
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
