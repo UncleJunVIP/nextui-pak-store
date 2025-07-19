@@ -284,6 +284,13 @@
       "categories": [
         "Media"
       ]
+    },
+    {
+      "storefront_name": "Zelda Classic",
+      "repo_url": "https://github.com/cobaltgit/Zelda-Classic-MinUI",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
