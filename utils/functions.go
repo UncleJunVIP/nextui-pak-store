@@ -73,9 +73,9 @@ func FetchStorefront(url string) (models.Storefront, error) {
 		return models.Storefront{}, err
 	}
 
-	for _, p := range sf.Paks {
+	for i, p := range sf.Paks {
 		if filepath.Ext(p.ReleaseFilename) == ".pakz" {
-			p.IsPakZ = true
+			sf.Paks[i].IsPakZ = true
 		}
 	}
 
