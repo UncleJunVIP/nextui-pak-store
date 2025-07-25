@@ -666,7 +666,7 @@
     {
       "storefront_name": "Artwork Scraper",
       "name": "Artwork Scraper",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "type": "TOOL",
       "description": "Scrapes artwork from the internet",
       "author": "josegonzalez",
