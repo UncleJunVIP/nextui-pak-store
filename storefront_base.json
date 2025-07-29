@@ -191,13 +191,6 @@
       ]
     },
     {
-      "storefront_name": "Theme Manager",
-      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
-      "categories": [
-        "Customization"
-      ]
-    },
-    {
       "storefront_name": "Portmaster",
       "repo_url": "https://github.com/ben16w/minui-portmaster",
       "categories": [
