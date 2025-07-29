@@ -1018,41 +1018,6 @@
       "disabled": false
     },
     {
-      "storefront_name": "Theme Manager",
-      "name": "Theme Manager",
-      "version": "v1.4",
-      "type": "TOOL",
-      "description": "A tool that manages, downloads, and deploys customization presets for NextUI",
-      "author": "Leviathan",
-      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
-      "release_filename": "Theme.Manager.pak.zip",
-      "changelog": null,
-      "scripts": {
-        "post_install": {
-          "path": "",
-          "args": null
-        },
-        "post_update": {
-          "path": "",
-          "args": null
-        },
-        "post_uninstall": {
-          "path": "",
-          "args": null
-        }
-      },
-      "update_ignore": null,
-      "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
-      "categories": [
-        "Customization"
-      ],
-      "large_pak": false,
-      "disabled": false
-    },
-    {
       "storefront_name": "Portmaster",
       "name": "PORTS",
       "version": "1.3.0",
