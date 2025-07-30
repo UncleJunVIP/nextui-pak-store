@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.2.1",
+      "version": "v1.3.0",
       "type": "TOOL",
       "description": "A Pak Store in this economy?!",
       "author": "K-Wall",
@@ -19,7 +19,8 @@
         "v1.0.5": "Small fix in UI library for artifacts that appeared when no bg.png is present. And actually quit Pak Store when it updates itself.",
         "v1.1.0": "Prepping Pak Store for bundling with NextUI!",
         "v1.2.0": "Added the ability to see info about installed paks and support for pakz archives.",
-        "v1.2.1": "Bugfix for a small error when handling pakz archives."
+        "v1.2.1": "Bugfix for a small error when handling pakz archives.",
+        "v1.3.0": "Bugfix for blank entries in Installed Paks list when a previously installed Pak was pulled from the store."
       },
       "scripts": {
         "post_install": {
@@ -1493,6 +1494,80 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "Theme Manager",
+      "name": "Theme Manager",
+      "version": "v1.4",
+      "type": "TOOL",
+      "description": "A tool that manages, downloads, and deploys customization presets for NextUI",
+      "author": "Leviathan",
+      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
+      "release_filename": "Theme.Manager.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Customization"
+      ],
+      "large_pak": false,
+      "disabled": true
+    },
+    {
+      "storefront_name": "Power Menu",
+      "name": "Power Menu",
+      "version": "0.1.0",
+      "type": "TOOL",
+      "description": "Quick options to reboot or shutdown your device.",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
+      "release_filename": "Power.pak.zip",
+      "changelog": {
+        "v0.1.0": "Initial release!."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/1.png"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "System"
+      ],
+      "large_pak": false,
+      "disabled": true
     }
   ]
 }
