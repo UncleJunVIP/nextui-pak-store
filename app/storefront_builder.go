@@ -34,10 +34,6 @@ func main() {
 	var paks []models.Pak
 
 	for _, p := range sf.Paks {
-		if p.Disabled {
-			continue
-		}
-
 		repoPath := strings.ReplaceAll(p.RepoURL, models.GitHubRoot, "")
 		parts := strings.Split(repoPath, "/")
 		if len(parts) < 2 {
@@ -59,6 +55,7 @@ func main() {
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		pak.LargePak = p.LargePak
+		pak.Disabled = p.Disabled
 
 		paks = append(paks, pak)
 	}

@@ -53,6 +53,11 @@ func refreshAppState(storefront models.Storefront) AppState {
 	for _, p := range storefront.Paks {
 		if _, ok := installedPaksMap[p.StorefrontName]; !ok {
 			availablePaks = append(availablePaks, p)
+
+			if p.Disabled {
+				continue
+			}
+
 			for _, cat := range p.Categories {
 				if _, ok := browsePaks[cat]; !ok {
 					browsePaks[cat] = make(map[string]models.Pak)

@@ -284,6 +284,22 @@
       "categories": [
         "Emulators"
       ]
+    },
+    {
+      "storefront_name": "Theme Manager",
+      "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
+      "categories": [
+        "Customization"
+      ],
+      "disabled": true
+    },
+    {
+      "storefront_name": "Power Menu",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
+      "categories": [
+        "System"
+      ],
+      "disabled": true
     }
   ]
 }

@@ -140,10 +140,12 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 		changelog = append(changelog, fmt.Sprintf("%s: %s", v, pi.Pak.Changelog[v]))
 	}
 
-	sections = append(sections, gaba.NewDescriptionSection(
-		"Changelog",
-		strings.Join(changelog, "\n\n"),
-	))
+	if len(changelog) > 0 {
+		sections = append(sections, gaba.NewDescriptionSection(
+			"Changelog",
+			strings.Join(changelog, "\n\n"),
+		))
+	}
 
 	qrcode, err := utils.CreateTempQRCode(pi.Pak.RepoURL, 256)
 	if err == nil {
@@ -163,6 +165,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 	options.Sections = sections
 	options.ShowThemeBackground = false
 	options.ConfirmButton = gaba.ButtonX
+	options.EnableAction = true
 
 	confirmLabel := "Install"
 
