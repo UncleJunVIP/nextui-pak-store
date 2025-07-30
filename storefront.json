@@ -109,7 +109,7 @@
     {
       "storefront_name": "Game Manager",
       "name": "Game Manager",
-      "version": "v2.6.0",
+      "version": "v2.7.0",
       "type": "TOOL",
       "description": "A one-stop pak for all your game management needs.",
       "author": "K-Wall \u0026 redria7",
@@ -125,7 +125,8 @@
         "v2.3.0": "Enhanced art searching that uses a fallback Jaccard Similarity with configurable threshold when art with an exact filename match does not exist.",
         "v2.4.1": "Added clear recently played to the global actions tool. Thanks madeleineostoja for the suggestion!",
         "v2.5.0": "Added a new Play History tool allowing for viewing of all current game tracking history. Includes total hours, hours by console, hours by game, ROM location tagging, ROM collection tagging, a play summary screen, and a granular detail screen. Play summary and granular detail screens can also be accessed from game actions.",
-        "v2.6.0": "Behind the scenes collection enhancements, fix for the art downloader missing exact name matches, you can now jump pages (D-Pad Left / Right) while reordering games in a collection and new option in the collection options screen to alphabetize the games."
+        "v2.6.0": "Behind the scenes collection enhancements, fix for the art downloader missing exact name matches, you can now jump pages (D-Pad Left / Right) while reordering games in a collection and new option in the collection options screen to alphabetize the games.",
+        "v2.7.0": "A new filtering option for the Play History Tool!"
       },
       "scripts": {
         "post_install": {
