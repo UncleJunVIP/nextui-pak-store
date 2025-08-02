@@ -986,41 +986,6 @@
       "disabled": false
     },
     {
-      "storefront_name": "Function Key Editor",
-      "name": "FN Editor",
-      "version": "0.4.0",
-      "type": "TOOL",
-      "description": "Function Key Editor",
-      "author": "josegonzalez",
-      "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
-      "release_filename": "FN.Editor.pak.zip",
-      "changelog": null,
-      "scripts": {
-        "post_install": {
-          "path": "",
-          "args": null
-        },
-        "post_update": {
-          "path": "",
-          "args": null
-        },
-        "post_uninstall": {
-          "path": "",
-          "args": null
-        }
-      },
-      "update_ignore": null,
-      "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
-      "categories": [
-        "Customization"
-      ],
-      "large_pak": false,
-      "disabled": false
-    },
-    {
       "storefront_name": "Portmaster",
       "name": "PORTS",
       "version": "1.3.0",
