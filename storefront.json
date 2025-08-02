@@ -988,12 +988,12 @@
     {
       "storefront_name": "Portmaster",
       "name": "PORTS",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "type": "EMU",
       "description": "A Emu Pak for PortMaster which includes everything needed and requires no additional software.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-portmaster",
-      "release_filename": "PORTS.pak.zip",
+      "release_filename": "PORTS.pakz",
       "changelog": null,
       "scripts": {
         "post_install": {
