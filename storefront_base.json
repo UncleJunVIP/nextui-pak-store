@@ -293,6 +293,22 @@
         "System"
       ],
       "disabled": true
+    },
+    {
+      "storefront_name": "Function Key Editor",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
+      "categories": [
+        "Customization"
+      ],
+      "disabled": true
+    },
+    {
+      "storefront_name": "USB Mass Storage",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
+      "categories": [
+        "File Management"
+      ],
+      "disabled": true
     }
   ]
 }
