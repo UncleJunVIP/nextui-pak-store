@@ -1534,6 +1534,76 @@
       ],
       "large_pak": false,
       "disabled": true
+    },
+    {
+      "storefront_name": "Function Key Editor",
+      "name": "FN Editor",
+      "version": "0.4.0",
+      "type": "TOOL",
+      "description": "Function Key Editor",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
+      "release_filename": "FN.Editor.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Customization"
+      ],
+      "large_pak": false,
+      "disabled": true
+    },
+    {
+      "storefront_name": "USB Mass Storage",
+      "name": "USB Mass Storage",
+      "version": "0.4.1",
+      "type": "TOOL",
+      "description": "Enables USB Mass Storage",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
+      "release_filename": "USB.Mass.Storage.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "File Management"
+      ],
+      "large_pak": false,
+      "disabled": true
     }
   ]
 }
