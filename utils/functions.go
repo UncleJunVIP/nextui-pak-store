@@ -45,7 +45,7 @@ func GetEmulatorRoot() string {
 	return models.EmulatorRoot
 }
 
-func FetchStorefront(url string) (models.Storefront, error) {
+func FetchStorefront() (models.Storefront, error) {
 	logger := common.GetLoggerInstance()
 
 	var data []byte
@@ -62,9 +62,12 @@ func FetchStorefront(url string) (models.Storefront, error) {
 			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
 		}
 	} else {
-		data, err = fetch(url)
+		data, err = fetch(models.StorefrontJsonURL)
 		if err != nil {
-			return models.Storefront{}, err
+			data, err = fetch(models.StorefrontJsonBackupURL)
+			if err != nil {
+				return models.Storefront{}, err
+			}
 		}
 	}
 

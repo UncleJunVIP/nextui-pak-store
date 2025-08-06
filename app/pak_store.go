@@ -35,7 +35,7 @@ func init() {
 	sf, err := gaba.ProcessMessage("",
 		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
 			time.Sleep(1250 * time.Millisecond)
-			return utils.FetchStorefront(models.StorefrontJson)
+			return utils.FetchStorefront()
 		})
 
 	if err != nil {
