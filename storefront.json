@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.4.0",
+      "version": "v1.4.1",
       "type": "TOOL",
       "description": "A Pak Store in this economy?!",
       "author": "K-Wall",
@@ -21,7 +21,8 @@
         "v1.2.0": "Added the ability to see info about installed paks and support for pakz archives.",
         "v1.2.1": "Bugfix for a small error when handling pakz archives.",
         "v1.3.0": "Bugfix for blank entries in Installed Paks list when a previously installed Pak was pulled from the store.",
-        "v1.4.0": "Add fallback Storefront URL."
+        "v1.4.0": "Add fallback Storefront URL.",
+        "v1.4.1": "Modified the internet connectivity check."
       },
       "scripts": {
         "post_install": {
