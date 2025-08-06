@@ -24,14 +24,6 @@ func init() {
 	})
 	common.SetLogLevel("ERROR")
 
-	if !utils.IsConnectedToInternet() {
-		gaba.ConfirmationMessage("No Internet Connection!\nMake sure you are connected to Wi-Fi.", []gaba.FooterHelpItem{
-			{ButtonName: "B", HelpText: "Quit"},
-		}, gaba.MessageOptions{})
-		defer cleanup()
-		common.LogStandardFatal("No Internet Connection", nil)
-	}
-
 	sf, err := gaba.ProcessMessage("",
 		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
 			time.Sleep(1250 * time.Millisecond)
@@ -39,7 +31,7 @@ func init() {
 		})
 
 	if err != nil {
-		gaba.ConfirmationMessage("Could not load the Storefront!\nPlease check the logs for more info.", []gaba.FooterHelpItem{
+		gaba.ConfirmationMessage("Could not load the Storefront!\nMake sure you are connected to Wi-Fi.\nIf this issue persists, check the logs.", []gaba.FooterHelpItem{
 			{ButtonName: "B", HelpText: "Quit"},
 		}, gaba.MessageOptions{})
 		defer gaba.CloseSDL()

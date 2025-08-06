@@ -78,6 +78,7 @@ func init() {
 func DBQ() *Queries {
 	return queries
 }
+
 func CloseDB() {
 	_ = dbc.Close()
 }
