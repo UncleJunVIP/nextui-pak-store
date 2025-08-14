@@ -60,7 +60,7 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v2.4.2",
+      "version": "v2.5.0",
       "type": "TOOL",
       "description": "ROM Downloader for RomM and Megathread",
       "author": "K-Wall",
@@ -73,7 +73,8 @@
         "v2.3.1": "Added a setting to unzip ROM archive after download.",
         "v2.4.0": "New settings to automagically group multi-disc games and BIN/CUE games. \u003c3",
         "v2.4.1": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
-        "v2.4.2": "Small fix in UI library for artifacts that appeared when no bg.png is present."
+        "v2.4.2": "Small fix in UI library for artifacts that appeared when no bg.png is present.",
+        "v2.5.0": "Mortar now recognizes tagless ROM directories (e.g. /mnt/SDCARD/Roms/GBA). Small update to system mapping for finding Libretro Artwork."
       },
       "scripts": {
         "post_install": {
