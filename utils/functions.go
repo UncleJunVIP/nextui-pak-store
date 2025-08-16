@@ -56,10 +56,10 @@ func FetchStorefront() (models.Storefront, error) {
 		if err != nil {
 			return models.Storefront{}, err
 		}
-	} else if os.Getenv("ENVIRONMENT") == "DEVZ" {
+	} else if os.Getenv("ENVIRONMENT") == "DEV" {
 		data, err = os.ReadFile("storefront.json")
 		if err != nil {
-			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json", err)
+			return models.Storefront{}, fmt.Errorf("failed to read local storefront.json: %w", err)
 		}
 	} else {
 		data, err = fetch(models.StorefrontJsonURL)

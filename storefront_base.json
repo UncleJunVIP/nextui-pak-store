@@ -309,6 +309,22 @@
         "File Management"
       ],
       "disabled": true
+    },
+    {
+      "storefront_name": "Screenshot Viewer",
+      "repo_url": "https://github.com/mikecosentino/Screenshots",
+      "categories": [
+        "Media"
+      ],
+      "disabled": false
+    },
+    {
+      "storefront_name": "WiliWili",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-wiliwili",
+      "categories": [
+        "Media"
+      ],
+      "disabled": false
     }
   ]
 }
