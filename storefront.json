@@ -1608,6 +1608,76 @@
       ],
       "large_pak": false,
       "disabled": true
+    },
+    {
+      "storefront_name": "Screenshot Viewer",
+      "name": "Screenshots",
+      "version": "v0.1.1",
+      "type": "TOOL",
+      "description": "A MinUI pak for browsing your saved screenshots. Automatically organized by game/app.",
+      "author": "mikecosentino",
+      "repo_url": "https://github.com/mikecosentino/Screenshots",
+      "release_filename": "Screenshots.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "WiliWili",
+      "name": "WiliWili",
+      "version": "v1.5.2",
+      "type": "TOOL",
+      "description": "wiliwili has a B-station browsing experience that is very close to the official PC client.",
+      "author": "xfangfang \u0026 dragonflylee",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-wiliwili",
+      "release_filename": "WiliWili.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
