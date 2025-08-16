@@ -1642,7 +1642,7 @@
         "Media"
       ],
       "large_pak": false,
-      "disabled": false
+      "disabled": true
     },
     {
       "storefront_name": "WiliWili",
