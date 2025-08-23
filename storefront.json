@@ -564,7 +564,7 @@
     {
       "storefront_name": "Report",
       "name": "Report",
-      "version": "0.8.1",
+      "version": "0.9.1",
       "type": "TOOL",
       "description": "Generates a report for development purposes",
       "author": "josegonzalez",
@@ -588,6 +588,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040",
         "trimuismart"
