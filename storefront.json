@@ -349,7 +349,7 @@
     {
       "storefront_name": "Dufs Server",
       "name": "HTTP Server",
-      "version": "0.8.2",
+      "version": "0.9.0",
       "type": "TOOL",
       "description": "Manages the Dufs HTTP Server",
       "author": "josegonzalez",
@@ -375,6 +375,7 @@
       "platforms": [
         "miyoomini",
         "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
