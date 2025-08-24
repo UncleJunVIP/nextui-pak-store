@@ -238,7 +238,7 @@
     {
       "storefront_name": "Screenshot Monitor",
       "name": "Screenshot Monitor",
-      "version": "0.7.1",
+      "version": "0.8.0",
       "type": "TOOL",
       "description": "Launches a daemon that allows users to take screenshots",
       "author": "josegonzalez",
@@ -262,6 +262,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -313,7 +316,7 @@
     {
       "storefront_name": "SFTPGO Server",
       "name": "FTP Server",
-      "version": "0.5.3",
+      "version": "0.6.0",
       "type": "TOOL",
       "description": "Manages the FTP Server",
       "author": "josegonzalez",
@@ -337,6 +340,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -466,7 +472,7 @@
     {
       "storefront_name": "Syncthing",
       "name": "Syncthing",
-      "version": "0.4.2",
+      "version": "0.5.0",
       "type": "TOOL",
       "description": "Manages Syncthing",
       "author": "josegonzalez",
@@ -490,6 +496,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -541,7 +550,7 @@
     {
       "storefront_name": "Remote Terminal",
       "name": "Remote Terminal",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "type": "TOOL",
       "description": "Manages the Remote Terminal",
       "author": "josegonzalez",
@@ -565,6 +574,7 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -617,7 +627,7 @@
     {
       "storefront_name": "Terminal",
       "name": "Terminal",
-      "version": "0.7.0",
+      "version": "0.8.0",
       "type": "TOOL",
       "description": "Manages the Terminal",
       "author": "josegonzalez",
@@ -641,6 +651,7 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -653,7 +664,7 @@
     {
       "storefront_name": "Simple Mode",
       "name": "Simple Mode",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "type": "TOOL",
       "description": "Manages MinUI's Simple Mode",
       "author": "josegonzalez",
@@ -677,6 +688,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -725,7 +739,7 @@
     {
       "storefront_name": "Random Game",
       "name": "Random Game",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "type": "TOOL",
       "description": "Randomly selects a game from the ROMs folder and launches it",
       "author": "josegonzalez",
@@ -749,6 +763,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
