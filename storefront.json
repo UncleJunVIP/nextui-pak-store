@@ -274,7 +274,7 @@
     {
       "storefront_name": "Dropbear Server (SSH)",
       "name": "SSH Server",
-      "version": "0.6.2",
+      "version": "0.8.0",
       "type": "TOOL",
       "description": "Manages the Dropbear SSH Server",
       "author": "josegonzalez",
@@ -298,6 +298,9 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
@@ -492,7 +495,7 @@
     {
       "storefront_name": "Developer",
       "name": "Developer",
-      "version": "0.7.0",
+      "version": "0.8.0",
       "type": "TOOL",
       "description": "Keeps the screen awake for development purposes",
       "author": "josegonzalez",
@@ -516,6 +519,7 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "my355",
         "rg35xxplus",
         "tg5040"
       ],
