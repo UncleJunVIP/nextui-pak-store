@@ -1066,7 +1066,7 @@
     {
       "storefront_name": "PPSSPP",
       "name": "PSP",
-      "version": "2.3.0",
+      "version": "3.0.0",
       "type": "EMU",
       "description": "A Emu Pak for PSP, wrapping the standalone PPSSPP emulator.",
       "author": "ben16w",
