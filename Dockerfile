@@ -13,6 +13,6 @@ COPY go.mod go.sum* ./
 RUN GOWORK=off go mod download
 
 COPY . .
-RUN GOWORK=off go build -v -gcflags="all=-N -l" -o pak-store app/pak_store.go
+RUN GOWORK=off go build -v -gcflags="all=-N -l" -ldflags="-w -s" -o pak-store app/pak_store.go
 
 CMD ["/bin/bash"]
