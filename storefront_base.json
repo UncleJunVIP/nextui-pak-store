@@ -323,8 +323,14 @@
       "repo_url": "https://github.com/UncleJunVIP/nextui-wiliwili",
       "categories": [
         "Media"
-      ],
-      "disabled": false
+      ]
+    },
+    {
+      "storefront_name": "SMSU (Genesis Plus GX)",
+      "repo_url": "https://github.com/SkyZ0ro/Trimui-Brick-GMD",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
