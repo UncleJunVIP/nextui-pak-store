@@ -1716,6 +1716,45 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "SMSU (Genesis Plus GX)",
+      "name": "SMSU",
+      "version": "v1.1.1",
+      "type": "EMU",
+      "description": "Genesis-Plus-GX (PUNCHiUM) core with MD-MSU support for Trimui Brick NextUI.",
+      "author": "SkyZ0ro",
+      "repo_url": "https://github.com/SkyZ0ro/Trimui-Brick-GMD",
+      "release_filename": "SMSU.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release.",
+        "v1.1.0": "Renamed GMD.pak to SMSU.pak, updated ROM folder name and README, added QR code.",
+        "v1.1.1": "Fixed pak.json name: removed .pak extension as requested by GitHub feedback."
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [],
+      "screenshots": [],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
