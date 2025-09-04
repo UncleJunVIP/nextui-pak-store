@@ -703,7 +703,7 @@
     {
       "storefront_name": "Artwork Scraper",
       "name": "Artwork Scraper",
-      "version": "0.4.1",
+      "version": "0.5.0",
       "type": "TOOL",
       "description": "Scrapes artwork from the internet",
       "author": "josegonzalez",
@@ -727,6 +727,7 @@
       "update_ignore": null,
       "screenshots": null,
       "platforms": [
+        "my355",
         "tg5040"
       ],
       "categories": [
