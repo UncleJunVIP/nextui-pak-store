@@ -627,7 +627,7 @@
     {
       "storefront_name": "Terminal",
       "name": "Terminal",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "type": "TOOL",
       "description": "Manages the Terminal",
       "author": "josegonzalez",
