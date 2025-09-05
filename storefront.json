@@ -1431,7 +1431,7 @@
     {
       "storefront_name": "Rockbox",
       "name": "Rockbox",
-      "version": "4.0.89",
+      "version": "4.0.92",
       "type": "TOOL",
       "description": "Rockbox is a free, open-source firmware replacement for digital audio players (DAPs), offering an alternative to the original operating system. It's designed to be highly customizable, with features like advanced equalizers, themes, and support for various file formats.",
       "author": "IncognitoMan",
@@ -1439,7 +1439,8 @@
       "release_filename": "Rockbox.pak.zip",
       "changelog": {
         "4.0.0": "Initial Release",
-        "4.0.89": "Added backlight settings and bluetooth media controls, updated keymap and many 'small' fixes."
+        "4.0.89": "Added backlight settings and bluetooth media controls, updated keymap and many 'small' fixes.",
+        "4.0.92": "Updated keylock method, updated keymap to allow media keys while device is locked."
       },
       "scripts": {
         "post_install": {
