@@ -1652,9 +1652,9 @@
     {
       "storefront_name": "Screenshot Viewer",
       "name": "Screenshots",
-      "version": "v0.1.1",
+      "version": "v0.1.2",
       "type": "TOOL",
-      "description": "A MinUI pak for browsing your saved screenshots. Automatically organized by game/app.",
+      "description": "Browse your saved screenshots. Automatically organized by game/app.",
       "author": "mikecosentino",
       "repo_url": "https://github.com/mikecosentino/Screenshots",
       "release_filename": "Screenshots.pak.zip",
