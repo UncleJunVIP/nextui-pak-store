@@ -315,8 +315,7 @@
       "repo_url": "https://github.com/mikecosentino/Screenshots",
       "categories": [
         "Media"
-      ],
-      "disabled": true
+      ]
     },
     {
       "storefront_name": "WiliWili",
@@ -330,6 +329,13 @@
       "repo_url": "https://github.com/SkyZ0ro/Trimui-Brick-GMD",
       "categories": [
         "Emulators"
+      ]
+    },
+    {
+      "storefront_name": "SDLReader",
+      "repo_url": "https://github.com/Helaas/SDLReader-brick",
+      "categories": [
+        "Media"
       ]
     }
   ]
