@@ -1682,7 +1682,7 @@
         "Media"
       ],
       "large_pak": false,
-      "disabled": true
+      "disabled": false
     },
     {
       "storefront_name": "WiliWili",
@@ -1754,6 +1754,45 @@
       ],
       "categories": [
         "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "SDLReader",
+      "name": "SDLReader",
+      "version": "v1.0.0",
+      "type": "TOOL",
+      "description": "A lightweight, cross-platform document viewer built with SDL2 and MuPDF. Supports viewing PDF, CBZ/ZIP comic archives, and EPUB books with intuitive navigation, zooming, rotation, and mirroring features. Optimized for TrimUI Brick (TG5040) running NextUI.",
+      "author": "Helaas",
+      "repo_url": "https://github.com/Helaas/SDLReader-brick",
+      "release_filename": "SDLReader.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release with PDF, CBZ, and EPUB support, optimized for TrimUI Brick"
+      },
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/tg5040%20controls.png"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
       ],
       "large_pak": false,
       "disabled": false
