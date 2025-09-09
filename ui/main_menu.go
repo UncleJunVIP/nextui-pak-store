@@ -2,11 +2,12 @@ package ui
 
 import (
 	"fmt"
+	"strings"
+
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
-	"strings"
 )
 
 type MainMenu struct {

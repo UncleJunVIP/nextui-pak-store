@@ -1,6 +1,6 @@
 {
   "name": "Pak Store",
-  "version": "v1.4.1",
+  "version": "v1.5.0",
   "type": "TOOL",
   "description": "A Pak Store in this economy?!",
   "author": "K-Wall",
@@ -21,6 +21,7 @@
     "tg5040"
   ],
   "changelog": {
+    "v1.5.0": "Removed the extra button press after a download completes and added an 'Update All' option for you scoundrels.",
     "v1.4.1": "Modified the internet connectivity check.",
     "v1.4.0": "Add fallback Storefront URL.",
     "v1.3.0": "Bugfix for blank entries in Installed Paks list when a previously installed Pak was pulled from the store.",

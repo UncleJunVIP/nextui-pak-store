@@ -2,6 +2,9 @@ package main
 
 import (
 	_ "embed"
+	"os"
+	"time"
+
 	_ "github.com/UncleJunVIP/certifiable"
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
@@ -11,8 +14,6 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	_ "modernc.org/sqlite"
-	"os"
-	"time"
 )
 
 var appState state.AppState
@@ -100,7 +101,7 @@ func main() {
 		case models.ScreenNames.PakList:
 			switch code {
 			case 0:
-				screen = ui.InitPakInfoScreen(res.(models.Pak), screen.(ui.PakList).Category, false, false)
+				screen = ui.InitPakInfoScreen([]models.Pak{res.(models.Pak)}, screen.(ui.PakList).Category, false, false)
 			case 1, 2:
 				screen = ui.InitBrowseScreen(appState)
 			}
@@ -141,7 +142,11 @@ func main() {
 				})
 				break
 			case 12:
-				// Action confirmation cancel
+			// Action confirmation cancel
+			case 33:
+				// User canceled multiple downloads
+				appState = appState.Refresh()
+				screen = ui.InitUpdatesScreen(appState)
 			case 86:
 				appState = appState.Refresh()
 				screen = ui.InitManageInstalledScreen(appState)
@@ -151,7 +156,7 @@ func main() {
 			switch code {
 			case 0:
 				appState = appState.Refresh()
-				screen = ui.InitPakInfoScreen(res.(models.Pak), "", true, false)
+				screen = ui.InitPakInfoScreen(res.([]models.Pak), "", true, false)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)
@@ -160,7 +165,7 @@ func main() {
 		case models.ScreenNames.ManageInstalled:
 			switch code {
 			case 0:
-				screen = ui.InitPakInfoScreen(res.(models.Pak), "", false, true)
+				screen = ui.InitPakInfoScreen([]models.Pak{res.(models.Pak)}, "", false, true)
 			case 1, 2:
 				appState = appState.Refresh()
 				screen = ui.InitMainMenu(appState)

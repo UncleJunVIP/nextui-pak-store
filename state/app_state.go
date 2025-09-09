@@ -2,13 +2,14 @@ package state
 
 import (
 	"context"
+	"slices"
+	"strings"
+
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"go.uber.org/zap"
 	"golang.org/x/mod/semver"
-	"slices"
-	"strings"
 )
 
 var LastSelectedIndex, LastSelectedPosition int

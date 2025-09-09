@@ -1,12 +1,13 @@
 package ui
 
 import (
+	"slices"
+	"strings"
+
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
-	"slices"
-	"strings"
 )
 
 type UpdatesScreen struct {
@@ -35,13 +36,22 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 			Text:     pak.StorefrontName,
 			Selected: false,
 			Focused:  false,
-			Metadata: pak,
+			Metadata: [1]models.Pak{pak},
 		})
 	}
 
 	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
+
+	if len(menuItems) > 1 {
+		menuItems = append([]gaba.MenuItem{{
+			Text:     "Update All",
+			Selected: false,
+			Focused:  false,
+			Metadata: us.AppState.UpdatesAvailable,
+		}}, menuItems...)
+	}
 
 	options := gaba.DefaultListOptions("Available Pak Updates", menuItems)
 	options.EnableAction = true
@@ -59,5 +69,5 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, 2, nil
 	}
 
-	return sel.Unwrap().SelectedItem.Metadata.(models.Pak), 0, nil
+	return sel.Unwrap().SelectedItem.Metadata.([]models.Pak), 0, nil
 }

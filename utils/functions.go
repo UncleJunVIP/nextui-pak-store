@@ -5,11 +5,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
-	"github.com/UncleJunVIP/nextui-pak-store/models"
-	"github.com/skip2/go-qrcode"
-	"go.uber.org/zap"
 	"image/color"
 	"io"
 	"net"
@@ -19,6 +14,12 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/skip2/go-qrcode"
+	"go.uber.org/zap"
 )
 
 func GetSDRoot() string {
@@ -119,7 +120,7 @@ func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error 
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
-	}}, make(map[string]string))
+	}}, make(map[string]string), true)
 
 	if err == nil && len(res.Errors) > 0 {
 		err = res.Errors[0]
@@ -201,6 +202,8 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 		if err != nil {
 			return nil, err
 		}
+
+		time.Sleep(1 * time.Second)
 
 		return nil, nil
 	})
