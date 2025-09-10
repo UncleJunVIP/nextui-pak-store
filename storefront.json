@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.5.0",
+      "version": "v1.5.1",
       "type": "TOOL",
       "description": "A Pak Store in this economy?!",
       "author": "K-Wall",
@@ -23,7 +23,8 @@
         "v1.3.0": "Bugfix for blank entries in Installed Paks list when a previously installed Pak was pulled from the store.",
         "v1.4.0": "Add fallback Storefront URL.",
         "v1.4.1": "Modified the internet connectivity check.",
-        "v1.5.0": "Removed the extra button press after a download completes and added an 'Update All' option for you scoundrels."
+        "v1.5.0": "Removed the extra button press after a download completes and added an 'Update All' option for you scoundrels.",
+        "v1.5.1": "Made a boo boo! Introduced a bug when I added the 'update all' functionality causing Pak Store to crash when viewing a single update. Thanks to @Helaas for reporting this!"
       },
       "scripts": {
         "post_install": {
