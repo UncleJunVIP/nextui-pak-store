@@ -36,7 +36,7 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 			Text:     pak.StorefrontName,
 			Selected: false,
 			Focused:  false,
-			Metadata: [1]models.Pak{pak},
+			Metadata: []models.Pak{pak},
 		})
 	}
 
