@@ -337,6 +337,13 @@
       "categories": [
         "Media"
       ]
+    },
+    {
+      "storefront_name": "M3U Manager",
+      "repo_url": "https://github.com/josegonzalez/minui-m3u-manager-pak",
+      "categories": [
+        "ROM Management"
+      ]
     }
   ]
 }
