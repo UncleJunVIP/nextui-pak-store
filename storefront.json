@@ -1805,6 +1805,46 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "M3U Manager",
+      "name": "M3U Manager",
+      "version": "0.1.0",
+      "type": "TOOL",
+      "description": "Manages M3U files",
+      "author": "josegonzalez",
+      "repo_url": "https://github.com/josegonzalez/minui-m3u-manager-pak",
+      "release_filename": "M3U.Manager.pak.zip",
+      "changelog": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "miyoomini",
+        "my282",
+        "my355",
+        "rg35xxplus",
+        "tg5040",
+        "trimuismart"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
