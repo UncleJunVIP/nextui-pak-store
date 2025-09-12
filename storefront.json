@@ -1510,7 +1510,7 @@
     {
       "storefront_name": "Theme Manager",
       "name": "Theme Manager",
-      "version": "v1.4",
+      "version": "1.5.0",
       "type": "TOOL",
       "description": "A tool that manages, downloads, and deploys customization presets for NextUI",
       "author": "Leviathan",
