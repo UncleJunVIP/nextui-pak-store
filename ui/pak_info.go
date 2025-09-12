@@ -15,7 +15,6 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
-	"go.uber.org/zap"
 	"qlova.tech/sum"
 )
 
@@ -76,17 +75,17 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 				screenshots[index] = downloadedScreenshot
 			} else {
 				logger.Error("Failed to download screenshot",
-					zap.Error(err),
-					zap.String("uri", uri),
-					zap.Int("attempt", 1))
+					"error", err,
+					"uri", uri,
+					"attempt", 1)
 
 				downloadedScreenshot, err = utils.DownloadTempFile(uri)
 				if err == nil {
 					screenshots[index] = downloadedScreenshot
 				} else {
 					logger.Error("Failed to download screenshot after retry",
-						zap.Error(err),
-						zap.String("uri", uri))
+						"error", err,
+						"uri", uri)
 				}
 			}
 		}(i, s)
@@ -169,7 +168,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		))
 
 	} else {
-		logger.Error("Unable to generate QR code", zap.Error(err))
+		logger.Error("Unable to generate QR code", "error", err)
 	}
 
 	options := gaba.DefaultInfoScreenOptions()
@@ -193,7 +192,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 	sel, err := gaba.DetailScreen(pak.StorefrontName, options, footerItems)
 	if err != nil {
-		logger.Error("Unable to display pak info screen", zap.Error(err))
+		logger.Error("Unable to display pak info screen", "error", err)
 		return pi.IsUpdate, -1, err
 	}
 
@@ -239,7 +238,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 				time.Sleep(3 * time.Second)
 				return nil, nil
 			})
-			logger.Error("Unable to remove pak", zap.Error(err))
+			logger.Error("Unable to remove pak", "error", err)
 		}
 
 		ctx := context.Background()
@@ -258,7 +257,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 			return pi.IsUpdate, 12, nil
 		}
 
-		logger.Error("Unable to download pak archive", zap.Error(err))
+		logger.Error("Unable to download pak archive", "error", err)
 		return pi.IsUpdate, -1, err
 	} else if !completed {
 		return pi.IsUpdate, 12, nil
@@ -363,7 +362,7 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 
 	sel, err := gaba.DetailScreen(title, options, footerItems)
 	if err != nil {
-		logger.Error("Unable to display multi-pak info screen", zap.Error(err))
+		logger.Error("Unable to display multi-pak info screen", "error", err)
 		return pi.IsUpdate, -1, err
 	}
 
@@ -377,7 +376,9 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 			if err.Error() == "download cancelled by user" {
 				return true, 33, nil
 			}
-			logger.Error("Failed to download pak", zap.Error(err), zap.String("pak", pak.StorefrontName))
+			logger.Error("Failed to download pak",
+				"error", err,
+				"pak", pak.StorefrontName)
 			gaba.ProcessMessage(fmt.Sprintf("Failed to download %s", pak.StorefrontName),
 				gaba.ProcessMessageOptions{ShowThemeBackground: true}, func() (interface{}, error) {
 					time.Sleep(2 * time.Second)
@@ -390,7 +391,9 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 
 		err = utils.UnzipPakArchive(pak, tmp)
 		if err != nil {
-			logger.Error("Failed to extract pak", zap.Error(err), zap.String("pak", pak.StorefrontName))
+			logger.Error("Failed to extract pak",
+				"error", err,
+				"pak", pak.StorefrontName)
 			gaba.ProcessMessage(fmt.Sprintf("Failed to extract %s", pak.StorefrontName),
 				gaba.ProcessMessageOptions{ShowThemeBackground: true}, func() (interface{}, error) {
 					time.Sleep(2 * time.Second)
@@ -405,7 +408,9 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 		}
 		err = database.DBQ().UpdateVersion(context.Background(), update)
 		if err != nil {
-			logger.Error("Failed to update pak in database", zap.Error(err), zap.String("pak", pak.Name))
+			logger.Error("Failed to update pak in database",
+				"error", err,
+				"pak", pak.Name)
 		}
 
 		if pak.Name == "Pak Store" {

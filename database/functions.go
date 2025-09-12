@@ -13,7 +13,6 @@ import (
 	pakstore "github.com/UncleJunVIP/nextui-pak-store"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
-	"go.uber.org/zap"
 	_ "modernc.org/sqlite"
 )
 
@@ -35,21 +34,22 @@ func init() {
 	if dbDir != "." && dbDir != "" {
 		err := os.MkdirAll(dbDir, 0755)
 		if err != nil {
-			//_, _ = cui.ShowMessage(models.InitializationError, "3")
-			logger.Fatal("Unable to open database file", zap.Error(err))
+			logger.Error("Unable to open database file", "error", err)
+			os.Exit(1)
 		}
 	}
 
 	dbc, err = sql.Open("sqlite", "file:"+dbPath)
 	if err != nil {
-		//_, _ = cui.ShowMessage(models.InitializationError, "3")
-		logger.Fatal("Unable to open database file", zap.Error(err))
+		logger.Error("Unable to open database file", "error", err)
+		os.Exit(1)
 	}
 
 	schemaExists, err := TableExists(dbc, "installed_paks")
 	if !schemaExists {
 		if _, err := dbc.ExecContext(ctx, pakstore.DDL); err != nil {
-			logger.Fatal("Unable to init schema", zap.Error(err))
+			logger.Error("Unable to init schema", "error", err)
+			os.Exit(1)
 		}
 	}
 

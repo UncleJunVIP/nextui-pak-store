@@ -19,7 +19,6 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/skip2/go-qrcode"
-	"go.uber.org/zap"
 )
 
 func GetSDRoot() string {
@@ -83,7 +82,7 @@ func FetchStorefront() (models.Storefront, error) {
 		}
 	}
 
-	logger.Info("Fetched storefront", zap.String("name", sf.Name))
+	logger.Info("Fetched storefront", "name", sf.Name)
 
 	return sf, nil
 }
@@ -127,7 +126,7 @@ func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error 
 	}
 
 	if err != nil {
-		logger.Error("Error downloading", zap.Error(err))
+		logger.Error("Error downloading", "error", err)
 		return "", false, err
 	} else if res.Cancelled {
 		return "", false, nil
@@ -145,7 +144,9 @@ func RunScript(script models.Script, scriptName string) error {
 	}
 
 	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s %s...", "Running", scriptName, "Script"), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
-		logger.Info("Running script", zap.String("path", script.Path), zap.Strings("args", script.Args))
+		logger.Info("Running script",
+			"path", script.Path,
+			"args", script.Args)
 
 		cmd := exec.Command(script.Path, script.Args...)
 
@@ -156,27 +157,27 @@ func RunScript(script models.Script, scriptName string) error {
 		err := cmd.Run()
 		if err != nil {
 			logger.Error("Failed to execute script",
-				zap.String("path", script.Path),
-				zap.Strings("args", script.Args),
-				zap.String("stderr", stderr.String()),
-				zap.Error(err))
+				"error", err,
+				"path", script.Path,
+				"args", script.Args,
+				"stderr", stderr.String())
 			return nil, fmt.Errorf("failed to execute script %s: %w", script.Path, err)
 		}
 
 		if cmd.ProcessState.ExitCode() != 0 {
 			logger.Error("Script returned non-zero exit code",
-				zap.String("path", script.Path),
-				zap.Strings("args", script.Args),
-				zap.Int("exitCode", cmd.ProcessState.ExitCode()),
-				zap.String("stderr", stderr.String()))
+				"path", script.Path,
+				"args", script.Args,
+				"exitCode", cmd.ProcessState.ExitCode(),
+				"stderr", stderr.String())
 			return nil, fmt.Errorf("script %s exited with code %d: %s",
 				script.Path, cmd.ProcessState.ExitCode(), stderr.String())
 		}
 
 		logger.Info("Script executed successfully",
-			zap.String("path", script.Path),
-			zap.Strings("args", script.Args),
-			zap.String("stdout", stdout.String()))
+			"path", script.Path,
+			"args", script.Args,
+			"stdout", stdout.String())
 
 		return nil, nil
 	})
@@ -213,7 +214,7 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 			time.Sleep(3 * time.Second)
 			return nil, nil
 		})
-		logger.Error("Unable to unzip pak", zap.Error(err))
+		logger.Error("Unable to unzip pak", "error", err)
 		return err
 	}
 
