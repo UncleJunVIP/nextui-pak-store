@@ -1809,7 +1809,7 @@
     {
       "storefront_name": "M3U Manager",
       "name": "M3U Manager",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "type": "TOOL",
       "description": "Manages M3U files",
       "author": "josegonzalez",
