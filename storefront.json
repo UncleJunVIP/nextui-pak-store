@@ -62,7 +62,7 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v2.5.0",
+      "version": "v2.6.0",
       "type": "TOOL",
       "description": "ROM Downloader for RomM and Megathread",
       "author": "K-Wall",
@@ -76,7 +76,8 @@
         "v2.4.0": "New settings to automagically group multi-disc games and BIN/CUE games. \u003c3",
         "v2.4.1": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
         "v2.4.2": "Small fix in UI library for artifacts that appeared when no bg.png is present.",
-        "v2.5.0": "Mortar now recognizes tagless ROM directories (e.g. /mnt/SDCARD/Roms/GBA). Small update to system mapping for finding Libretro Artwork."
+        "v2.5.0": "Mortar now recognizes tagless ROM directories (e.g. /mnt/SDCARD/Roms/GBA). Small update to system mapping for finding Libretro Artwork.",
+        "v2.6.0": "Added new platform configuration options. 'is_arcade' to use an internal mapping file for arcade filenames, 'skip_inclusive_filters' to include all ROMs in the displayed games list and 'skip_exclusive_filters' to not exclude any ROMs from the displayed games list."
       },
       "scripts": {
         "post_install": {
