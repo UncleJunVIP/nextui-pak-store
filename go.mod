@@ -6,12 +6,11 @@ toolchain go1.24.2
 
 require (
 	github.com/UncleJunVIP/certifiable v1.0.0
-	github.com/UncleJunVIP/gabagool v0.0.71
-	github.com/UncleJunVIP/nextui-pak-shared-functions v1.12.0
+	github.com/UncleJunVIP/gabagool v0.0.78
+	github.com/UncleJunVIP/nextui-pak-shared-functions v1.13.0
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
-	go.uber.org/zap v1.27.0
 	golang.org/x/mod v0.28.0
-	modernc.org/sqlite v1.38.2
+	modernc.org/sqlite v1.39.0
 	qlova.tech v0.1.1
 )
 
@@ -30,10 +29,11 @@ require (
 	github.com/veandco/go-sdl2 v0.4.40 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
+	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/exp v0.0.0-20250911091902-df9299821621 // indirect
 	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
-	modernc.org/libc v1.66.8 // indirect
+	modernc.org/libc v1.66.9 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )

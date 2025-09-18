@@ -14,6 +14,7 @@ type Pak struct {
 	RepoURL         string            `json:"repo_url"`
 	ReleaseFilename string            `json:"release_filename"`
 	Changelog       map[string]string `json:"changelog"`
+	PreviousNames   []string          `json:"previous_names"`
 	Scripts         Scripts           `json:"scripts"`
 	UpdateIgnore    []string          `json:"update_ignore"`
 	Screenshots     []string          `json:"screenshots"`

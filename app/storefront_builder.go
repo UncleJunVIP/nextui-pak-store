@@ -53,6 +53,7 @@ func main() {
 		}
 
 		pak.StorefrontName = p.StorefrontName
+		pak.PreviousNames = p.PreviousNames
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		pak.LargePak = p.LargePak

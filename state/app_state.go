@@ -2,6 +2,7 @@ package state
 
 import (
 	"context"
+	"database/sql"
 	"os"
 	"slices"
 	"strings"
@@ -41,9 +42,33 @@ func refreshAppState(storefront models.Storefront) AppState {
 		os.Exit(1)
 	}
 
+	for idx, p := range installed {
+		if p.RepoUrl.String == "" {
+			for _, sfp := range storefront.Paks {
+				if p.DisplayName == sfp.StorefrontName || slices.Contains(sfp.PreviousNames, p.DisplayName) {
+					ctx := context.Background()
+					err := database.DBQ().UpdateInstalledWithRepo(ctx, database.UpdateInstalledWithRepoParams{
+						NewDisplayName: sfp.StorefrontName,
+						NewName:        sfp.Name,
+						NewRepoUrl:     sql.NullString{String: sfp.RepoURL, Valid: true},
+						OldDisplayName: p.DisplayName,
+					})
+					if err != nil {
+						logger.Error("Failed to update installed pak with repo URL", "error", err)
+					} else {
+						logger.Info("Updated installed Pak with Repo URL", "pak", p.DisplayName, "repo", sfp.RepoURL)
+						installed[idx].DisplayName = sfp.StorefrontName
+						installed[idx].RepoUrl = sql.NullString{String: sfp.RepoURL, Valid: true}
+					}
+					break
+				}
+			}
+		}
+	}
+
 	installedPaksMap := make(map[string]database.InstalledPak)
 	for _, p := range installed {
-		installedPaksMap[p.DisplayName] = p
+		installedPaksMap[p.RepoUrl.String] = p
 	}
 
 	var availablePaks []models.Pak
@@ -52,7 +77,7 @@ func refreshAppState(storefront models.Storefront) AppState {
 	browsePaks := make(map[string]map[string]models.Pak)
 
 	for _, p := range storefront.Paks {
-		if _, ok := installedPaksMap[p.StorefrontName]; !ok {
+		if _, ok := installedPaksMap[p.RepoURL]; !ok {
 			availablePaks = append(availablePaks, p)
 
 			if p.Disabled {
@@ -65,9 +90,9 @@ func refreshAppState(storefront models.Storefront) AppState {
 				}
 				browsePaks[cat][p.StorefrontName] = p
 			}
-		} else if hasUpdate(installedPaksMap[p.StorefrontName].Version, p.Version) {
+		} else if hasUpdate(installedPaksMap[p.RepoURL].Version, p.Version) {
 			updatesAvailable = append(updatesAvailable, p)
-			updatesAvailableMap[p.StorefrontName] = p
+			updatesAvailableMap[p.RepoURL] = p
 		}
 	}
 

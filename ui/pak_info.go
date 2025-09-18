@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -164,7 +165,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 			qrcode,
 			int32(256),
 			int32(256),
-			gaba.AlignCenter,
+			gaba.TextAlignCenter,
 		))
 
 	} else {
@@ -242,7 +243,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		}
 
 		ctx := context.Background()
-		err = database.DBQ().Uninstall(ctx, pak.Name)
+		err = database.DBQ().Uninstall(ctx, sql.NullString{String: pak.RepoURL, Valid: true})
 		if err != nil {
 			// TODO wtf do I do here?
 		}
@@ -285,7 +286,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		database.DBQ().Install(context.Background(), info)
 	} else {
 		update := database.UpdateVersionParams{
-			Name:    pak.Name,
+			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
 			Version: pak.Version,
 		}
 		database.DBQ().UpdateVersion(context.Background(), update)
@@ -403,7 +404,7 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 		}
 
 		update := database.UpdateVersionParams{
-			Name:    pak.Name,
+			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
 			Version: pak.Version,
 		}
 		err = database.DBQ().UpdateVersion(context.Background(), update)

@@ -57,7 +57,10 @@
       ]
     },
     {
-      "storefront_name": "Dufs Server",
+      "storefront_name": "Dufs HTTP Server",
+      "previous_names": [
+        "Dufs Server"
+      ],
       "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
       "categories": [
         "File Management"

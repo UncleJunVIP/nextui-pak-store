@@ -4,9 +4,14 @@
 
 package database
 
+import (
+	"database/sql"
+)
+
 type InstalledPak struct {
 	Name         string
 	DisplayName  string
+	RepoUrl      sql.NullString
 	Type         string
 	Version      string
 	CanUninstall int64

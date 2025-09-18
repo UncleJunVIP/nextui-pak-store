@@ -7,16 +7,18 @@ package database
 
 import (
 	"context"
+	"database/sql"
 )
 
 const install = `-- name: Install :exec
-INSERT INTO installed_paks (display_name, name, version, type, can_uninstall)
-VALUES (?, ?, ?, ?, ?)
+INSERT INTO installed_paks (display_name, name, repo_url, version, type, can_uninstall)
+VALUES (?, ?, ?, ?, ?, ?)
 `
 
 type InstallParams struct {
 	DisplayName  string
 	Name         string
+	RepoUrl      sql.NullString
 	Version      string
 	Type         string
 	CanUninstall int64
@@ -26,6 +28,7 @@ func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
 	_, err := q.db.ExecContext(ctx, install,
 		arg.DisplayName,
 		arg.Name,
+		arg.RepoUrl,
 		arg.Version,
 		arg.Type,
 		arg.CanUninstall,
@@ -34,8 +37,9 @@ func (q *Queries) Install(ctx context.Context, arg InstallParams) error {
 }
 
 const listInstalledPaks = `-- name: ListInstalledPaks :many
-SELECT name, display_name, type, version, can_uninstall
+SELECT name, display_name, repo_url, type, version, can_uninstall
 FROM installed_paks
+WHERE can_uninstall = 1
 ORDER BY name
 `
 
@@ -51,6 +55,43 @@ func (q *Queries) ListInstalledPaks(ctx context.Context) ([]InstalledPak, error)
 		if err := rows.Scan(
 			&i.Name,
 			&i.DisplayName,
+			&i.RepoUrl,
+			&i.Type,
+			&i.Version,
+			&i.CanUninstall,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listInstalledPaksWithoutRepo = `-- name: ListInstalledPaksWithoutRepo :many
+SELECT name, display_name, repo_url, type, version, can_uninstall
+FROM installed_paks
+WHERE repo_url IS NULL
+`
+
+func (q *Queries) ListInstalledPaksWithoutRepo(ctx context.Context) ([]InstalledPak, error) {
+	rows, err := q.db.QueryContext(ctx, listInstalledPaksWithoutRepo)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []InstalledPak
+	for rows.Next() {
+		var i InstalledPak
+		if err := rows.Scan(
+			&i.Name,
+			&i.DisplayName,
+			&i.RepoUrl,
 			&i.Type,
 			&i.Version,
 			&i.CanUninstall,
@@ -71,26 +112,51 @@ func (q *Queries) ListInstalledPaks(ctx context.Context) ([]InstalledPak, error)
 const uninstall = `-- name: Uninstall :exec
 DELETE
 FROM installed_paks
-WHERE name = ?
+WHERE repo_url = ?
 `
 
-func (q *Queries) Uninstall(ctx context.Context, name string) error {
-	_, err := q.db.ExecContext(ctx, uninstall, name)
+func (q *Queries) Uninstall(ctx context.Context, repoUrl sql.NullString) error {
+	_, err := q.db.ExecContext(ctx, uninstall, repoUrl)
+	return err
+}
+
+const updateInstalledWithRepo = `-- name: UpdateInstalledWithRepo :exec
+UPDATE installed_paks
+SET display_name = ?1,
+    name         = ?2,
+    repo_url     = ?3
+WHERE display_name = ?4
+`
+
+type UpdateInstalledWithRepoParams struct {
+	NewDisplayName string
+	NewName        string
+	NewRepoUrl     sql.NullString
+	OldDisplayName string
+}
+
+func (q *Queries) UpdateInstalledWithRepo(ctx context.Context, arg UpdateInstalledWithRepoParams) error {
+	_, err := q.db.ExecContext(ctx, updateInstalledWithRepo,
+		arg.NewDisplayName,
+		arg.NewName,
+		arg.NewRepoUrl,
+		arg.OldDisplayName,
+	)
 	return err
 }
 
 const updateVersion = `-- name: UpdateVersion :exec
 UPDATE installed_paks
 SET version = ?
-WHERE name = ?
+WHERE repo_url = ?
 `
 
 type UpdateVersionParams struct {
 	Version string
-	Name    string
+	RepoUrl sql.NullString
 }
 
 func (q *Queries) UpdateVersion(ctx context.Context, arg UpdateVersionParams) error {
-	_, err := q.db.ExecContext(ctx, updateVersion, arg.Version, arg.Name)
+	_, err := q.db.ExecContext(ctx, updateVersion, arg.Version, arg.RepoUrl)
 	return err
 }

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	_ "embed"
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -45,13 +46,15 @@ func init() {
 		os.Exit(1)
 	}
 
-	schemaExists, err := TableExists(dbc, "installed_paks")
+	schemaExists, err := tableExists(dbc, "installed_paks")
 	if !schemaExists {
 		if _, err := dbc.ExecContext(ctx, pakstore.DDL); err != nil {
 			logger.Error("Unable to init schema", "error", err)
 			os.Exit(1)
 		}
 	}
+
+	columnMigration("installed_paks", "repo_url", "TEXT")
 
 	queries = New(dbc)
 
@@ -63,15 +66,17 @@ func init() {
 
 	if !schemaExists {
 		queries.Install(ctx, InstallParams{
-			DisplayName: "Pak Store",
-			Name:        "Pak Store",
-			Version:     pak.Version,
-			Type:        "TOOL",
+			DisplayName:  "Pak Store",
+			Name:         "Pak Store",
+			RepoUrl:      sql.NullString{String: models.PakStoreRepo, Valid: true},
+			Version:      pak.Version,
+			Type:         "TOOL",
+			CanUninstall: 0,
 		})
 	} else {
 		queries.UpdateVersion(ctx, UpdateVersionParams{
-			Name:    "Pak Store",
 			Version: pak.Version,
+			RepoUrl: sql.NullString{String: models.PakStoreRepo, Valid: true},
 		})
 	}
 }
@@ -84,7 +89,7 @@ func CloseDB() {
 	_ = dbc.Close()
 }
 
-func TableExists(db *sql.DB, tableName string) (bool, error) {
+func tableExists(db *sql.DB, tableName string) (bool, error) {
 	query := `SELECT name FROM sqlite_master WHERE type='table' AND name=?`
 	var name string
 	err := db.QueryRow(query, tableName).Scan(&name)
@@ -92,4 +97,51 @@ func TableExists(db *sql.DB, tableName string) (bool, error) {
 		return false, nil
 	}
 	return err == nil, err
+}
+
+func columnExists(db *sql.DB, tableName, columnName string) (bool, error) {
+	query := fmt.Sprintf("PRAGMA table_info(%s)", tableName)
+	rows, err := db.Query(query)
+	if err != nil {
+		return false, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var cid int
+		var name, dataType string
+		var notNull, pk int
+		var defaultValue sql.NullString
+
+		err := rows.Scan(&cid, &name, &dataType, &notNull, &defaultValue, &pk)
+		if err != nil {
+			return false, err
+		}
+
+		if name == columnName {
+			return true, nil
+		}
+	}
+
+	return false, rows.Err()
+}
+
+func columnMigration(tableName, columnName, columnDefinition string) {
+	logger := common.GetLoggerInstance()
+	ctx := context.Background()
+
+	ce, err := columnExists(dbc, tableName, columnName)
+	if err != nil {
+		logger.Error("Unable to check column existence", "error", err)
+		os.Exit(1)
+	}
+
+	if !ce {
+		migrationSQL := fmt.Sprintf("ALTER TABLE %s ADD COLUMN %s %s", tableName, columnName, columnDefinition)
+		if _, err := dbc.ExecContext(ctx, migrationSQL); err != nil {
+			logger.Error("Unable to run column migration", "error", err)
+			os.Exit(1)
+		}
+		logger.Info("Successfully added column", "column", columnName)
+	}
 }

@@ -35,15 +35,13 @@ func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e 
 		var pak models.Pak
 
 		for _, p := range mis.AppState.Storefront.Paks {
-			if p.StorefrontName == installed.DisplayName {
+			if p.RepoURL == installed.RepoUrl.String {
 				pak = p
 			}
 		}
 
-		pak.CanUninstall = installed.CanUninstall == 1
-
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     pak.Name,
+			Text:     pak.StorefrontName,
 			Selected: false,
 			Focused:  false,
 			Metadata: pak,
