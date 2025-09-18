@@ -6,6 +6,8 @@ github.com/UncleJunVIP/gabagool v0.0.71 h1:2kr1joNY5/XfuzhqgggogmxCUwBxNkAzb5hE9
 github.com/UncleJunVIP/gabagool v0.0.71/go.mod h1:b+7yRVojxZNEg2kMgUM4KG9TZE6xQPViA1hX+xx/oFc=
 github.com/UncleJunVIP/gabagool v0.0.78 h1:xoNqEr+zDoGYPYlitpX9PcYghZbqOWOwkMYi2mNArjA=
 github.com/UncleJunVIP/gabagool v0.0.78/go.mod h1:WsNPFEacGvE+g4sPnsa0xkjHGq9f9j5MNXkRwuQAI+0=
+github.com/UncleJunVIP/gabagool v0.0.79 h1:S8GsD0NO7tjT2k4PHKc1wRfxxsHbTfR8TGGZgJ/z0rg=
+github.com/UncleJunVIP/gabagool v0.0.79/go.mod h1:WsNPFEacGvE+g4sPnsa0xkjHGq9f9j5MNXkRwuQAI+0=
 github.com/UncleJunVIP/nextui-pak-shared-functions v1.12.0 h1:W060Evq9lRJPeUR7DynP2V+5o8rVku4po64qXtXkaac=
 github.com/UncleJunVIP/nextui-pak-shared-functions v1.12.0/go.mod h1:sXHrQmYySc2DVrGkhpoAoqDxb3lq3AS1HRbuHKCLnDE=
 github.com/UncleJunVIP/nextui-pak-shared-functions v1.13.0 h1:mY9lC6ieTqaZv82uofbUNcxpHyHONpNNDHcWi/U4Ao8=

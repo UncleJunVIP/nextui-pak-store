@@ -175,7 +175,6 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 	options := gaba.DefaultInfoScreenOptions()
 	options.Sections = sections
 	options.ShowThemeBackground = false
-	options.ConfirmButton = gaba.ButtonX
 	options.EnableAction = true
 
 	confirmLabel := "Install"
@@ -188,7 +187,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 	footerItems := []gaba.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "X", HelpText: confirmLabel},
+		{ButtonName: "A", HelpText: confirmLabel},
 	}
 
 	sel, err := gaba.DetailScreen(pak.StorefrontName, options, footerItems)
@@ -351,8 +350,6 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 	options := gaba.DefaultInfoScreenOptions()
 	options.Sections = sections
 	options.ShowThemeBackground = false
-	options.ConfirmButton = gaba.ButtonX
-	options.EnableAction = true
 
 	footerItems := []gaba.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Cancel"},
