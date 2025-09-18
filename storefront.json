@@ -5,7 +5,7 @@
     {
       "storefront_name": "Pak Store",
       "name": "Pak Store",
-      "version": "v1.5.1",
+      "version": "v2.0.0",
       "type": "TOOL",
       "description": "A Pak Store in this economy?! Find, install and update community made Paks right on your device!",
       "author": "K-Wall",
@@ -24,8 +24,10 @@
         "v1.4.0": "Add fallback Storefront URL.",
         "v1.4.1": "Modified the internet connectivity check.",
         "v1.5.0": "Removed the extra button press after a download completes and added an 'Update All' option for you scoundrels.",
-        "v1.5.1": "Made a boo boo! Introduced a bug when I added the 'update all' functionality causing Pak Store to crash when viewing a single update. Thanks to @Helaas for reporting this!"
+        "v1.5.1": "Made a boo boo! Introduced a bug when I added the 'update all' functionality causing Pak Store to crash when viewing a single update. Thanks to @Helaas for reporting this!",
+        "v2.0.0": "Added support for tracking a Pak's previous name to prevent blank entries in the Installed Paks list. DB also tracks Repo URL, something I should have done from the start."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -80,6 +82,7 @@
         "v2.6.2": "Added new platform configuration options. 'is_arcade' to use an internal mapping file for arcade filenames, 'skip_inclusive_filters' to include all ROMs in the displayed games list and 'skip_exclusive_filters' to not exclude any ROMs from the displayed games list.",
         "v2.7.0": "Fix for incorrect arcade box art naming."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -138,6 +141,7 @@
         "v2.7.1": "Updated filter screen formatting to show the full time.",
         "v2.8.0": "Updated the system tag mappings to help find game art for more platforms."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -176,6 +180,7 @@
         "v1.0.0": "The initial release! Warning there may be bugs!",
         "v1.1.0": "Added a \"Kid Mode\" environment variable to be uncommented in launch.sh"
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -214,6 +219,7 @@
         "v1.0.0": "Initial release!",
         "v1.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -249,6 +255,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-screenshot-monitor-pak",
       "release_filename": "Screenshot.Monitor.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -288,6 +295,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
       "release_filename": "SSH.Server.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -327,6 +335,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
       "release_filename": "FTP.Server.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -357,7 +366,7 @@
       "disabled": false
     },
     {
-      "storefront_name": "Dufs Server",
+      "storefront_name": "Dufs HTTP Server",
       "name": "HTTP Server",
       "version": "0.9.0",
       "type": "TOOL",
@@ -366,6 +375,9 @@
       "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
       "release_filename": "HTTP.Server.pak.zip",
       "changelog": null,
+      "previous_names": [
+        "Dufs Server"
+      ],
       "scripts": {
         "post_install": {
           "path": "",
@@ -405,6 +417,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-filebrowser-pak",
       "release_filename": "HTTP.Filebrowser.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -444,6 +457,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-ftpserver-pak",
       "release_filename": "FTP.Server.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -483,6 +497,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-syncthing-pak",
       "release_filename": "Syncthing.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -522,6 +537,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-developer-pak",
       "release_filename": "Developer.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -561,6 +577,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-remote-terminal-pak",
       "release_filename": "Remote.Terminal.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -598,6 +615,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-report-pak",
       "release_filename": "Report.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -638,6 +656,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-terminal-pak",
       "release_filename": "Terminal.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -675,6 +694,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-simple-mode-pak",
       "release_filename": "Simple.Mode.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -714,6 +734,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-artwork-scraper-pak",
       "release_filename": "Artwork.Scraper.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -751,6 +772,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-random-game-pak",
       "release_filename": "Random.Game.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -790,6 +812,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-pico-8-pak",
       "release_filename": "PICO.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -826,6 +849,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-nintendo-ds-pak",
       "release_filename": "NDS.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -861,6 +885,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-n64-pak",
       "release_filename": "N64.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -896,6 +921,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-dreamcast-pak",
       "release_filename": "DC.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -931,6 +957,7 @@
       "repo_url": "https://github.com/josegonzalez/trimui-brick-moonlight-pak",
       "release_filename": "Moonlight.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -966,6 +993,7 @@
       "repo_url": "https://github.com/josegonzalez/trimui-brick-media-player-pak",
       "release_filename": "Media.Player.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1001,6 +1029,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-gallery-pak",
       "release_filename": "Gallery.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1040,6 +1069,7 @@
       "repo_url": "https://github.com/ben16w/minui-portmaster",
       "release_filename": "PORTS.pakz",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1078,6 +1108,7 @@
       "repo_url": "https://github.com/ben16w/minui-psp",
       "release_filename": "PSP.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1116,6 +1147,7 @@
       "repo_url": "https://github.com/ben16w/minui-cloud-backups",
       "release_filename": "Cloud.Backups.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1153,6 +1185,7 @@
       "repo_url": "https://github.com/ben16w/minui-favorites",
       "release_filename": "Favorites.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1193,6 +1226,7 @@
       "repo_url": "https://github.com/ben16w/minui-tailscale",
       "release_filename": "Tailscale.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1231,6 +1265,7 @@
       "repo_url": "https://github.com/LanderN/nextui-updater-pak",
       "release_filename": "Updater.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1266,6 +1301,7 @@
       "repo_url": "https://github.com/laesetuc/minui-search-pak",
       "release_filename": "Search.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1301,6 +1337,7 @@
       "repo_url": "https://github.com/laesetuc/minui-collections-editor",
       "release_filename": "Collections.Editor.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1336,6 +1373,7 @@
       "repo_url": "https://github.com/laesetuc/minui-dotclean-pak",
       "release_filename": "Dotclean.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1371,6 +1409,7 @@
       "repo_url": "https://github.com/laesetuc/minui-scummvm",
       "release_filename": "ScummVM.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1406,6 +1445,7 @@
       "repo_url": "https://github.com/gabrielpsp/Rom-Inspector-pak",
       "release_filename": "Rom.Inspector.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1446,6 +1486,7 @@
         "4.0.89": "Added backlight settings and bluetooth media controls, updated keymap and many 'small' fixes.",
         "4.0.92": "Updated keylock method, updated keymap to allow media keys while device is locked."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1484,6 +1525,7 @@
       "changelog": {
         "v1.0.0": "Initial release"
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1519,6 +1561,7 @@
       "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
       "release_filename": "Theme.Manager.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1556,6 +1599,7 @@
       "changelog": {
         "v0.1.0": "Initial release!."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1593,6 +1637,7 @@
       "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
       "release_filename": "FN.Editor.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1628,6 +1673,7 @@
       "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
       "release_filename": "USB.Mass.Storage.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1669,6 +1715,7 @@
         "v0.2.2": "Sped up rebuilding screenshot list after deleting a screenshot.",
         "v0.2.3": "Moved screenshot delete to list of screenshots."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1704,6 +1751,7 @@
       "repo_url": "https://github.com/UncleJunVIP/nextui-wiliwili",
       "release_filename": "WiliWili.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1743,6 +1791,7 @@
         "v1.1.0": "Renamed GMD.pak to SMSU.pak, updated ROM folder name and README, added QR code.",
         "v1.1.1": "Fixed pak.json name: removed .pak extension as requested by GitHub feedback."
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1783,6 +1832,7 @@
         "v1.0.2": "Fixed zoom/pan lag and high-zoom slowdowns with better prerendering, caching, and rendering limits.",
         "v1.0.3": "Adds support for CBR (RAR) comic book archives "
       },
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
@@ -1820,6 +1870,7 @@
       "repo_url": "https://github.com/josegonzalez/minui-m3u-manager-pak",
       "release_filename": "M3U.Manager.pak.zip",
       "changelog": null,
+      "previous_names": null,
       "scripts": {
         "post_install": {
           "path": "",
