@@ -1702,7 +1702,7 @@
     {
       "storefront_name": "Screenshot Viewer",
       "name": "Screenshots",
-      "version": "v0.2.3",
+      "version": "v0.2.4",
       "type": "TOOL",
       "description": "A MinUI pak for browsing your saved screenshots. Automatically organized by game/app.",
       "author": "mikecosentino",
@@ -1713,7 +1713,8 @@
         "v0.2.0": "Pressing X while viewing a screenshot will prompt to delete. (I'm working on speeding up the screenshot list rebuild speed)",
         "v0.2.1": "Fixed a launch bug. Sorry!",
         "v0.2.2": "Sped up rebuilding screenshot list after deleting a screenshot.",
-        "v0.2.3": "Moved screenshot delete to list of screenshots."
+        "v0.2.3": "Moved screenshot delete to list of screenshots.",
+        "v0.2.4": "Displays a status screen while rebuilding cache."
       },
       "previous_names": null,
       "scripts": {
