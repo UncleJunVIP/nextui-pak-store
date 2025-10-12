@@ -347,6 +347,13 @@
       "categories": [
         "ROM Management"
       ]
+    },
+    {
+      "storefront_name": "Map.txt Generator",
+      "repo_url": "https://github.com/josegonzalez/minui-map-txt-generator-pak",
+      "categories": [
+        "ROM Management"
+      ]
     }
   ]
 }
