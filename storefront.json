@@ -1946,6 +1946,52 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "Storiies",
+      "name": "Storiies",
+      "version": "v1.0.4",
+      "type": "TOOL",
+      "description": "A simple, intuitive and kid-friendly MP3 player for retro-handhelds.",
+      "author": "pcorbel",
+      "repo_url": "https://github.com/pcorbel/storiies",
+      "release_filename": "Storiies.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release",
+        "v1.0.1": "Added support for NextUI",
+        "v1.0.2": "Added support for Knulli",
+        "v1.0.3": "Added splash screen",
+        "v1.0.4": "Added support for nextui-pak-store"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": [],
+      "screenshots": [
+        ".github/albums.png",
+        ".github/tracks.png",
+        ".github/player.png"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
