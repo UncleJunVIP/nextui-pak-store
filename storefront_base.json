@@ -354,6 +354,13 @@
       "categories": [
         "ROM Management"
       ]
+    },
+    {
+      "storefront_name": "Storiies",
+      "repo_url": "https://github.com/pcorbel/storiies",
+      "categories": [
+        "Media"
+      ]
     }
   ]
 }
