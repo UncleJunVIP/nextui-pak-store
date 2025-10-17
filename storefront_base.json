@@ -22,6 +22,13 @@
       ]
     },
     {
+      "storefront_name": "Aesthetics",
+      "repo_url": "https://github.com/redria7/nextui-aesthetics",
+      "categories": [
+        "Customization"
+      ]
+    },
+    {
       "storefront_name": "LED Manager",
       "repo_url": "https://github.com/UncleJunVIP/nextui-led-manager",
       "categories": [
