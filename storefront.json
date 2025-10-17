@@ -169,6 +169,44 @@
       "disabled": false
     },
     {
+      "storefront_name": "Aesthetics",
+      "name": "Aesthetics",
+      "version": "v1.0.0",
+      "type": "TOOL",
+      "description": "Download, Apply, Clear, and Export Aesthetic Properties: Theme management with Ultimate Control!",
+      "author": "redria7",
+      "repo_url": "https://github.com/redria7/nextui-aesthetics",
+      "release_filename": "Aesthetics.pak.zip",
+      "changelog": {
+        "v1.0.0": "Aesthetics launch, featuring theme downloads, theme deletion, and wallpaper/icon management"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Customization"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
       "storefront_name": "LED Manager",
       "name": "LED Manager",
       "version": "v1.1.0",
