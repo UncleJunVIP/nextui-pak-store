@@ -368,6 +368,20 @@
       "categories": [
         "Media"
       ]
+    },
+    {
+      "storefront_name": "8bit-Numera",
+      "repo_url": "https://github.com/naveensiva/Trimui-8bit-Numera",
+      "categories": [
+        "Miscellaneous Tools"
+      ]
+    },
+    {
+      "storefront_name": "Intellivision (INTV)",
+      "repo_url": "https://github.com/K2Retro2nd/minui-intv-pak",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
