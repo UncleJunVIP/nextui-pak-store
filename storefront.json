@@ -2031,6 +2031,82 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "8bit-Numera",
+      "name": "8bit-Numera",
+      "version": "v1.0.0",
+      "type": "TOOL",
+      "description": "A simple calculator application.",
+      "author": "Naveen Siva Gurumohanram",
+      "repo_url": "https://github.com/naveensiva/Trimui-8bit-Numera",
+      "release_filename": "8bit-Numera.pak.zip",
+      "changelog": null,
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main_menu.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Miscellaneous Tools"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Intellivision (INTV)",
+      "name": "Intellivision (INTV)",
+      "version": "v0.0.0",
+      "type": "EMU",
+      "description": "Play classic Intellivision games with the FreeINTV core.",
+      "author": "K2Retro2nd",
+      "repo_url": "https://github.com/K2Retro2nd/minui-intv-pak",
+      "release_filename": "INTV.pak.zip",
+      "changelog": {
+        "v0.0.0": "Released"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
