@@ -37,8 +37,11 @@ Awesome! To get added to Pak Store you have to complete the following steps:
      - `repo_url`
      - `release_filename`
      - `platforms`
+   - If you are packaging up an emulator, please set the name to the desired emulator tag. (e.g., an Intellivision Pak with the tag `INTV` would have `INTV` as the name in pak.json)
 2. Prepare your Pak for distribution by making a zip file. The contents of the zip file must the contents present in the root of your Pak directory.
 3. Ensure your release is tagged properly and matches the `version` field in `pak.json`.
+   - The tag should be in the format `vX.X.X` where `X` is the major, minor, and patch version. For more details for using SemVer, please see the [SemVer Documentaton](https://semver.org/).
+   - GitHub releases have both tags and titles. The title does not matter in the context of the Pak Store but you should have it match the tag and pak.json version.
 4. Make sure the file name of the release artifact matches what is in `pak.json`.
 5. Once all of these steps are complete, please file an issue with a link to your repo.
 
