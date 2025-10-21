@@ -377,7 +377,7 @@
       ]
     },
     {
-      "storefront_name": "Intellivision (INTV)",
+      "storefront_name": "Intellivision (FreeINTV)",
       "repo_url": "https://github.com/K2Retro2nd/minui-intv-pak",
       "categories": [
         "Emulators"
