@@ -2071,7 +2071,7 @@
       "disabled": false
     },
     {
-      "storefront_name": "Intellivision (INTV)",
+      "storefront_name": "Intellivision (FreeINTV)",
       "name": "INTV",
       "version": "v0.0.0",
       "type": "EMU",
