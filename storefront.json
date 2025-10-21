@@ -2072,7 +2072,7 @@
     },
     {
       "storefront_name": "Intellivision (INTV)",
-      "name": "Intellivision (INTV)",
+      "name": "INTV",
       "version": "v0.0.0",
       "type": "EMU",
       "description": "Play classic Intellivision games with the FreeINTV core.",
