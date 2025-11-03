@@ -171,15 +171,16 @@
     {
       "storefront_name": "Aesthetics",
       "name": "Aesthetics",
-      "version": "v1.0.1",
+      "version": "v1.1.0",
       "type": "TOOL",
-      "description": "Download, Apply, Clear, and Export Aesthetic Properties: Theme management with Ultimate Control!",
+      "description": "Download, Apply, Clear, and Save Aesthetic Properties: Theme Management with Ultimate Control!",
       "author": "redria7",
       "repo_url": "https://github.com/redria7/nextui-aesthetics",
       "release_filename": "Aesthetics.pak.zip",
       "changelog": {
         "v1.0.0": "Aesthetics launch, featuring theme downloads, theme deletion, and wallpaper/icon management",
-        "v1.0.1": "Collection Icon setting support added and reduced (PORTS) png collection (for now)"
+        "v1.0.1": "Collection Icon setting support added and reduced (PORTS) png collection (for now)",
+        "v1.1.0": "Bulk Theme Management: Apply, Save, Clear, and Rename entire themes at once!"
       },
       "previous_names": null,
       "scripts": {
