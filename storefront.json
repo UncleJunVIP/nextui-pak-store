@@ -211,7 +211,7 @@
     {
       "storefront_name": "LED Manager",
       "name": "LED Manager",
-      "version": "v1.1.0",
+      "version": "v1.1.1",
       "type": "TOOL",
       "description": "A enhanced LED configuration tool.",
       "author": "K-Wall",
@@ -219,7 +219,8 @@
       "release_filename": "LED.Manager.pak.zip",
       "changelog": {
         "v1.0.0": "The initial release! Warning there may be bugs!",
-        "v1.1.0": "Added a \"Kid Mode\" environment variable to be uncommented in launch.sh"
+        "v1.1.0": "Added a \"Kid Mode\" environment variable to be uncommented in launch.sh",
+        "v1.1.1": "Potential fix for ambient mode not working as reported by @machlen."
       },
       "previous_names": null,
       "scripts": {
