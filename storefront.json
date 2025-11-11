@@ -169,6 +169,44 @@
       "disabled": false
     },
     {
+      "storefront_name": "RetroArch",
+      "name": "RetroArch",
+      "version": "v1.0.0",
+      "type": "TOOL",
+      "description": "A clean, reproducible RetroArch build with known provenance.",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/UncleJunVIP/retroarch-tg5040",
+      "release_filename": "RetroArch.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release with RetroArch v1.21.0. See GitHub README for more details."
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
       "storefront_name": "Aesthetics",
       "name": "Aesthetics",
       "version": "v1.1.0",
