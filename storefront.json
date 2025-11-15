@@ -64,7 +64,7 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v2.9.0",
+      "version": "v3.0.0",
       "type": "TOOL",
       "description": "ROM Downloader for RomM and Megathread",
       "author": "K-Wall",
@@ -82,7 +82,8 @@
         "v2.6.2": "Added new platform configuration options. 'is_arcade' to use an internal mapping file for arcade filenames, 'skip_inclusive_filters' to include all ROMs in the displayed games list and 'skip_exclusive_filters' to not exclude any ROMs from the displayed games list.",
         "v2.7.0": "Fix for incorrect arcade box art naming.",
         "v2.8.0": "Finally addressed logging and made it more robust. Plus small and uninteresting fixes behind the scenes.",
-        "v2.9.0": "Housekeeping release to keep dependencies up to date."
+        "v2.9.0": "Housekeeping release to keep dependencies up to date.",
+        "v3.0.0": "Mortar now has a configuration editor! Go to the Settings menu and select 'Launch Configuration API' and scan the QR code. Additionally, Mortar now uses JSON for the config file instead of YAML. It will be automatically migrated for you."
       },
       "previous_names": null,
       "scripts": {
