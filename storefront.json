@@ -149,16 +149,7 @@
         }
       },
       "update_ignore": null,
-      "screenshots": [
-        ".github/resources/screenshots/main_menu.jpg",
-        ".github/resources/screenshots/settings.jpg",
-        ".github/resources/screenshots/platforms.jpg",
-        ".github/resources/screenshots/games_list.jpg",
-        ".github/resources/screenshots/search.jpg",
-        ".github/resources/screenshots/search_results.jpg",
-        ".github/resources/screenshots/download.jpg",
-        ".github/resources/screenshots/art_download.jpg"
-      ],
+      "screenshots": [],
       "platforms": [
         "tg5040"
       ],
