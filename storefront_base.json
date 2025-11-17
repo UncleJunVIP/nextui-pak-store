@@ -397,6 +397,13 @@
       "categories": [
         "Emulators"
       ]
+    },
+    {
+      "storefront_name": "PCE SuperGrafx (beetle-supergrafx)",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-pce-supergrafx",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
