@@ -119,7 +119,7 @@
         "ROM Management"
       ],
       "large_pak": false,
-      "disabled": false
+      "disabled": true
     },
     {
       "storefront_name": "Grout",
