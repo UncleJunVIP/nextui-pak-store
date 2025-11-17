@@ -64,9 +64,9 @@
     {
       "storefront_name": "Mortar",
       "name": "Mortar",
-      "version": "v3.0.0",
+      "version": "v3.1.0",
       "type": "TOOL",
-      "description": "ROM Downloader for RomM and Megathread",
+      "description": "ROM Downloader for Megathread",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
       "release_filename": "Mortar.pak.zip",
@@ -83,7 +83,55 @@
         "v2.7.0": "Fix for incorrect arcade box art naming.",
         "v2.8.0": "Finally addressed logging and made it more robust. Plus small and uninteresting fixes behind the scenes.",
         "v2.9.0": "Housekeeping release to keep dependencies up to date.",
-        "v3.0.0": "Mortar now has a configuration editor! Go to the Settings menu and select 'Launch Configuration API' and scan the QR code. Additionally, Mortar now uses JSON for the config file instead of YAML. It will be automatically migrated for you."
+        "v3.0.0": "Mortar now has a configuration editor! Go to the Settings menu and select 'Launch Configuration API' and scan the QR code. Additionally, Mortar now uses JSON for the config file instead of YAML. It will be automatically migrated for you.",
+        "v3.1.0": "RomM support has a new home! Go grab Grout from the Pak Store!"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main_menu.jpg",
+        ".github/resources/screenshots/settings.jpg",
+        ".github/resources/screenshots/platforms.jpg",
+        ".github/resources/screenshots/games_list.jpg",
+        ".github/resources/screenshots/search.jpg",
+        ".github/resources/screenshots/search_results.jpg",
+        ".github/resources/screenshots/download.jpg",
+        ".github/resources/screenshots/art_download.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "ROM Management"
+      ],
+      "large_pak": false,
+      "disabled": false
+    },
+    {
+      "storefront_name": "Grout",
+      "name": "Grout",
+      "version": "v1.0.0",
+      "type": "TOOL",
+      "description": "A RomM client for NextUI and muOS",
+      "author": "K-Wall",
+      "repo_url": "https://github.com/rommapp/grout",
+      "release_filename": "Grout.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release of Grout!"
       },
       "previous_names": null,
       "scripts": {
