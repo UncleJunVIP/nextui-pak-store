@@ -2189,6 +2189,44 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "PCE SuperGrafx (beetle-supergrafx)",
+      "name": "SUPERGRAFX",
+      "version": "v1.0.0",
+      "type": "EMU",
+      "description": "An addon core for minarch for PC Engine SuperGrafx. Uses the beetle-supergrafx core.",
+      "author": "Mednafen Team",
+      "repo_url": "https://github.com/UncleJunVIP/nextui-pce-supergrafx",
+      "release_filename": "SUPERGRAFX.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial Release."
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
