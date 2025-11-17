@@ -12,7 +12,8 @@
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
       "categories": [
         "ROM Management"
-      ]
+      ],
+      "disabled": true
     },
     {
       "storefront_name": "Grout",
