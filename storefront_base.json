@@ -15,6 +15,13 @@
       ]
     },
     {
+      "storefront_name": "Grout",
+      "repo_url": "https://github.com/rommapp/grout",
+      "categories": [
+        "ROM Management"
+      ]
+    },
+    {
       "storefront_name": "Game Manager",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
       "categories": [

@@ -19,11 +19,11 @@ import (
 var appState state.AppState
 
 func init() {
-	gaba.InitSDL(gaba.GabagoolOptions{
+	gaba.InitSDL(gaba.Options{
 		WindowTitle:    "Pak Store",
 		ShowBackground: true,
+		LogFilename:    "pak_store.log",
 	})
-	common.SetLogLevel("ERROR")
 
 	sf, err := gaba.ProcessMessage("",
 		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
@@ -44,11 +44,10 @@ func init() {
 
 func cleanup() {
 	database.CloseDB()
-	common.CloseLogger()
+	gaba.CloseSDL()
 }
 
 func main() {
-	defer gaba.CloseSDL()
 	defer cleanup()
 
 	logger := common.GetLoggerInstance()

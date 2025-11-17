@@ -123,8 +123,8 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		sections = append(sections, gaba.NewSlideshowSection(
 			"Screenshots",
 			screenshots,
-			int32(float64(gaba.GetWindow().Width)/1.2),
-			int32(float64(gaba.GetWindow().Height)/1.2),
+			int32(float64(gaba.GetWindow().GetWidth())/1.2),
+			int32(float64(gaba.GetWindow().GetHeight())/1.2),
 		))
 	}
 
@@ -206,7 +206,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 				{ButtonName: "B", HelpText: "Nevermind"},
 				{ButtonName: "X", HelpText: "Yes"},
 			}, gaba.MessageOptions{
-				ConfirmButton: gaba.ButtonX,
+				ConfirmButton: gaba.InternalButtonX,
 			})
 
 		if err != nil {
