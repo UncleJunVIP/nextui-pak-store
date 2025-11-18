@@ -63,29 +63,14 @@
     },
     {
       "storefront_name": "Mortar",
-      "name": "Mortar",
-      "version": "v3.1.0",
+      "name": "",
+      "version": "",
       "type": "TOOL",
-      "description": "ROM Downloader for Megathread",
-      "author": "K-Wall",
+      "description": "",
+      "author": "",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
-      "release_filename": "Mortar.pak.zip",
-      "changelog": {
-        "v2.1.1": "Upgraded the UI Library Dependency which brings system theme consistency and a new parallel download manager.",
-        "v2.2.0": "A quick fix that should address the weird ROM folder discovery issue. Fingers crossed!",
-        "v2.2.1": "Fix for a small bug in the fixed ROM folder discovery code.",
-        "v2.3.1": "Added a setting to unzip ROM archive after download.",
-        "v2.4.0": "New settings to automagically group multi-disc games and BIN/CUE games. \u003c3",
-        "v2.4.1": "Just keeping dependencies up to date. I make enough technical debt myself... don't need to add to it.",
-        "v2.4.2": "Small fix in UI library for artifacts that appeared when no bg.png is present.",
-        "v2.5.0": "Mortar now recognizes tagless ROM directories (e.g. /mnt/SDCARD/Roms/GBA). Small update to system mapping for finding Libretro Artwork.",
-        "v2.6.2": "Added new platform configuration options. 'is_arcade' to use an internal mapping file for arcade filenames, 'skip_inclusive_filters' to include all ROMs in the displayed games list and 'skip_exclusive_filters' to not exclude any ROMs from the displayed games list.",
-        "v2.7.0": "Fix for incorrect arcade box art naming.",
-        "v2.8.0": "Finally addressed logging and made it more robust. Plus small and uninteresting fixes behind the scenes.",
-        "v2.9.0": "Housekeeping release to keep dependencies up to date.",
-        "v3.0.0": "Mortar now has a configuration editor! Go to the Settings menu and select 'Launch Configuration API' and scan the QR code. Additionally, Mortar now uses JSON for the config file instead of YAML. It will be automatically migrated for you.",
-        "v3.1.0": "RomM support has a new home! Go grab Grout from the Pak Store!"
-      },
+      "release_filename": "",
+      "changelog": null,
       "previous_names": null,
       "scripts": {
         "post_install": {
@@ -102,19 +87,8 @@
         }
       },
       "update_ignore": null,
-      "screenshots": [
-        ".github/resources/screenshots/main_menu.jpg",
-        ".github/resources/screenshots/settings.jpg",
-        ".github/resources/screenshots/platforms.jpg",
-        ".github/resources/screenshots/games_list.jpg",
-        ".github/resources/screenshots/search.jpg",
-        ".github/resources/screenshots/search_results.jpg",
-        ".github/resources/screenshots/download.jpg",
-        ".github/resources/screenshots/art_download.jpg"
-      ],
-      "platforms": [
-        "tg5040"
-      ],
+      "screenshots": null,
+      "platforms": null,
       "categories": [
         "ROM Management"
       ],
@@ -1674,13 +1648,13 @@
     },
     {
       "storefront_name": "Theme Manager",
-      "name": "Theme Manager",
-      "version": "1.5.1",
+      "name": "",
+      "version": "",
       "type": "TOOL",
-      "description": "A tool that manages, downloads, and deploys customization presets for NextUI",
-      "author": "Leviathan",
+      "description": "",
+      "author": "",
       "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
-      "release_filename": "Theme.Manager.pak.zip",
+      "release_filename": "",
       "changelog": null,
       "previous_names": null,
       "scripts": {
@@ -1699,9 +1673,7 @@
       },
       "update_ignore": null,
       "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
+      "platforms": null,
       "categories": [
         "Customization"
       ],
@@ -1710,16 +1682,14 @@
     },
     {
       "storefront_name": "Power Menu",
-      "name": "Power Menu",
-      "version": "0.1.0",
+      "name": "",
+      "version": "",
       "type": "TOOL",
-      "description": "Quick options to reboot or shutdown your device.",
-      "author": "K-Wall",
+      "description": "",
+      "author": "",
       "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
-      "release_filename": "Power.pak.zip",
-      "changelog": {
-        "v0.1.0": "Initial release!."
-      },
+      "release_filename": "",
+      "changelog": null,
       "previous_names": null,
       "scripts": {
         "post_install": {
@@ -1736,12 +1706,8 @@
         }
       },
       "update_ignore": null,
-      "screenshots": [
-        ".github/resources/screenshots/1.png"
-      ],
-      "platforms": [
-        "tg5040"
-      ],
+      "screenshots": null,
+      "platforms": null,
       "categories": [
         "System"
       ],
@@ -1750,13 +1716,13 @@
     },
     {
       "storefront_name": "Function Key Editor",
-      "name": "FN Editor",
-      "version": "0.4.0",
+      "name": "",
+      "version": "",
       "type": "TOOL",
-      "description": "Function Key Editor",
-      "author": "josegonzalez",
+      "description": "",
+      "author": "",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
-      "release_filename": "FN.Editor.pak.zip",
+      "release_filename": "",
       "changelog": null,
       "previous_names": null,
       "scripts": {
@@ -1775,9 +1741,7 @@
       },
       "update_ignore": null,
       "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
+      "platforms": null,
       "categories": [
         "Customization"
       ],
@@ -1786,13 +1750,13 @@
     },
     {
       "storefront_name": "USB Mass Storage",
-      "name": "USB Mass Storage",
-      "version": "0.4.1",
+      "name": "",
+      "version": "",
       "type": "TOOL",
-      "description": "Enables USB Mass Storage",
-      "author": "josegonzalez",
+      "description": "",
+      "author": "",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
-      "release_filename": "USB.Mass.Storage.pak.zip",
+      "release_filename": "",
       "changelog": null,
       "previous_names": null,
       "scripts": {
@@ -1811,9 +1775,7 @@
       },
       "update_ignore": null,
       "screenshots": null,
-      "platforms": [
-        "tg5040"
-      ],
+      "platforms": null,
       "categories": [
         "File Management"
       ],
