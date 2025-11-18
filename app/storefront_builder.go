@@ -47,9 +47,14 @@ func main() {
 		apiURL := fmt.Sprintf("https://api.github.com/repos/%s/%s/contents/%s",
 			owner, repo, models.PakJsonStub)
 
-		pak, err := fetchPakJsonFromGitHubAPI(apiURL)
-		if err != nil {
-			log.Fatal("Unable to fetch pak json for "+p.Name+" ("+p.RepoURL+")", err)
+		pak := models.Pak{}
+		var err error
+
+		if !p.Disabled {
+			pak, err = fetchPakJsonFromGitHubAPI(apiURL)
+			if err != nil {
+				log.Fatal("Unable to fetch pak json for "+p.Name+" ("+p.RepoURL+")", err)
+			}
 		}
 
 		pak.StorefrontName = p.StorefrontName
