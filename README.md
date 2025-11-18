@@ -69,10 +69,7 @@ Awesome! To get added to Pak Store you have to complete the following steps:
     ".github/resources/screenshots/ports.jpg",
     ".github/resources/screenshots/portmaster_1.jpg",
     ".github/resources/screenshots/portmaster_2.jpg",
-    ".github/resources/screenshots/updates.jpg",
-    ".github/resources/screenshots/mortar_1.jpg",
-    ".github/resources/screenshots/mortar_2.jpg",
-    ".github/resources/screenshots/mortar_3.jpg"
+    ".github/resources/screenshots/updates.jpg"
   ],
   "platforms": [
     "tg5040"
