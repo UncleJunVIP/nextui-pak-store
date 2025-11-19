@@ -1901,7 +1901,7 @@
     {
       "storefront_name": "SDLReader",
       "name": "SDLReader",
-      "version": "v2.1.0",
+      "version": "v2.1.1",
       "type": "TOOL",
       "description": "Read PDF, CBZ/ZIP \u0026 CBR/RAR comic archives, EPUB, and MOBI e-books with smooth navigation, zoom, rotation, and mirroring. SDLReader is a lightweight, cross-platform viewer optimized for the TrimUI Brick (TG5040) running NextUI, built on SDL2 and MuPDF.",
       "author": "Helaas",
@@ -1915,7 +1915,8 @@
         "v1.1.0": "Support for WebP images in CBZ/CBR archives and EPUB/MOBI files, improving compatibility with modern comics and e-books.",
         "v2.0.0": "Major rework with ImGui UI overlay, controller-ready file browser, runtime font \u0026 theme picker, reading history, and expanded TG5040 bundle tooling.",
         "v2.0.1": "UI improvements with smart text contrast, continuous D-pad scrolling in file browser, and edge progress bar can now be disabled.",
-        "v2.1.0": "Settings persist after app updates, configurable document minimap, thumbnails in file browser (X button), smoother high-zoom rendering, improved controller-friendly menus, and more robust TG5040 power handling."
+        "v2.1.0": "Settings persist after app updates, configurable document minimap, thumbnails in file browser (X button), smoother high-zoom rendering, improved controller-friendly menus, and more robust TG5040 power handling.",
+        "v2.1.1": "Prevent the thumbnail viewer from crashing when handling large folders."
       },
       "previous_names": null,
       "scripts": {
