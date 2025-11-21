@@ -20,7 +20,7 @@ import (
 var dbc *sql.DB
 var queries *Queries
 
-func init() {
+func Init() {
 	logger := common.GetLoggerInstance()
 	ctx := context.Background()
 
@@ -49,7 +49,7 @@ func init() {
 	schemaExists, err := tableExists(dbc, "installed_paks")
 	if !schemaExists {
 		if _, err := dbc.ExecContext(ctx, pakstore.DDL); err != nil {
-			logger.Error("Unable to init schema", "error", err)
+			logger.Error("Unable to Init schema", "error", err)
 			os.Exit(1)
 		}
 	}

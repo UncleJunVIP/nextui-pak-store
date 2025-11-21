@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/skip2/go-qrcode"
@@ -115,7 +115,7 @@ func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error 
 
 	message := fmt.Sprintf("Downloading %s %s...", pak.StorefrontName, pak.Version)
 
-	res, err := gaba.DownloadManager([]gaba.Download{{
+	res, err := gabagool.DownloadManager([]gabagool.Download{{
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
@@ -143,7 +143,7 @@ func RunScript(script models.Script, scriptName string) error {
 		return nil
 	}
 
-	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s %s...", "Running", scriptName, "Script"), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+	_, err := gabagool.ProcessMessage(fmt.Sprintf("%s %s %s...", "Running", scriptName, "Script"), gabagool.ProcessMessageOptions{}, func() (interface{}, error) {
 		logger.Info("Running script",
 			"path", script.Path,
 			"args", script.Args)
@@ -198,7 +198,7 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 		pakDestination = filepath.Join(GetEmulatorRoot(), pak.Name+".pak")
 	}
 
-	_, err := gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Unzipping", pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+	_, err := gabagool.ProcessMessage(fmt.Sprintf("%s %s...", "Unzipping", pak.StorefrontName), gabagool.ProcessMessageOptions{}, func() (interface{}, error) {
 		err := Unzip(tmp, pakDestination, pak, false)
 		if err != nil {
 			return nil, err
@@ -210,7 +210,7 @@ func UnzipPakArchive(pak models.Pak, tmp string) error {
 	})
 
 	if err != nil {
-		gaba.ProcessMessage(fmt.Sprintf("Unable to unzip %s", pak.StorefrontName), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
+		gabagool.ProcessMessage(fmt.Sprintf("Unable to unzip %s", pak.StorefrontName), gabagool.ProcessMessageOptions{}, func() (interface{}, error) {
 			time.Sleep(3 * time.Second)
 			return nil, nil
 		})

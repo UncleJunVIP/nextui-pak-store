@@ -12,6 +12,7 @@ import (
 	"time"
 
 	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool/constants"
 	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
@@ -165,7 +166,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 			qrcode,
 			int32(256),
 			int32(256),
-			gaba.TextAlignCenter,
+			constants.TextAlignCenter,
 		))
 
 	} else {
@@ -206,7 +207,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 				{ButtonName: "B", HelpText: "Nevermind"},
 				{ButtonName: "X", HelpText: "Yes"},
 			}, gaba.MessageOptions{
-				ConfirmButton: gaba.InternalButtonX,
+				ConfirmButton: constants.VirtualButtonX,
 			})
 
 		if err != nil {

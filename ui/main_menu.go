@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -27,10 +27,10 @@ func (m MainMenu) Name() sum.Int[models.ScreenName] {
 func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 	title := "Pak Store"
 
-	var menuItems []gaba.MenuItem
+	var menuItems []gabagool.MenuItem
 
 	if len(m.AppState.UpdatesAvailable) > 0 {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     fmt.Sprintf("Available Updates (%d)", len(m.AppState.UpdatesAvailable)),
 			Selected: false,
 			Focused:  false,
@@ -39,7 +39,7 @@ func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 	}
 
 	if len(m.AppState.BrowsePaks) > 0 {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks)),
 			Selected: false,
 			Focused:  false,
@@ -48,7 +48,7 @@ func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 	}
 
 	if len(m.AppState.InstalledPaks) > 0 {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     fmt.Sprintf("Manage Installed (%d)", len(m.AppState.InstalledPaks)),
 			Selected: false,
 			Focused:  false,
@@ -56,14 +56,14 @@ func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
 		})
 	}
 
-	options := gaba.DefaultListOptions(title, menuItems)
+	options := gabagool.DefaultListOptions(title, menuItems)
 	options.EnableAction = true
-	options.FooterHelpItems = []gaba.FooterHelpItem{
+	options.FooterHelpItems = []gabagool.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Quit"},
 		{ButtonName: "A", HelpText: "Select"},
 	}
 
-	sel, err := gaba.List(options)
+	sel, err := gabagool.List(options)
 	if err != nil {
 		return nil, -1, err
 	}

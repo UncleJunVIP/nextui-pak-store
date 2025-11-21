@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strings"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -27,9 +27,9 @@ func (pl PakList) Name() sum.Int[models.ScreenName] {
 }
 
 func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
-	var menuItems []gaba.MenuItem
+	var menuItems []gabagool.MenuItem
 	for _, p := range pl.AppState.BrowsePaks[pl.Category] {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     p.StorefrontName,
 			Selected: false,
 			Focused:  false,
@@ -37,23 +37,23 @@ func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
-	options := gaba.DefaultListOptions(pl.Category, menuItems)
+	options := gabagool.DefaultListOptions(pl.Category, menuItems)
 
 	selectedIndex := state.LastSelectedIndex
 
 	options.SelectedIndex = selectedIndex
 	options.VisibleStartIndex = max(0, state.LastSelectedIndex-state.LastSelectedPosition)
 	options.EnableAction = true
-	options.FooterHelpItems = []gaba.FooterHelpItem{
+	options.FooterHelpItems = []gabagool.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
 		{ButtonName: "A", HelpText: "View"},
 	}
 
-	sel, err := gaba.List(options)
+	sel, err := gabagool.List(options)
 	if err != nil {
 		return nil, -1, err
 	}

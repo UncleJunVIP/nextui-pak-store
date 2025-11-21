@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -26,10 +26,10 @@ func (bs BrowseScreen) Name() sum.Int[models.ScreenName] {
 }
 
 func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
-	var menuItems []gaba.MenuItem
+	var menuItems []gabagool.MenuItem
 
 	for cat := range bs.AppState.BrowsePaks {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     cat + " (" + strconv.Itoa(len(bs.AppState.BrowsePaks[cat])) + ")",
 			Selected: false,
 			Focused:  false,
@@ -37,18 +37,18 @@ func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
-	options := gaba.DefaultListOptions("Browse Paks", menuItems)
+	options := gabagool.DefaultListOptions("Browse Paks", menuItems)
 	options.EnableAction = true
-	options.FooterHelpItems = []gaba.FooterHelpItem{
+	options.FooterHelpItems = []gabagool.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
 		{ButtonName: "A", HelpText: "Select"},
 	}
 
-	sel, err := gaba.List(options)
+	sel, err := gabagool.List(options)
 	if err != nil {
 		return nil, -1, err
 	}

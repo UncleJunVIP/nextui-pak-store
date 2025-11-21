@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strings"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -29,10 +29,10 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		return nil, 2, nil
 	}
 
-	var menuItems []gaba.MenuItem
+	var menuItems []gabagool.MenuItem
 
 	for _, pak := range us.AppState.UpdatesAvailable {
-		menuItems = append(menuItems, gaba.MenuItem{
+		menuItems = append(menuItems, gabagool.MenuItem{
 			Text:     pak.StorefrontName,
 			Selected: false,
 			Focused:  false,
@@ -40,12 +40,12 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
 	if len(menuItems) > 1 {
-		menuItems = append([]gaba.MenuItem{{
+		menuItems = append([]gabagool.MenuItem{{
 			Text:     "Update All",
 			Selected: false,
 			Focused:  false,
@@ -53,14 +53,14 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		}}, menuItems...)
 	}
 
-	options := gaba.DefaultListOptions("Available Pak Updates", menuItems)
+	options := gabagool.DefaultListOptions("Available Pak Updates", menuItems)
 	options.EnableAction = true
-	options.FooterHelpItems = []gaba.FooterHelpItem{
+	options.FooterHelpItems = []gabagool.FooterHelpItem{
 		{ButtonName: "B", HelpText: "Back"},
 		{ButtonName: "A", HelpText: "View"},
 	}
 
-	sel, err := gaba.List(options)
+	sel, err := gabagool.List(options)
 	if err != nil {
 		return nil, -1, err
 	}

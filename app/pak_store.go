@@ -19,7 +19,7 @@ import (
 var appState state.AppState
 
 func init() {
-	gaba.InitSDL(gaba.Options{
+	gaba.Init(gaba.Options{
 		WindowTitle:    "Pak Store",
 		ShowBackground: true,
 		LogFilename:    "pak_store.log",
@@ -35,16 +35,18 @@ func init() {
 		gaba.ConfirmationMessage("Could not load the Storefront!\nMake sure you are connected to Wi-Fi.\nIf this issue persists, check the logs.", []gaba.FooterHelpItem{
 			{ButtonName: "B", HelpText: "Quit"},
 		}, gaba.MessageOptions{})
-		defer gaba.CloseSDL()
+		defer gaba.Close()
 		common.LogStandardFatal("Could not load Storefront!", err)
 	}
+
+	database.Init()
 
 	appState = state.NewAppState(sf.Result.(models.Storefront))
 }
 
 func cleanup() {
 	database.CloseDB()
-	gaba.CloseSDL()
+	gaba.Close()
 }
 
 func main() {
