@@ -419,7 +419,7 @@
     {
       "storefront_name": "SFTPGO Server",
       "name": "FTP Server",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "type": "TOOL",
       "description": "Manages the FTP Server",
       "author": "josegonzalez",
