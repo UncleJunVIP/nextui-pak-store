@@ -1153,7 +1153,7 @@
     {
       "storefront_name": "Portmaster",
       "name": "PORTS",
-      "version": "2.4.0",
+      "version": "2.5.0",
       "type": "EMU",
       "description": "A Emu Pak for PortMaster which includes everything needed and requires no additional software.",
       "author": "ben16w",
