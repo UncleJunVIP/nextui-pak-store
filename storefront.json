@@ -94,7 +94,7 @@
     {
       "storefront_name": "Grout",
       "name": "Grout",
-      "version": "v1.1.0",
+      "version": "v1.2.0",
       "type": "TOOL",
       "description": "A RomM client for NextUI and muOS",
       "author": "K-Wall",
@@ -102,7 +102,7 @@
       "release_filename": "Grout.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release of Grout!",
-        "v1.1.0": "Built out a platform mapping screen to allow assigning RomM Platforms to CFW Rom Directories."
+        "v1.2.0": "Platform mapping tweaks, multi-file ROM downloads, bug fixes and more!"
       },
       "previous_names": null,
       "scripts": {
