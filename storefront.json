@@ -94,7 +94,7 @@
     {
       "storefront_name": "Grout",
       "name": "Grout",
-      "version": "v1.2.2",
+      "version": "v1.2.3",
       "type": "TOOL",
       "description": "A RomM client for NextUI and muOS",
       "author": "K-Wall",
@@ -104,7 +104,8 @@
         "v1.0.0": "Initial release of Grout!",
         "v1.2.0": "Platform mapping tweaks, multi-file ROM downloads, bug fixes and more!",
         "v1.2.1": "Quick fix for not evaluating all art paths.",
-        "v1.2.2": "Quick fix for not evaluating all art paths."
+        "v1.2.2": "Quick fix for not evaluating all art paths.",
+        "v1.2.3": "Background art downloads moved to the foreground due to inadvertent early termination."
       },
       "previous_names": null,
       "scripts": {
