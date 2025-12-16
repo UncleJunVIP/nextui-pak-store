@@ -938,7 +938,7 @@
     {
       "storefront_name": "Nintendo DS (DraStic)",
       "name": "NDS",
-      "version": "0.6.2",
+      "version": "0.7.0",
       "type": "EMU",
       "description": "Runs drastic in standalone mode for the specified rom",
       "author": "josegonzalez",
@@ -960,7 +960,10 @@
           "args": null
         }
       },
-      "update_ignore": null,
+      "update_ignore": [
+        "drastic/config/drastic.cfg",
+        "drastic/resources/settings.json"
+      ],
       "screenshots": null,
       "platforms": [
         "tg5040"
