@@ -1501,12 +1501,12 @@
     {
       "storefront_name": "ScummVM",
       "name": "ScummVM",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "type": "EMU",
       "description": "ScummVM emulator for NextUI.",
       "author": "Cuteseal",
       "repo_url": "https://github.com/laesetuc/minui-scummvm",
-      "release_filename": "ScummVM.pak.zip",
+      "release_filename": "SCUMMVM.pak.zip",
       "changelog": null,
       "previous_names": null,
       "scripts": {
