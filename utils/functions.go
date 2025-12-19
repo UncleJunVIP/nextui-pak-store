@@ -4,9 +4,11 @@ import (
 	"archive/zip"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"image/color"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -15,8 +17,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/skip2/go-qrcode"
 )
@@ -45,8 +46,13 @@ func GetEmulatorRoot() string {
 	return models.EmulatorRoot
 }
 
+func LogStandardFatal(msg string, err error) {
+	log.SetOutput(os.Stderr)
+	log.Fatalf("%s: %v", msg, err)
+}
+
 func FetchStorefront() (models.Storefront, error) {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 
 	var data []byte
 	var err error
@@ -107,7 +113,7 @@ func ParseJSONFile(filePath string, out *models.Pak) error {
 }
 
 func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error error) {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 
 	releasesStub := fmt.Sprintf("/releases/download/%s/", pak.Version)
 	dl := pak.RepoURL + releasesStub + pak.ReleaseFilename
@@ -119,24 +125,29 @@ func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error 
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
-	}}, make(map[string]string), true)
-
-	if err == nil && len(res.Errors) > 0 {
-		err = res.Errors[0]
-	}
+	}}, make(map[string]string), gabagool.DownloadManagerOptions{AutoContinue: true})
 
 	if err != nil {
+		// Check if it was cancelled
+		if errors.Is(err, gabagool.ErrCancelled) {
+			return "", false, nil
+		}
 		logger.Error("Error downloading", "error", err)
 		return "", false, err
-	} else if res.Cancelled {
-		return "", false, nil
+	}
+
+	// Check for failed downloads
+	if len(res.Failed) > 0 {
+		err = res.Failed[0].Error
+		logger.Error("Error downloading", "error", err)
+		return "", false, err
 	}
 
 	return tmp, true, nil
 }
 
 func RunScript(script models.Script, scriptName string) error {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 
 	if script.Path == "" {
 		logger.Info("No script to run")
@@ -186,7 +197,7 @@ func RunScript(script models.Script, scriptName string) error {
 }
 
 func UnzipPakArchive(pak models.Pak, tmp string) error {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 
 	pakDestination := ""
 

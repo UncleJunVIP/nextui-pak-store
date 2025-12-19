@@ -3,6 +3,7 @@ package ui
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,9 +12,8 @@ import (
 	"sync"
 	"time"
 
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
-	"github.com/UncleJunVIP/gabagool/pkg/gabagool/constants"
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/constants"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
@@ -49,7 +49,7 @@ func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
 }
 
 func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e error) {
-	logger := common.GetLoggerInstance()
+	logger := gaba.GetLogger()
 
 	pak := pi.Pak[0]
 
@@ -191,18 +191,17 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		{ButtonName: "A", HelpText: confirmLabel},
 	}
 
-	sel, err := gaba.DetailScreen(pak.StorefrontName, options, footerItems)
+	_, err = gaba.DetailScreen(pak.StorefrontName, options, footerItems)
 	if err != nil {
+		if errors.Is(err, gaba.ErrCancelled) {
+			return pi.IsUpdate, 2, nil
+		}
 		logger.Error("Unable to display pak info screen", "error", err)
 		return pi.IsUpdate, -1, err
 	}
 
-	if sel.IsNone() {
-		return pi.IsUpdate, 2, nil
-	}
-
 	if pi.IsInstalled {
-		confirm, err := gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", pak.Name),
+		_, err = gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", pak.Name),
 			[]gaba.FooterHelpItem{
 				{ButtonName: "B", HelpText: "Nevermind"},
 				{ButtonName: "X", HelpText: "Yes"},
@@ -211,11 +210,10 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 			})
 
 		if err != nil {
+			if errors.Is(err, gaba.ErrCancelled) {
+				return nil, 12, nil
+			}
 			return nil, -1, err
-		}
-
-		if confirm.IsNone() {
-			return nil, 12, nil
 		}
 
 		_, err = gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Uninstalling", pak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
@@ -310,7 +308,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 }
 
 func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
-	logger := common.GetLoggerInstance()
+	logger := gaba.GetLogger()
 
 	if len(pi.Pak) == 0 {
 		return pi.IsUpdate, 2, nil
@@ -359,14 +357,14 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 
 	title := fmt.Sprintf("Update %d Paks", len(pi.Pak))
 
-	sel, err := gaba.DetailScreen(title, options, footerItems)
+	var err error
+	_, err = gaba.DetailScreen(title, options, footerItems)
 	if err != nil {
+		if errors.Is(err, gaba.ErrCancelled) {
+			return pi.IsUpdate, 2, nil
+		}
 		logger.Error("Unable to display multi-pak info screen", "error", err)
 		return pi.IsUpdate, -1, err
-	}
-
-	if sel.IsNone() {
-		return pi.IsUpdate, 2, nil
 	}
 
 	for _, pak := range pi.Pak {

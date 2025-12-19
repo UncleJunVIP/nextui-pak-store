@@ -5,9 +5,8 @@ import (
 	"os"
 	"time"
 
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	_ "github.com/UncleJunVIP/certifiable"
-	gaba "github.com/UncleJunVIP/gabagool/pkg/gabagool"
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
@@ -26,7 +25,7 @@ func init() {
 	})
 
 	sf, err := gaba.ProcessMessage("",
-		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (interface{}, error) {
+		gaba.ProcessMessageOptions{Image: "resources/splash.png", ImageWidth: 1024, ImageHeight: 768}, func() (models.Storefront, error) {
 			time.Sleep(1250 * time.Millisecond)
 			return utils.FetchStorefront()
 		})
@@ -36,12 +35,12 @@ func init() {
 			{ButtonName: "B", HelpText: "Quit"},
 		}, gaba.MessageOptions{})
 		defer gaba.Close()
-		common.LogStandardFatal("Could not load Storefront!", err)
+		utils.LogStandardFatal("Could not load Storefront!", err)
 	}
 
 	database.Init()
 
-	appState = state.NewAppState(sf.Result.(models.Storefront))
+	appState = state.NewAppState(sf)
 }
 
 func cleanup() {
@@ -52,7 +51,7 @@ func cleanup() {
 func main() {
 	defer cleanup()
 
-	logger := common.GetLoggerInstance()
+	logger := gaba.GetLogger()
 
 	logger.Info("Starting Pak Store")
 

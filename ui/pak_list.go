@@ -1,10 +1,11 @@
 package ui
 
 import (
+	"errors"
 	"slices"
 	"strings"
 
-	"github.com/UncleJunVIP/gabagool/pkg/gabagool"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 	"qlova.tech/sum"
@@ -55,15 +56,18 @@ func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
 
 	sel, err := gabagool.List(options)
 	if err != nil {
+		if errors.Is(err, gabagool.ErrCancelled) {
+			return nil, 2, nil
+		}
 		return nil, -1, err
 	}
 
-	if sel.IsNone() || sel.Unwrap().SelectedIndex == -1 {
+	if len(sel.Selected) == 0 {
 		return nil, 2, nil
 	}
 
-	state.LastSelectedIndex = sel.Unwrap().SelectedIndex
-	state.LastSelectedPosition = sel.Unwrap().VisiblePosition
+	state.LastSelectedIndex = sel.Selected[0]
+	state.LastSelectedPosition = sel.VisiblePosition
 
-	return sel.Unwrap().SelectedItem.Metadata, 0, nil
+	return sel.Items[sel.Selected[0]].Metadata, 0, nil
 }

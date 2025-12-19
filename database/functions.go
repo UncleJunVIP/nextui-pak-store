@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	pakstore "github.com/UncleJunVIP/nextui-pak-store"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
@@ -21,7 +21,7 @@ var dbc *sql.DB
 var queries *Queries
 
 func Init() {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
 	var err error
@@ -127,7 +127,7 @@ func columnExists(db *sql.DB, tableName, columnName string) (bool, error) {
 }
 
 func columnMigration(tableName, columnName, columnDefinition string) {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
 	ce, err := columnExists(dbc, tableName, columnName)

@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/UncleJunVIP/nextui-pak-shared-functions/common"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"golang.org/x/mod/semver"
@@ -33,7 +33,7 @@ func (appState *AppState) Refresh() AppState {
 }
 
 func refreshAppState(storefront models.Storefront) AppState {
-	logger := common.GetLoggerInstance()
+	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
 	installed, err := database.DBQ().ListInstalledPaks(ctx)
