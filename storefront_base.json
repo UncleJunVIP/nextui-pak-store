@@ -404,6 +404,13 @@
       "categories": [
         "Emulators"
       ]
+    },
+     {
+      "storefront_name": "3DO",
+      "repo_url": "https://github.com/dominickvaccaro/nextui-opera-3do",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
