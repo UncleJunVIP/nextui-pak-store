@@ -94,7 +94,7 @@
     {
       "storefront_name": "Grout",
       "name": "Grout",
-      "version": "v1.3.4",
+      "version": "v1.3.6",
       "type": "TOOL",
       "description": "A RomM client for NextUI and muOS",
       "author": "K-Wall",
@@ -111,7 +111,9 @@
         "v1.3.1": "Add missing languages to settings",
         "v1.3.2": "Bug fixes and performance tweaks.",
         "v1.3.3": "Added auto updater function for muOS and Knulli plus a number of performance / organizational fixes.",
-        "v1.3.4": "Fixed regression with multi-disk downloads."
+        "v1.3.4": "Fixed regression with multi-disk downloads.",
+        "v1.3.5": "Fix auto save sync from hashing files unnecessarily ",
+        "v1.3.6": "App didn't exit on update."
       },
       "previous_names": null,
       "scripts": {
