@@ -94,9 +94,9 @@
     {
       "storefront_name": "Grout",
       "name": "Grout",
-      "version": "v1.3.6",
+      "version": "v1.3.7",
       "type": "TOOL",
-      "description": "A RomM client for NextUI and muOS",
+      "description": "A RomM client for NextUI, muOS, and Knulli.",
       "author": "K-Wall",
       "repo_url": "https://github.com/rommapp/grout",
       "release_filename": "Grout.pak.zip",
@@ -113,7 +113,8 @@
         "v1.3.3": "Added auto updater function for muOS and Knulli plus a number of performance / organizational fixes.",
         "v1.3.4": "Fixed regression with multi-disk downloads.",
         "v1.3.5": "Fix auto save sync from hashing files unnecessarily ",
-        "v1.3.6": "App didn't exit on update."
+        "v1.3.6": "App didn't exit on update.",
+        "v1.3.7": "Switch to new gabagool default font for expanded icon and glyph support."
       },
       "previous_names": null,
       "scripts": {
