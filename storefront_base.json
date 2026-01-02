@@ -411,6 +411,13 @@
       "categories": [
         "Emulators"
       ]
+    },
+    {
+      "storefront_name": "JAGUAR",
+      "repo_url": "https://github.com/dominickvaccaro/nextui-virtual-jaguar",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
