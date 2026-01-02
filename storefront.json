@@ -2251,6 +2251,44 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "JAGUAR",
+      "name": "JAGUAR",
+      "version": "v1.0.0",
+      "type": "EMU",
+      "description": "An Atari Jaguar addon for minarch, utilizing the Virtual Jaguar core.",
+      "author": "Dominick Vaccaro",
+      "repo_url": "https://github.com/dominickvaccaro/nextui-virtual-jaguar",
+      "release_filename": "JAGUAR.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial Release."
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
