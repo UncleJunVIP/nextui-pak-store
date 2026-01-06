@@ -596,7 +596,7 @@
     {
       "storefront_name": "Syncthing",
       "name": "Syncthing",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "type": "TOOL",
       "description": "Manages Syncthing",
       "author": "josegonzalez",
