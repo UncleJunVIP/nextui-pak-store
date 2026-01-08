@@ -48,14 +48,16 @@
       "repo_url": "https://github.com/UncleJunVIP/nextui-led-manager",
       "categories": [
         "Customization"
-      ]
+      ],
+      "disabled": true
     },
     {
       "storefront_name": "S3 SaveSync",
       "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
       "categories": [
         "File Management"
-      ]
+      ],
+      "disabled": true
     },
     {
       "storefront_name": "Screenshot Monitor",
