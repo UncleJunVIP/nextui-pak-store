@@ -274,14 +274,18 @@
     },
     {
       "storefront_name": "LED Manager",
-      "name": "",
-      "version": "",
+      "name": "LED Manager",
+      "version": "v1.1.1",
       "type": "TOOL",
-      "description": "",
-      "author": "",
+      "description": "A enhanced LED configuration tool.",
+      "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-led-manager",
-      "release_filename": "",
-      "changelog": null,
+      "release_filename": "LED.Manager.pak.zip",
+      "changelog": {
+        "v1.0.0": "The initial release! Warning there may be bugs!",
+        "v1.1.0": "Added a \"Kid Mode\" environment variable to be uncommented in launch.sh",
+        "v1.1.1": "Potential fix for ambient mode not working as reported by @machlen."
+      },
       "previous_names": null,
       "scripts": {
         "post_install": {
@@ -299,23 +303,28 @@
       },
       "update_ignore": null,
       "screenshots": null,
-      "platforms": null,
+      "platforms": [
+        "tg5040"
+      ],
       "categories": [
         "Customization"
       ],
       "large_pak": false,
-      "disabled": true
+      "disabled": false
     },
     {
       "storefront_name": "S3 SaveSync",
-      "name": "",
-      "version": "",
+      "name": "SaveSync",
+      "version": "v1.0.1",
       "type": "TOOL",
-      "description": "",
-      "author": "",
+      "description": "Sync your save files to a versioned S3 Bucket.",
+      "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
-      "release_filename": "",
-      "changelog": null,
+      "release_filename": "SaveSync.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial release!",
+        "v1.0.1": "Small fix in UI library for artifacts that appeared when no bg.png is present."
+      },
       "previous_names": null,
       "scripts": {
         "post_install": {
@@ -333,12 +342,14 @@
       },
       "update_ignore": null,
       "screenshots": null,
-      "platforms": null,
+      "platforms": [
+        "tg5040"
+      ],
       "categories": [
         "File Management"
       ],
       "large_pak": false,
-      "disabled": true
+      "disabled": false
     },
     {
       "storefront_name": "Screenshot Monitor",
