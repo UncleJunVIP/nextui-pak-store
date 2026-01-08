@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "embed"
-	"os"
 	"time"
 
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
@@ -10,12 +9,11 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"github.com/UncleJunVIP/nextui-pak-store/ui"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
 	_ "modernc.org/sqlite"
 )
 
-var appState state.AppState
+var storefront models.Storefront
 
 func init() {
 	gaba.Init(gaba.Options{
@@ -40,7 +38,12 @@ func init() {
 
 	database.Init()
 
-	appState = state.NewAppState(sf)
+	// Sync installed paks with storefront data
+	if err := state.SyncInstalledWithStorefront(sf); err != nil {
+		gaba.GetLogger().Error("Failed to sync installed paks", "error", err)
+	}
+
+	storefront = sf
 }
 
 func cleanup() {
@@ -55,123 +58,9 @@ func main() {
 
 	logger.Info("Starting Pak Store")
 
-	var screen models.Screen
-	screen = ui.InitMainMenu(appState)
+	fsm := buildFSM(storefront)
 
-	for {
-		res, code, _ := screen.Draw()
-
-		if code == 23 {
-			gaba.ProcessMessage("Pak Store Updated! Exiting...", gaba.ProcessMessageOptions{}, func() (interface{}, error) {
-				time.Sleep(3 * time.Second)
-				return nil, nil
-			})
-			os.Exit(0)
-		}
-
-		switch screen.Name() {
-		case models.ScreenNames.MainMenu:
-			switch code {
-			case 0:
-				switch res.(string) {
-				case "Browse":
-					screen = ui.InitBrowseScreen(appState)
-				case "Available Updates":
-					screen = ui.InitUpdatesScreen(appState)
-				case "Manage Installed":
-					screen = ui.InitManageInstalledScreen(appState)
-				}
-			case 4:
-				appState = appState.Refresh()
-				screen = ui.InitMainMenu(appState)
-			case 1, 2:
-				os.Exit(0)
-			}
-
-		case models.ScreenNames.Browse:
-			switch code {
-			case 0:
-				state.LastSelectedIndex = 0
-				state.LastSelectedPosition = 0
-				screen = ui.InitPakList(appState, res.(string))
-			case 1, 2:
-				screen = ui.InitMainMenu(appState)
-			}
-
-		case models.ScreenNames.PakList:
-			switch code {
-			case 0:
-				screen = ui.InitPakInfoScreen([]models.Pak{res.(models.Pak)}, screen.(ui.PakList).Category, false, false)
-			case 1, 2:
-				screen = ui.InitBrowseScreen(appState)
-			}
-
-		case models.ScreenNames.PakInfo:
-			switch code {
-			case 0, 1, 2, 4:
-				appState = appState.Refresh()
-
-				if screen.(ui.PakInfoScreen).IsInstalled {
-					screen = ui.InitManageInstalledScreen(appState)
-					break
-				}
-
-				if res.(bool) {
-					if len(appState.UpdatesAvailable) == 0 {
-						screen = ui.InitMainMenu(appState)
-						break
-					}
-
-					screen = ui.InitUpdatesScreen(appState)
-				} else {
-					if len(appState.AvailablePaks) == 0 {
-						screen = ui.InitBrowseScreen(appState)
-						break
-					}
-
-					if len(appState.BrowsePaks[screen.(ui.PakInfoScreen).Category]) == 0 {
-						screen = ui.InitBrowseScreen(appState)
-						break
-					}
-					screen = ui.InitPakList(appState, screen.(ui.PakInfoScreen).Category)
-				}
-			case -1:
-				gaba.ProcessMessage("Unable to Download Pak!", gaba.ProcessMessageOptions{ShowThemeBackground: true}, func() (interface{}, error) {
-					time.Sleep(1750 * time.Millisecond)
-					return nil, nil
-				})
-				break
-			case 12:
-			// Action confirmation cancel
-			case 33:
-				// User canceled multiple downloads
-				appState = appState.Refresh()
-				screen = ui.InitUpdatesScreen(appState)
-			case 86:
-				appState = appState.Refresh()
-				screen = ui.InitManageInstalledScreen(appState)
-			}
-
-		case models.ScreenNames.Updates:
-			switch code {
-			case 0:
-				appState = appState.Refresh()
-				screen = ui.InitPakInfoScreen(res.([]models.Pak), "", true, false)
-			case 1, 2:
-				appState = appState.Refresh()
-				screen = ui.InitMainMenu(appState)
-			}
-
-		case models.ScreenNames.ManageInstalled:
-			switch code {
-			case 0:
-				screen = ui.InitPakInfoScreen([]models.Pak{res.(models.Pak)}, "", false, true)
-			case 1, 2:
-				appState = appState.Refresh()
-				screen = ui.InitMainMenu(appState)
-			}
-
-		}
+	if err := fsm.Run(); err != nil {
+		logger.Error("FSM error", "error", err)
 	}
-
 }

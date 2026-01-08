@@ -9,7 +9,6 @@ import (
 	"image/color"
 	"io"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/exec"
@@ -329,7 +328,6 @@ func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {
 
 		path := filepath.Join(dest, f.Name)
 
-		// Check for ZipSlip (Directory traversal)
 		if !strings.HasPrefix(path, filepath.Clean(dest)+string(os.PathSeparator)) {
 			return fmt.Errorf("illegal file path: %s", path)
 		}
@@ -345,7 +343,6 @@ func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {
 				return err
 			}
 
-			// Use a temporary file to avoid ETXTBSY error
 			tempPath := path + ".tmp"
 			tempFile, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
 			if err != nil {
@@ -353,17 +350,16 @@ func Unzip(src, dest string, pak models.Pak, isUpdate bool) error {
 			}
 
 			_, err = io.Copy(tempFile, rc)
-			tempFile.Close() // Close the file before attempting to rename it
+			tempFile.Close()
 
 			if err != nil {
-				os.Remove(tempPath) // Clean up on error
+				os.Remove(tempPath)
 				return err
 			}
 
-			// Now rename the temporary file to the target path
 			err = os.Rename(tempPath, path)
 			if err != nil {
-				os.Remove(tempPath) // Clean up on error
+				os.Remove(tempPath)
 				return err
 			}
 		}
@@ -402,10 +398,4 @@ func ShouldIgnoreFile(filePath string, pak models.Pak) bool {
 	}
 
 	return false
-}
-
-func IsConnectedToInternet() bool {
-	timeout := 5 * time.Second
-	_, err := net.DialTimeout("tcp", "8.8.8.8:53", timeout)
-	return err == nil
 }

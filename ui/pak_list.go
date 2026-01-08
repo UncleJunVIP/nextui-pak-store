@@ -5,69 +5,89 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"qlova.tech/sum"
 )
 
-type PakList struct {
-	AppState state.AppState
-	Category string
+type PakListInput struct {
+	Storefront           models.Storefront
+	Category             string
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
-func InitPakList(appState state.AppState, category string) PakList {
-	return PakList{
-		AppState: appState,
-		Category: category,
+type PakListOutput struct {
+	SelectedPak          models.Pak
+	Category             string
+	LastSelectedIndex    int
+	LastSelectedPosition int
+}
+
+type PakListScreen struct{}
+
+func NewPakListScreen() *PakListScreen {
+	return &PakListScreen{}
+}
+
+func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], error) {
+	output := PakListOutput{
+		Category:             input.Category,
+		LastSelectedIndex:    input.LastSelectedIndex,
+		LastSelectedPosition: input.LastSelectedPosition,
 	}
-}
 
-func (pl PakList) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.PakList
-}
+	// Compute data on demand
+	installedPaks, err := state.GetInstalledPaks()
+	if err != nil {
+		return withCode(output, gaba.ExitCodeError), err
+	}
 
-func (pl PakList) Draw() (selection interface{}, exitCode int, e error) {
-	var menuItems []gabagool.MenuItem
-	for _, p := range pl.AppState.BrowsePaks[pl.Category] {
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     p.StorefrontName,
+	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
+
+	var menuItems []gaba.MenuItem
+	for _, pakStatus := range browsePaks[input.Category] {
+		displayText := pakStatus.Pak.StorefrontName
+
+		// Add status indicator
+		if pakStatus.HasUpdate {
+			displayText += " [Update Available]"
+		} else if pakStatus.IsInstalled {
+			displayText += " [Installed]"
+		}
+
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     displayText,
 			Selected: false,
 			Focused:  false,
-			Metadata: p,
+			Metadata: pakStatus.Pak,
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
-	options := gabagool.DefaultListOptions(pl.Category, menuItems)
+	options := gaba.DefaultListOptions(input.Category, menuItems)
+	options.SelectedIndex = input.LastSelectedIndex
+	options.VisibleStartIndex = max(0, input.LastSelectedIndex-input.LastSelectedPosition)
+	options.FooterHelpItems = BackViewFooter()
 
-	selectedIndex := state.LastSelectedIndex
-
-	options.SelectedIndex = selectedIndex
-	options.VisibleStartIndex = max(0, state.LastSelectedIndex-state.LastSelectedPosition)
-	options.EnableAction = true
-	options.FooterHelpItems = []gabagool.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "A", HelpText: "View"},
-	}
-
-	sel, err := gabagool.List(options)
+	sel, err := gaba.List(options)
 	if err != nil {
-		if errors.Is(err, gabagool.ErrCancelled) {
-			return nil, 2, nil
+		if errors.Is(err, gaba.ErrCancelled) {
+			return back(output), nil
 		}
-		return nil, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return nil, 2, nil
+		return back(output), nil
 	}
 
-	state.LastSelectedIndex = sel.Selected[0]
-	state.LastSelectedPosition = sel.VisiblePosition
+	output.SelectedPak = sel.Items[sel.Selected[0]].Metadata.(models.Pak)
+	output.LastSelectedIndex = sel.Selected[0]
+	output.LastSelectedPosition = sel.VisiblePosition
 
-	return sel.Items[sel.Selected[0]].Metadata, 0, nil
+	return success(output), nil
 }

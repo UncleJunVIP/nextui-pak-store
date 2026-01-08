@@ -5,74 +5,80 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"qlova.tech/sum"
 )
 
-type ManageInstalledScreen struct {
-	AppState state.AppState
+type ManageInstalledInput struct {
+	Storefront models.Storefront
 }
 
-func InitManageInstalledScreen(appState state.AppState) ManageInstalledScreen {
-	return ManageInstalledScreen{
-		AppState: appState,
+type ManageInstalledOutput struct {
+	SelectedPak models.Pak
+}
+
+type ManageInstalledScreen struct{}
+
+func NewManageInstalledScreen() *ManageInstalledScreen {
+	return &ManageInstalledScreen{}
+}
+
+func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[ManageInstalledOutput], error) {
+	output := ManageInstalledOutput{}
+
+	// Get installed paks from database
+	installedPaks, err := state.GetInstalledPaks()
+	if err != nil {
+		return withCode(output, gaba.ExitCodeError), err
 	}
-}
 
-func (mis ManageInstalledScreen) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.ManageInstalled
-}
-
-func (mis ManageInstalledScreen) Draw() (selection interface{}, exitCode int, e error) {
-	if len(mis.AppState.InstalledPaks) == 0 {
-		return nil, 2, nil
+	if len(installedPaks) == 0 {
+		return back(output), nil
 	}
 
-	var menuItems []gabagool.MenuItem
+	var menuItems []gaba.MenuItem
 
-	for _, installed := range mis.AppState.InstalledPaks {
+	for _, installed := range installedPaks {
 		var pak models.Pak
 
-		for _, p := range mis.AppState.Storefront.Paks {
+		for _, p := range input.Storefront.Paks {
 			if p.RepoURL == installed.RepoUrl.String {
 				pak = p
+				break
 			}
 		}
 
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     pak.StorefrontName,
-			Selected: false,
-			Focused:  false,
-			Metadata: pak,
-		})
+		if pak.StorefrontName != "" {
+			menuItems = append(menuItems, gaba.MenuItem{
+				Text:     pak.StorefrontName,
+				Selected: false,
+				Focused:  false,
+				Metadata: pak,
+			})
+		}
 	}
 
-	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
-	options := gabagool.DefaultListOptions("Manage Installed Paks", menuItems)
-	options.EnableAction = true
-	options.FooterHelpItems = []gabagool.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "A", HelpText: "Select"},
-	}
+	options := gaba.DefaultListOptions("Manage Installed Paks", menuItems)
+	options.FooterHelpItems = BackSelectFooter()
 
-	sel, err := gabagool.List(options)
+	sel, err := gaba.List(options)
 	if err != nil {
-		if errors.Is(err, gabagool.ErrCancelled) {
-			return nil, 2, nil
+		if errors.Is(err, gaba.ErrCancelled) {
+			return back(output), nil
 		}
-		return nil, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return nil, 2, nil
+		return back(output), nil
 	}
 
-	selectedPak := sel.Items[sel.Selected[0]].Metadata.(models.Pak)
+	output.SelectedPak = sel.Items[sel.Selected[0]].Metadata.(models.Pak)
 
-	return selectedPak, 0, nil
+	return success(output), nil
 }

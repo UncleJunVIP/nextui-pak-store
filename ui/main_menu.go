@@ -3,80 +3,104 @@ package ui
 import (
 	"errors"
 	"fmt"
-	"strings"
 
-	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"qlova.tech/sum"
 )
 
-type MainMenu struct {
-	AppState state.AppState
+type MainMenuInput struct {
+	Storefront models.Storefront
 }
 
-func InitMainMenu(appState state.AppState) MainMenu {
-	return MainMenu{
-		AppState: appState,
+type MainMenuOutput struct {
+	Selection string
+}
+
+type MainMenuScreen struct{}
+
+func NewMainMenuScreen() *MainMenuScreen {
+	return &MainMenuScreen{}
+}
+
+func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput], error) {
+	output := MainMenuOutput{}
+
+	// Compute data on demand
+	installedPaks, err := state.GetInstalledPaks()
+	if err != nil {
+		return withCode(output, gaba.ExitCodeError), err
 	}
-}
 
-func (m MainMenu) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.MainMenu
-}
+	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
+	updatesAvailable := state.GetUpdatesAvailable(input.Storefront, installedPaks)
 
-func (m MainMenu) Draw() (selection interface{}, exitCode int, e error) {
+	// Count available (not installed) paks
+	availableCount := 0
+	for _, catPaks := range browsePaks {
+		for _, pakStatus := range catPaks {
+			if !pakStatus.IsInstalled {
+				availableCount++
+			}
+		}
+	}
+
 	title := "Pak Store"
 
-	var menuItems []gabagool.MenuItem
+	var menuItems []gaba.MenuItem
 
-	if len(m.AppState.UpdatesAvailable) > 0 {
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     fmt.Sprintf("Available Updates (%d)", len(m.AppState.UpdatesAvailable)),
+	if len(updatesAvailable) > 0 {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Available Updates (%d)", len(updatesAvailable)),
 			Selected: false,
 			Focused:  false,
 			Metadata: "Available Updates",
 		})
 	}
 
-	if len(m.AppState.BrowsePaks) > 0 {
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     fmt.Sprintf("Browse (%d)", len(m.AppState.AvailablePaks)),
+	if len(browsePaks) > 0 {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Browse (%d)", availableCount),
 			Selected: false,
 			Focused:  false,
 			Metadata: "Browse",
 		})
 	}
 
-	if len(m.AppState.InstalledPaks) > 0 {
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     fmt.Sprintf("Manage Installed (%d)", len(m.AppState.InstalledPaks)),
+	if len(installedPaks) > 0 {
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     fmt.Sprintf("Manage Installed (%d)", len(installedPaks)),
 			Selected: false,
 			Focused:  false,
 			Metadata: "Manage Installed",
 		})
 	}
 
-	options := gabagool.DefaultListOptions(title, menuItems)
-	options.EnableAction = true
-	options.FooterHelpItems = []gabagool.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Quit"},
-		{ButtonName: "A", HelpText: "Select"},
-	}
+	options := gaba.DefaultListOptions(title, menuItems)
+	options.FooterHelpItems = QuitSelectFooter()
 
-	sel, err := gabagool.List(options)
+	sel, err := gaba.List(options)
 	if err != nil {
-		if errors.Is(err, gabagool.ErrCancelled) {
-			return nil, 2, nil
+		if errors.Is(err, gaba.ErrCancelled) {
+			return withCode(output, gaba.ExitCodeQuit), nil
 		}
-		return nil, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return nil, 2, nil
+		return withCode(output, gaba.ExitCodeQuit), nil
 	}
 
-	trimmedCount := strings.Split(sel.Items[sel.Selected[0]].Text, " (")[0] // TODO clean this up with regex
+	output.Selection = sel.Items[sel.Selected[0]].Metadata.(string)
 
-	return trimmedCount, 0, nil
+	switch output.Selection {
+	case "Browse":
+		return withCode(output, ExitCodeBrowse), nil
+	case "Available Updates":
+		return withCode(output, ExitCodeUpdates), nil
+	case "Manage Installed":
+		return withCode(output, ExitCodeManageInstalled), nil
+	}
+
+	return success(output), nil
 }

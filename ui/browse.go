@@ -6,60 +6,75 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"qlova.tech/sum"
 )
 
-type BrowseScreen struct {
-	AppState state.AppState
+type BrowseInput struct {
+	Storefront models.Storefront
 }
 
-func InitBrowseScreen(appState state.AppState) BrowseScreen {
-	return BrowseScreen{
-		AppState: appState,
+type BrowseOutput struct {
+	SelectedCategory string
+}
+
+type BrowseScreen struct{}
+
+func NewBrowseScreen() *BrowseScreen {
+	return &BrowseScreen{}
+}
+
+func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], error) {
+	output := BrowseOutput{}
+
+	// Compute data on demand
+	installedPaks, err := state.GetInstalledPaks()
+	if err != nil {
+		return withCode(output, gaba.ExitCodeError), err
 	}
-}
 
-func (bs BrowseScreen) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.Browse
-}
+	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
 
-func (bs BrowseScreen) Draw() (selection interface{}, exitCode int, e error) {
-	var menuItems []gabagool.MenuItem
+	var menuItems []gaba.MenuItem
 
-	for cat := range bs.AppState.BrowsePaks {
-		menuItems = append(menuItems, gabagool.MenuItem{
-			Text:     cat + " (" + strconv.Itoa(len(bs.AppState.BrowsePaks[cat])) + ")",
+	for cat := range browsePaks {
+		// Count available (not installed) paks in this category
+		available := 0
+		for _, pakStatus := range browsePaks[cat] {
+			if !pakStatus.IsInstalled {
+				available++
+			}
+		}
+
+		menuItems = append(menuItems, gaba.MenuItem{
+			Text:     cat + " (" + strconv.Itoa(available) + ")",
 			Selected: false,
 			Focused:  false,
 			Metadata: cat,
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
-	options := gabagool.DefaultListOptions("Browse Paks", menuItems)
-	options.EnableAction = true
-	options.FooterHelpItems = []gabagool.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "A", HelpText: "Select"},
-	}
+	options := gaba.DefaultListOptions("Browse Paks", menuItems)
+	options.FooterHelpItems = BackSelectFooter()
 
-	sel, err := gabagool.List(options)
+	sel, err := gaba.List(options)
 	if err != nil {
-		if errors.Is(err, gabagool.ErrCancelled) {
-			return nil, 2, nil
+		if errors.Is(err, gaba.ErrCancelled) {
+			return back(output), nil
 		}
-		return nil, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return nil, 2, nil
+		return back(output), nil
 	}
 
-	return sel.Items[sel.Selected[0]].Metadata, 0, nil
+	output.SelectedCategory = sel.Items[sel.Selected[0]].Metadata.(string)
+
+	return success(output), nil
 }

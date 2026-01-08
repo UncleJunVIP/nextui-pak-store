@@ -5,11 +5,11 @@ go 1.24.0
 toolchain go1.24.2
 
 require (
-	github.com/BrandonKowalski/gabagool/v2 v2.2.0
+	github.com/BrandonKowalski/gabagool/v2 v2.5.3
 	github.com/UncleJunVIP/certifiable v1.2.0
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	golang.org/x/mod v0.31.0
-	modernc.org/sqlite v1.40.1
+	modernc.org/sqlite v1.42.2
 	qlova.tech v0.1.1
 )
 
@@ -20,11 +20,16 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/ncruces/go-strftime v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	github.com/srwiley/oksvg v0.0.0-20221011165216-be6e8873101c // indirect
+	github.com/srwiley/rasterx v0.0.0-20220730225603-2ab79fcdd4ef // indirect
 	github.com/veandco/go-sdl2 v0.4.40 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20251209150349-8475f28825e9 // indirect
+	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93 // indirect
+	golang.org/x/image v0.34.0 // indirect
+	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/sys v0.39.0 // indirect
-	modernc.org/libc v1.67.1 // indirect
+	golang.org/x/text v0.32.0 // indirect
+	modernc.org/libc v1.67.4 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )

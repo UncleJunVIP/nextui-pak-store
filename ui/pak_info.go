@@ -17,41 +17,38 @@ import (
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/utils"
-	"qlova.tech/sum"
 )
 
-type PakInfoScreen struct {
-	Pak         []models.Pak
+type PakInfoInput struct {
+	Paks        []models.Pak
 	Category    string
 	IsUpdate    bool
 	IsInstalled bool
 }
 
-func InitPakInfoScreen(pak []models.Pak, category string, isUpdate bool, isInstalled bool) PakInfoScreen {
-	return PakInfoScreen{
-		Pak:         pak,
-		Category:    category,
-		IsUpdate:    isUpdate,
-		IsInstalled: isInstalled,
+type PakInfoOutput struct {
+	IsUpdate     bool
+	WasInstalled bool
+}
+
+type PakInfoScreen struct{}
+
+func NewPakInfoScreen() *PakInfoScreen {
+	return &PakInfoScreen{}
+}
+
+func (s *PakInfoScreen) Draw(input PakInfoInput) (ScreenResult[PakInfoOutput], error) {
+	if len(input.Paks) == 1 {
+		return s.drawSingle(input)
 	}
+	return s.drawMultiple(input)
 }
 
-func (pi PakInfoScreen) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.PakInfo
-}
-
-func (pi PakInfoScreen) Draw() (selection interface{}, exitCode int, e error) {
-	if len(pi.Pak) == 1 {
-		return pi.DrawSingle()
-	}
-
-	return pi.DrawMultiple()
-}
-
-func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e error) {
+func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutput], error) {
 	logger := gaba.GetLogger()
+	output := PakInfoOutput{IsUpdate: input.IsUpdate}
 
-	pak := pi.Pak[0]
+	pak := input.Paks[0]
 
 	screenshots := make([]string, len(pak.Screenshots))
 
@@ -60,7 +57,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 	var wg sync.WaitGroup
 
-	for i, s := range pak.Screenshots {
+	for i, screenshot := range pak.Screenshots {
 		wg.Add(1)
 		go func(index int, screenshot string) {
 			sem <- struct{}{}
@@ -90,7 +87,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 						"uri", uri)
 				}
 			}
-		}(i, s)
+		}(i, screenshot)
 	}
 
 	wg.Wait()
@@ -105,7 +102,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 	var sections []gaba.Section
 
-	if _, ok := pak.Changelog[pak.Version]; ok && pi.IsUpdate {
+	if _, ok := pak.Changelog[pak.Version]; ok && input.IsUpdate {
 		sections = append(sections,
 			gaba.NewDescriptionSection(
 				fmt.Sprintf("What's new in %s?", pak.Version),
@@ -140,7 +137,7 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 	var changelog []string
 
 	var versions []string
-	for k, _ := range pak.Changelog {
+	for k := range pak.Changelog {
 		versions = append(versions, k)
 	}
 
@@ -180,27 +177,27 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 	confirmLabel := "Install"
 
-	if pi.IsUpdate {
+	if input.IsUpdate {
 		confirmLabel = "Update"
-	} else if pi.IsInstalled {
+	} else if input.IsInstalled {
 		confirmLabel = "Uninstall"
 	}
 
 	footerItems := []gaba.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Back"},
+		FooterBack(),
 		{ButtonName: "A", HelpText: confirmLabel},
 	}
 
 	_, err = gaba.DetailScreen(pak.StorefrontName, options, footerItems)
 	if err != nil {
 		if errors.Is(err, gaba.ErrCancelled) {
-			return pi.IsUpdate, 2, nil
+			return back(output), nil
 		}
 		logger.Error("Unable to display pak info screen", "error", err)
-		return pi.IsUpdate, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
-	if pi.IsInstalled {
+	if input.IsInstalled {
 		_, err = gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", pak.Name),
 			[]gaba.FooterHelpItem{
 				{ButtonName: "B", HelpText: "Nevermind"},
@@ -211,17 +208,18 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 
 		if err != nil {
 			if errors.Is(err, gaba.ErrCancelled) {
-				return nil, 12, nil
+				return withCode(output, ExitCodeCancelled), nil
 			}
-			return nil, -1, err
+			return withCode(output, gaba.ExitCodeError), err
 		}
 
 		_, err = gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Uninstalling", pak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
 			pakLocation := ""
 
-			if pak.PakType == models.PakTypes.TOOL {
+			switch pak.PakType {
+			case models.PakTypes.TOOL:
 				pakLocation = filepath.Join(utils.GetToolRoot(), pak.Name+".pak")
-			} else if pak.PakType == models.PakTypes.EMU {
+			case models.PakTypes.EMU:
 				pakLocation = filepath.Join(utils.GetEmulatorRoot(), pak.Name+".pak")
 			}
 
@@ -243,40 +241,36 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		ctx := context.Background()
 		err = database.DBQ().Uninstall(ctx, sql.NullString{String: pak.RepoURL, Valid: true})
 		if err != nil {
-			// TODO wtf do I do here?
+			logger.Error("Failed to uninstall pak from database", "error", err)
 		}
 
-		return nil, 86, nil
+		output.WasInstalled = true
+		return withCode(output, ExitCodeUninstalled), nil
 	}
 
 	tmp, completed, err := utils.DownloadPakArchive(pak)
 	if err != nil {
 
 		if err.Error() == "download cancelled by user" {
-			return pi.IsUpdate, 12, nil
+			return withCode(output, ExitCodeCancelled), nil
 		}
 
 		logger.Error("Unable to download pak archive", "error", err)
-		return pi.IsUpdate, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	} else if !completed {
-		return pi.IsUpdate, 12, nil
+		return withCode(output, ExitCodeCancelled), nil
 	}
 
 	err = utils.UnzipPakArchive(pak, tmp)
 	if err != nil {
-		return pi.IsUpdate, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
-	if pak.HasScripts() {
-		if !pi.IsUpdate {
-
-		}
-	}
-
-	if !pi.IsUpdate {
+	if !input.IsUpdate {
 		info := database.InstallParams{
 			DisplayName:  pak.StorefrontName,
 			Name:         pak.Name,
+			RepoUrl:      sql.NullString{String: pak.RepoURL, Valid: true},
 			Version:      pak.Version,
 			Type:         models.PakTypeMap[pak.PakType],
 			CanUninstall: int64(1),
@@ -291,12 +285,12 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 	}
 
 	action := "Installed"
-	if pi.IsUpdate {
+	if input.IsUpdate {
 		action = "Updated"
 	}
 
 	if pak.Name == "Pak Store" {
-		return pi.IsUpdate, 23, nil
+		return withCode(output, ExitCodePakStoreUpdated), nil
 	}
 
 	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
@@ -304,32 +298,33 @@ func (pi PakInfoScreen) DrawSingle() (selection interface{}, exitCode int, e err
 		return nil, nil
 	})
 
-	return pi.IsUpdate, 0, nil
+	return success(output), nil
 }
 
-func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
+func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOutput], error) {
 	logger := gaba.GetLogger()
+	output := PakInfoOutput{IsUpdate: input.IsUpdate}
 
-	if len(pi.Pak) == 0 {
-		return pi.IsUpdate, 2, nil
+	if len(input.Paks) == 0 {
+		return back(output), nil
 	}
 
 	var sections []gaba.Section
 
-	pakNames := make([]string, len(pi.Pak))
-	for i, pak := range pi.Pak {
+	pakNames := make([]string, len(input.Paks))
+	for i, pak := range input.Paks {
 		pakNames[i] = pak.StorefrontName
 	}
 
 	overviewText := fmt.Sprintf("The following %d paks will be updated!",
-		len(pi.Pak))
+		len(input.Paks))
 
 	sections = append(sections, gaba.NewDescriptionSection(
 		"Update Overview",
 		overviewText,
 	))
 
-	for _, pak := range pi.Pak {
+	for _, pak := range input.Paks {
 		info := []gaba.MetadataItem{
 			{Label: "Author", Value: pak.Author},
 			{Label: "Current Version", Value: pak.Version},
@@ -340,7 +335,7 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 		}
 
 		sections = append(sections, gaba.NewInfoSection(
-			fmt.Sprintf("%s", pak.StorefrontName),
+			pak.StorefrontName,
 			info,
 		))
 
@@ -351,27 +346,27 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 	options.ShowThemeBackground = false
 
 	footerItems := []gaba.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Cancel"},
+		FooterCancel(),
 		{ButtonName: "X", HelpText: "Update All"},
 	}
 
-	title := fmt.Sprintf("Update %d Paks", len(pi.Pak))
+	title := fmt.Sprintf("Update %d Paks", len(input.Paks))
 
 	var err error
 	_, err = gaba.DetailScreen(title, options, footerItems)
 	if err != nil {
 		if errors.Is(err, gaba.ErrCancelled) {
-			return pi.IsUpdate, 2, nil
+			return back(output), nil
 		}
 		logger.Error("Unable to display multi-pak info screen", "error", err)
-		return pi.IsUpdate, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
-	for _, pak := range pi.Pak {
+	for _, pak := range input.Paks {
 		tmp, completed, err := utils.DownloadPakArchive(pak)
 		if err != nil {
 			if err.Error() == "download cancelled by user" {
-				return true, 33, nil
+				return withCode(output, ExitCodePartialUpdate), nil
 			}
 			logger.Error("Failed to download pak",
 				"error", err,
@@ -383,7 +378,7 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 				})
 			continue
 		} else if !completed {
-			return true, 33, nil
+			return withCode(output, ExitCodePartialUpdate), nil
 		}
 
 		err = utils.UnzipPakArchive(pak, tmp)
@@ -416,7 +411,7 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 					time.Sleep(2 * time.Second)
 					return nil, nil
 				})
-			return pi.IsUpdate, 23, nil
+			return withCode(output, ExitCodePakStoreUpdated), nil
 		}
 	}
 
@@ -426,5 +421,5 @@ func (pi PakInfoScreen) DrawMultiple() (interface{}, int, error) {
 			return nil, nil
 		})
 
-	return pi.IsUpdate, 0, nil
+	return success(output), nil
 }

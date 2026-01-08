@@ -5,35 +5,44 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
-	"qlova.tech/sum"
 )
 
-type UpdatesScreen struct {
-	AppState state.AppState
+type UpdatesInput struct {
+	Storefront models.Storefront
 }
 
-func InitUpdatesScreen(appState state.AppState) UpdatesScreen {
-	return UpdatesScreen{
-		AppState: appState,
+type UpdatesOutput struct {
+	SelectedPaks []models.Pak
+}
+
+type UpdatesScreen struct{}
+
+func NewUpdatesScreen() *UpdatesScreen {
+	return &UpdatesScreen{}
+}
+
+func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], error) {
+	output := UpdatesOutput{}
+
+	// Compute data on demand
+	installedPaks, err := state.GetInstalledPaks()
+	if err != nil {
+		return withCode(output, gaba.ExitCodeError), err
 	}
-}
 
-func (us UpdatesScreen) Name() sum.Int[models.ScreenName] {
-	return models.ScreenNames.Updates
-}
+	updatesAvailable := state.GetUpdatesAvailable(input.Storefront, installedPaks)
 
-func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
-	if len(us.AppState.UpdatesAvailable) == 0 {
-		return nil, 2, nil
+	if len(updatesAvailable) == 0 {
+		return back(output), nil
 	}
 
-	var menuItems []gabagool.MenuItem
+	var menuItems []gaba.MenuItem
 
-	for _, pak := range us.AppState.UpdatesAvailable {
-		menuItems = append(menuItems, gabagool.MenuItem{
+	for _, pak := range updatesAvailable {
+		menuItems = append(menuItems, gaba.MenuItem{
 			Text:     pak.StorefrontName,
 			Selected: false,
 			Focused:  false,
@@ -41,37 +50,35 @@ func (us UpdatesScreen) Draw() (selection interface{}, exitCode int, e error) {
 		})
 	}
 
-	slices.SortFunc(menuItems, func(a, b gabagool.MenuItem) int {
+	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
 		return strings.Compare(a.Text, b.Text)
 	})
 
 	if len(menuItems) > 1 {
-		menuItems = append([]gabagool.MenuItem{{
+		menuItems = append([]gaba.MenuItem{{
 			Text:     "Update All",
 			Selected: false,
 			Focused:  false,
-			Metadata: us.AppState.UpdatesAvailable,
+			Metadata: updatesAvailable,
 		}}, menuItems...)
 	}
 
-	options := gabagool.DefaultListOptions("Available Pak Updates", menuItems)
-	options.EnableAction = true
-	options.FooterHelpItems = []gabagool.FooterHelpItem{
-		{ButtonName: "B", HelpText: "Back"},
-		{ButtonName: "A", HelpText: "View"},
-	}
+	options := gaba.DefaultListOptions("Available Pak Updates", menuItems)
+	options.FooterHelpItems = BackViewFooter()
 
-	sel, err := gabagool.List(options)
+	sel, err := gaba.List(options)
 	if err != nil {
-		if errors.Is(err, gabagool.ErrCancelled) {
-			return nil, 2, nil
+		if errors.Is(err, gaba.ErrCancelled) {
+			return back(output), nil
 		}
-		return nil, -1, err
+		return withCode(output, gaba.ExitCodeError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return nil, 2, nil
+		return back(output), nil
 	}
 
-	return sel.Items[sel.Selected[0]].Metadata.([]models.Pak), 0, nil
+	output.SelectedPaks = sel.Items[sel.Selected[0]].Metadata.([]models.Pak)
+
+	return success(output), nil
 }
