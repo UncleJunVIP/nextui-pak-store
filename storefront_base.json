@@ -418,6 +418,13 @@
       "categories": [
         "Emulators"
       ]
+    },
+    {
+      "storefront_name": "Music Player",
+      "repo_url": "https://github.com/mohammadsyuhada/nextui-music-player",
+      "categories": [
+        "Media"
+      ]
     }
   ]
 }
