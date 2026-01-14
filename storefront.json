@@ -2292,6 +2292,48 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "Music Player",
+      "name": "Music Player",
+      "version": "v1.1.1",
+      "type": "TOOL",
+      "description": "A comprehensive music playback application for NextUI featuring local file playback, internet radio streaming, and MP3 audio downloading.",
+      "author": "kotaksempit",
+      "repo_url": "https://github.com/mohammadsyuhada/nextui-music-player",
+      "release_filename": "Music.Player.pak.zip",
+      "changelog": {
+        "v1.0.0": "Initial stable release",
+        "v1.1.0": "CPU usage optimizations and minor bug fixes",
+        "v1.1.1": "Fix: Prevent downloads failing at 100% by enforcing M4A format"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": [
+        ".github/resources/screenshots/main.jpg"
+      ],
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Media"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
