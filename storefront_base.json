@@ -425,6 +425,13 @@
       "categories": [
         "Media"
       ]
+    },
+    {
+      "storefront_name": "TIC-80",
+      "repo_url": "https://github.com/amayer5125/nextui-tic-80-pak",
+      "categories": [
+        "Emulators"
+      ]
     }
   ]
 }
