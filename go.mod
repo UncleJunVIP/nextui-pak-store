@@ -8,8 +8,8 @@ require (
 	github.com/BrandonKowalski/gabagool/v2 v2.5.3
 	github.com/UncleJunVIP/certifiable v1.2.0
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
-	golang.org/x/mod v0.31.0
-	modernc.org/sqlite v1.42.2
+	golang.org/x/mod v0.32.0
+	modernc.org/sqlite v1.43.0
 	qlova.tech v0.1.1
 )
 
@@ -27,8 +27,8 @@ require (
 	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93 // indirect
 	golang.org/x/image v0.34.0 // indirect
 	golang.org/x/net v0.48.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	modernc.org/libc v1.67.4 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
