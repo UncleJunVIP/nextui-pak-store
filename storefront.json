@@ -2334,6 +2334,44 @@
       ],
       "large_pak": false,
       "disabled": false
+    },
+    {
+      "storefront_name": "TIC-80",
+      "name": "TIC",
+      "version": "0.1.0",
+      "type": "EMU",
+      "description": "Runs TIC-80 fantasy computer games",
+      "author": "Alex Mayer",
+      "repo_url": "https://github.com/amayer5125/nextui-tic-80-pak",
+      "release_filename": "TIC.pak.zip",
+      "changelog": {
+        "0.1.0": "Initial Pak"
+      },
+      "previous_names": null,
+      "scripts": {
+        "post_install": {
+          "path": "",
+          "args": null
+        },
+        "post_update": {
+          "path": "",
+          "args": null
+        },
+        "post_uninstall": {
+          "path": "",
+          "args": null
+        }
+      },
+      "update_ignore": null,
+      "screenshots": null,
+      "platforms": [
+        "tg5040"
+      ],
+      "categories": [
+        "Emulators"
+      ],
+      "large_pak": false,
+      "disabled": false
     }
   ]
 }
