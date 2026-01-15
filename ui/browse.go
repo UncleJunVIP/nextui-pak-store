@@ -12,11 +12,15 @@ import (
 )
 
 type BrowseInput struct {
-	Storefront models.Storefront
+	Storefront           models.Storefront
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type BrowseOutput struct {
-	SelectedCategory string
+	SelectedCategory     string
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type BrowseScreen struct{}
@@ -26,7 +30,10 @@ func NewBrowseScreen() *BrowseScreen {
 }
 
 func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], error) {
-	output := BrowseOutput{}
+	output := BrowseOutput{
+		LastSelectedIndex:    input.LastSelectedIndex,
+		LastSelectedPosition: input.LastSelectedPosition,
+	}
 
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
@@ -60,6 +67,8 @@ func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], erro
 	})
 
 	options := gaba.DefaultListOptions("Browse Paks", menuItems)
+	options.SelectedIndex = input.LastSelectedIndex
+	options.VisibleStartIndex = max(0, input.LastSelectedIndex-input.LastSelectedPosition)
 	options.FooterHelpItems = BackSelectFooter()
 
 	sel, err := gaba.List(options)
@@ -75,6 +84,8 @@ func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], erro
 	}
 
 	output.SelectedCategory = sel.Items[sel.Selected[0]].Metadata.(string)
+	output.LastSelectedIndex = sel.Selected[0]
+	output.LastSelectedPosition = sel.VisiblePosition
 
 	return success(output), nil
 }

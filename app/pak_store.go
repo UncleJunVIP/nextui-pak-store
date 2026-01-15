@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"time"
 
+	_ "github.com/BrandonKowalski/certifiable"
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
-	_ "github.com/UncleJunVIP/certifiable"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"

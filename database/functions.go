@@ -55,6 +55,7 @@ func Init() {
 	}
 
 	columnMigration("installed_paks", "repo_url", "TEXT")
+	columnMigration("installed_paks", "pak_id", "TEXT")
 
 	queries = New(dbc)
 
@@ -68,6 +69,7 @@ func Init() {
 		queries.Install(ctx, InstallParams{
 			DisplayName:  "Pak Store",
 			Name:         "Pak Store",
+			PakID:        sql.NullString{String: models.PakStoreID, Valid: true},
 			RepoUrl:      sql.NullString{String: models.PakStoreRepo, Valid: true},
 			Version:      pak.Version,
 			Type:         "TOOL",
@@ -77,6 +79,7 @@ func Init() {
 		queries.UpdateVersion(ctx, UpdateVersionParams{
 			Version: pak.Version,
 			RepoUrl: sql.NullString{String: models.PakStoreRepo, Valid: true},
+			PakID:   sql.NullString{String: models.PakStoreID, Valid: true},
 		})
 	}
 }

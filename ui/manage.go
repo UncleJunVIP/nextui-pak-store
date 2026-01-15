@@ -11,11 +11,15 @@ import (
 )
 
 type ManageInstalledInput struct {
-	Storefront models.Storefront
+	Storefront           models.Storefront
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type ManageInstalledOutput struct {
-	SelectedPak models.Pak
+	SelectedPak          models.Pak
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type ManageInstalledScreen struct{}
@@ -25,7 +29,10 @@ func NewManageInstalledScreen() *ManageInstalledScreen {
 }
 
 func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[ManageInstalledOutput], error) {
-	output := ManageInstalledOutput{}
+	output := ManageInstalledOutput{
+		LastSelectedIndex:    input.LastSelectedIndex,
+		LastSelectedPosition: input.LastSelectedPosition,
+	}
 
 	// Get installed paks from database
 	installedPaks, err := state.GetInstalledPaks()
@@ -43,7 +50,15 @@ func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[M
 		var pak models.Pak
 
 		for _, p := range input.Storefront.Paks {
-			if p.RepoURL == installed.RepoUrl.String {
+			// Match by pak_id first, then fall back to repo_url
+			matched := false
+			if installed.PakID.Valid && installed.PakID.String != "" && p.ID == installed.PakID.String {
+				matched = true
+			} else if installed.RepoUrl.Valid && p.RepoURL == installed.RepoUrl.String {
+				matched = true
+			}
+
+			if matched {
 				pak = p
 				break
 			}
@@ -64,6 +79,8 @@ func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[M
 	})
 
 	options := gaba.DefaultListOptions("Manage Installed Paks", menuItems)
+	options.SelectedIndex = input.LastSelectedIndex
+	options.VisibleStartIndex = max(0, input.LastSelectedIndex-input.LastSelectedPosition)
 	options.FooterHelpItems = BackSelectFooter()
 
 	sel, err := gaba.List(options)
@@ -79,6 +96,8 @@ func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[M
 	}
 
 	output.SelectedPak = sel.Items[sel.Selected[0]].Metadata.(models.Pak)
+	output.LastSelectedIndex = sel.Selected[0]
+	output.LastSelectedPosition = sel.VisiblePosition
 
 	return success(output), nil
 }

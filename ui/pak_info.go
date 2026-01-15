@@ -175,17 +175,22 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 	options.ShowThemeBackground = false
 	options.EnableAction = true
 
-	confirmLabel := "Install"
-
-	if input.IsUpdate {
-		confirmLabel = "Update"
-	} else if input.IsInstalled {
-		confirmLabel = "Uninstall"
-	}
-
-	footerItems := []gaba.FooterHelpItem{
-		FooterBack(),
-		{ButtonName: "A", HelpText: confirmLabel},
+	var footerItems []gaba.FooterHelpItem
+	if input.IsInstalled {
+		footerItems = []gaba.FooterHelpItem{
+			FooterBack(),
+			{ButtonName: "A", HelpText: "Uninstall"},
+		}
+	} else if input.IsUpdate {
+		footerItems = []gaba.FooterHelpItem{
+			FooterBack(),
+			{ButtonName: "A", HelpText: "Update"},
+		}
+	} else {
+		footerItems = []gaba.FooterHelpItem{
+			FooterBack(),
+			{ButtonName: "A", HelpText: "Install"},
+		}
 	}
 
 	_, err = gaba.DetailScreen(pak.StorefrontName, options, footerItems)
@@ -239,7 +244,7 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 		}
 
 		ctx := context.Background()
-		err = database.DBQ().Uninstall(ctx, sql.NullString{String: pak.RepoURL, Valid: true})
+		err = database.DBQ().Uninstall(ctx, sql.NullString{String: pak.ID, Valid: true})
 		if err != nil {
 			logger.Error("Failed to uninstall pak from database", "error", err)
 		}
@@ -270,6 +275,7 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 		info := database.InstallParams{
 			DisplayName:  pak.StorefrontName,
 			Name:         pak.Name,
+			PakID:        sql.NullString{String: pak.ID, Valid: true},
 			RepoUrl:      sql.NullString{String: pak.RepoURL, Valid: true},
 			Version:      pak.Version,
 			Type:         models.PakTypeMap[pak.PakType],
@@ -278,8 +284,9 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 		database.DBQ().Install(context.Background(), info)
 	} else {
 		update := database.UpdateVersionParams{
-			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
 			Version: pak.Version,
+			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
+			PakID:   sql.NullString{String: pak.ID, Valid: true},
 		}
 		database.DBQ().UpdateVersion(context.Background(), update)
 	}
@@ -395,8 +402,9 @@ func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOu
 		}
 
 		update := database.UpdateVersionParams{
-			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
 			Version: pak.Version,
+			RepoUrl: sql.NullString{String: pak.RepoURL, Valid: true},
+			PakID:   sql.NullString{String: pak.ID, Valid: true},
 		}
 		err = database.DBQ().UpdateVersion(context.Background(), update)
 		if err != nil {

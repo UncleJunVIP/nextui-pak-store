@@ -24,11 +24,15 @@ type ListPosition struct {
 }
 
 type NavState struct {
+	BrowsePos        ListPosition
 	PakListPos       ListPosition
+	ManagePos        ListPosition
+	UpdatesPos       ListPosition
 	SelectedCategory string
 	SelectedPaks     []models.Pak
 	IsUpdate         bool
 	IsInstalled      bool
+	Source           gaba.StateName
 }
 
 func (n *NavState) ResetPakListPos() {
@@ -67,15 +71,21 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 	// Browse State
 	gaba.AddState(fsm, browse, func(ctx *gaba.Context) (ui.BrowseOutput, gaba.ExitCode) {
 		storefront, _ := gaba.Get[models.Storefront](ctx)
+		nav, _ := gaba.Get[*NavState](ctx)
 
 		screen := ui.NewBrowseScreen()
 		result, err := screen.Draw(ui.BrowseInput{
-			Storefront: storefront,
+			Storefront:           storefront,
+			LastSelectedIndex:    nav.BrowsePos.Index,
+			LastSelectedPosition: nav.BrowsePos.VisibleStartIndex,
 		})
 
 		if err != nil {
 			return ui.BrowseOutput{}, gaba.ExitCodeError
 		}
+
+		nav.BrowsePos.Index = result.Value.LastSelectedIndex
+		nav.BrowsePos.VisibleStartIndex = result.Value.LastSelectedPosition
 
 		return result.Value, result.ExitCode
 	}).
@@ -115,7 +125,8 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 			nav, _ := gaba.Get[*NavState](ctx)
 			nav.SelectedPaks = []models.Pak{output.SelectedPak}
 			nav.IsUpdate = false
-			nav.IsInstalled = false
+			nav.IsInstalled = output.IsInstalled
+			nav.Source = pakList
 			return nil
 		}).
 		On(gaba.ExitCodeBack, browse)
@@ -136,10 +147,23 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 			return ui.PakInfoOutput{}, gaba.ExitCodeError
 		}
 
-		return result.Value, result.ExitCode
+		// Route back to the correct source screen
+		exitCode := result.ExitCode
+		if exitCode == gaba.ExitCodeBack || exitCode == gaba.ExitCodeSuccess {
+			switch nav.Source {
+			case manageInstalled:
+				exitCode = ui.ExitCodeBackToManage
+			case updates:
+				exitCode = ui.ExitCodeBackToUpdates
+			}
+		}
+
+		return result.Value, exitCode
 	}).
 		On(gaba.ExitCodeSuccess, pakList).
 		On(gaba.ExitCodeBack, pakList).
+		On(ui.ExitCodeBackToManage, manageInstalled).
+		On(ui.ExitCodeBackToUpdates, updates).
 		OnWithHook(ui.ExitCodePakStoreUpdated, mainMenu, func(ctx *gaba.Context) error {
 			gaba.ProcessMessage("Pak Store Updated! Exiting...", gaba.ProcessMessageOptions{}, func() (any, error) {
 				time.Sleep(3 * time.Second)
@@ -155,15 +179,21 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 	// Updates State
 	gaba.AddState(fsm, updates, func(ctx *gaba.Context) (ui.UpdatesOutput, gaba.ExitCode) {
 		storefront, _ := gaba.Get[models.Storefront](ctx)
+		nav, _ := gaba.Get[*NavState](ctx)
 
 		screen := ui.NewUpdatesScreen()
 		result, err := screen.Draw(ui.UpdatesInput{
-			Storefront: storefront,
+			Storefront:           storefront,
+			LastSelectedIndex:    nav.UpdatesPos.Index,
+			LastSelectedPosition: nav.UpdatesPos.VisibleStartIndex,
 		})
 
 		if err != nil {
 			return ui.UpdatesOutput{}, gaba.ExitCodeError
 		}
+
+		nav.UpdatesPos.Index = result.Value.LastSelectedIndex
+		nav.UpdatesPos.VisibleStartIndex = result.Value.LastSelectedPosition
 
 		return result.Value, result.ExitCode
 	}).
@@ -173,6 +203,7 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 			nav.SelectedPaks = output.SelectedPaks
 			nav.IsUpdate = true
 			nav.IsInstalled = false
+			nav.Source = updates
 			return nil
 		}).
 		On(gaba.ExitCodeBack, mainMenu)
@@ -180,15 +211,21 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 	// Manage Installed State
 	gaba.AddState(fsm, manageInstalled, func(ctx *gaba.Context) (ui.ManageInstalledOutput, gaba.ExitCode) {
 		storefront, _ := gaba.Get[models.Storefront](ctx)
+		nav, _ := gaba.Get[*NavState](ctx)
 
 		screen := ui.NewManageInstalledScreen()
 		result, err := screen.Draw(ui.ManageInstalledInput{
-			Storefront: storefront,
+			Storefront:           storefront,
+			LastSelectedIndex:    nav.ManagePos.Index,
+			LastSelectedPosition: nav.ManagePos.VisibleStartIndex,
 		})
 
 		if err != nil {
 			return ui.ManageInstalledOutput{}, gaba.ExitCodeError
 		}
+
+		nav.ManagePos.Index = result.Value.LastSelectedIndex
+		nav.ManagePos.VisibleStartIndex = result.Value.LastSelectedPosition
 
 		return result.Value, result.ExitCode
 	}).
@@ -198,6 +235,7 @@ func buildFSM(storefront models.Storefront) *gaba.FSM {
 			nav.SelectedPaks = []models.Pak{output.SelectedPak}
 			nav.IsUpdate = false
 			nav.IsInstalled = true
+			nav.Source = manageInstalled
 			return nil
 		}).
 		On(gaba.ExitCodeBack, mainMenu)

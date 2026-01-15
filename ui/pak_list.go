@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/constants"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 )
@@ -22,6 +23,7 @@ type PakListOutput struct {
 	Category             string
 	LastSelectedIndex    int
 	LastSelectedPosition int
+	IsInstalled          bool
 }
 
 type PakListScreen struct{}
@@ -53,14 +55,14 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 		if pakStatus.HasUpdate {
 			displayText += " [Update Available]"
 		} else if pakStatus.IsInstalled {
-			displayText += " [Installed]"
+			displayText += " " + constants.Download
 		}
 
 		menuItems = append(menuItems, gaba.MenuItem{
 			Text:     displayText,
 			Selected: false,
 			Focused:  false,
-			Metadata: pakStatus.Pak,
+			Metadata: pakStatus,
 		})
 	}
 
@@ -85,7 +87,9 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 		return back(output), nil
 	}
 
-	output.SelectedPak = sel.Items[sel.Selected[0]].Metadata.(models.Pak)
+	selectedStatus := sel.Items[sel.Selected[0]].Metadata.(state.PakWithStatus)
+	output.SelectedPak = selectedStatus.Pak
+	output.IsInstalled = selectedStatus.IsInstalled
 	output.LastSelectedIndex = sel.Selected[0]
 	output.LastSelectedPosition = sel.VisiblePosition
 

@@ -9,19 +9,24 @@ SELECT *
 FROM installed_paks
 WHERE repo_url IS NULL;
 
+-- name: ListInstalledPaksWithoutPakID :many
+SELECT *
+FROM installed_paks
+WHERE pak_id IS NULL OR pak_id = '';
+
 -- name: Install :exec
-INSERT INTO installed_paks (display_name, name, repo_url, version, type, can_uninstall)
-VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO installed_paks (display_name, name, pak_id, repo_url, version, type, can_uninstall)
+VALUES (?, ?, ?, ?, ?, ?, ?);
 
 -- name: UpdateVersion :exec
 UPDATE installed_paks
-SET version = ?
-WHERE repo_url = ?;
+SET version = ?, repo_url = ?
+WHERE pak_id = ?;
 
 -- name: Uninstall :exec
 DELETE
 FROM installed_paks
-WHERE repo_url = ?;
+WHERE pak_id = ?;
 
 -- name: UpdateInstalledWithRepo :exec
 UPDATE installed_paks
@@ -29,3 +34,11 @@ SET display_name = @new_display_name,
     name         = @new_name,
     repo_url     = @new_repo_url
 WHERE display_name = @old_display_name;
+
+-- name: UpdateInstalledWithPakID :exec
+UPDATE installed_paks
+SET pak_id       = @pak_id,
+    display_name = @new_display_name,
+    name         = @new_name,
+    repo_url     = @new_repo_url
+WHERE repo_url = @old_repo_url;

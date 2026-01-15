@@ -13,4 +13,8 @@ const (
 	ExitCodeBrowse          gaba.ExitCode = 100
 	ExitCodeUpdates         gaba.ExitCode = 101
 	ExitCodeManageInstalled gaba.ExitCode = 102
+
+	// Navigation back codes
+	ExitCodeBackToManage  gaba.ExitCode = 110
+	ExitCodeBackToUpdates gaba.ExitCode = 111
 )

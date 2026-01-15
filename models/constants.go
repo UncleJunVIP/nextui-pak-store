@@ -1,6 +1,7 @@
 package models
 
 const (
+	PakStoreID              = "xK9mR2vL4w"
 	PakStoreRepo            = "https://github.com/UncleJunVIP/nextui-pak-store"
 	StorefrontJsonURL       = "https://pak-store.unclejun.vip/storefront.json"
 	StorefrontJsonBackupURL = "https://raw.githubusercontent.com/UncleJunVIP/nextui-pak-store/refs/heads/gh-pages/storefront.json"

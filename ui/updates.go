@@ -11,11 +11,15 @@ import (
 )
 
 type UpdatesInput struct {
-	Storefront models.Storefront
+	Storefront           models.Storefront
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type UpdatesOutput struct {
-	SelectedPaks []models.Pak
+	SelectedPaks         []models.Pak
+	LastSelectedIndex    int
+	LastSelectedPosition int
 }
 
 type UpdatesScreen struct{}
@@ -25,7 +29,10 @@ func NewUpdatesScreen() *UpdatesScreen {
 }
 
 func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], error) {
-	output := UpdatesOutput{}
+	output := UpdatesOutput{
+		LastSelectedIndex:    input.LastSelectedIndex,
+		LastSelectedPosition: input.LastSelectedPosition,
+	}
 
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
@@ -64,6 +71,8 @@ func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], e
 	}
 
 	options := gaba.DefaultListOptions("Available Pak Updates", menuItems)
+	options.SelectedIndex = input.LastSelectedIndex
+	options.VisibleStartIndex = max(0, input.LastSelectedIndex-input.LastSelectedPosition)
 	options.FooterHelpItems = BackViewFooter()
 
 	sel, err := gaba.List(options)
@@ -79,6 +88,8 @@ func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], e
 	}
 
 	output.SelectedPaks = sel.Items[sel.Selected[0]].Metadata.([]models.Pak)
+	output.LastSelectedIndex = sel.Selected[0]
+	output.LastSelectedPosition = sel.VisiblePosition
 
 	return success(output), nil
 }
