@@ -3,6 +3,7 @@
   "url": "https://github.com/UncleJunVIP/nextui-pak-store",
   "paks": [
     {
+      "id": "xK9mR2vL4w",
       "storefront_name": "Pak Store",
       "name": "Pak Store",
       "version": "v2.0.1",
@@ -10,6 +11,7 @@
       "description": "A Pak Store in this economy?! Find, install and update community made Paks right on your device!",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+      "previous_repo_urls": null,
       "release_filename": "Pak.Store.pak.zip",
       "changelog": {
         "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!",
@@ -58,6 +60,7 @@
       "disabled": false
     },
     {
+      "id": "bQ3nT7yH1p",
       "storefront_name": "Mortar",
       "name": "",
       "version": "",
@@ -65,6 +68,7 @@
       "description": "",
       "author": "",
       "repo_url": "https://github.com/UncleJunVIP/Mortar",
+      "previous_repo_urls": null,
       "release_filename": "",
       "changelog": null,
       "previous_names": null,
@@ -92,6 +96,7 @@
       "disabled": true
     },
     {
+      "id": "jF8cW5zN2m",
       "storefront_name": "Grout",
       "name": "Grout",
       "version": "v1.4.2",
@@ -99,6 +104,7 @@
       "description": "A RomM client for NextUI, muOS, Knulli, and Spruce v4.",
       "author": "K-Wall",
       "repo_url": "https://github.com/rommapp/grout",
+      "previous_repo_urls": null,
       "release_filename": "Grout.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release of Grout!",
@@ -147,6 +153,7 @@
       "disabled": false
     },
     {
+      "id": "pY6kD4xS9q",
       "storefront_name": "Game Manager",
       "name": "Game Manager",
       "version": "v2.8.0",
@@ -154,6 +161,7 @@
       "description": "A one-stop pak for all your game management needs.",
       "author": "K-Wall \u0026 redria7",
       "repo_url": "https://github.com/UncleJunVIP/nextui-game-manager",
+      "previous_repo_urls": null,
       "release_filename": "Game.Manager.pak.zip",
       "changelog": {
         "v2.0.0": "Huge UI refresh along with long requested bugfixes.",
@@ -197,6 +205,7 @@
       "disabled": false
     },
     {
+      "id": "tR1vB8gM3h",
       "storefront_name": "RetroArch",
       "name": "RetroArch",
       "version": "v1.0.0",
@@ -204,6 +213,7 @@
       "description": "A clean, reproducible RetroArch build with known provenance.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/retroarch-tg5040",
+      "previous_repo_urls": null,
       "release_filename": "RetroArch.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release with RetroArch v1.21.0. See GitHub README for more details."
@@ -235,6 +245,7 @@
       "disabled": false
     },
     {
+      "id": "wL5nJ2cF7z",
       "storefront_name": "Aesthetics",
       "name": "Aesthetics",
       "version": "v1.1.0",
@@ -242,6 +253,7 @@
       "description": "Download, Apply, Clear, and Save Aesthetic Properties: Theme Management with Ultimate Control!",
       "author": "redria7",
       "repo_url": "https://github.com/redria7/nextui-aesthetics",
+      "previous_repo_urls": null,
       "release_filename": "Aesthetics.pak.zip",
       "changelog": {
         "v1.0.0": "Aesthetics launch, featuring theme downloads, theme deletion, and wallpaper/icon management",
@@ -275,6 +287,7 @@
       "disabled": false
     },
     {
+      "id": "aH9pK6dX4r",
       "storefront_name": "LED Manager",
       "name": "LED Manager",
       "version": "v1.1.1",
@@ -282,6 +295,7 @@
       "description": "A enhanced LED configuration tool.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-led-manager",
+      "previous_repo_urls": null,
       "release_filename": "LED.Manager.pak.zip",
       "changelog": {
         "v1.0.0": "The initial release! Warning there may be bugs!",
@@ -315,6 +329,7 @@
       "disabled": false
     },
     {
+      "id": "mC3qY8wT1v",
       "storefront_name": "S3 SaveSync",
       "name": "SaveSync",
       "version": "v1.0.1",
@@ -322,6 +337,7 @@
       "description": "Sync your save files to a versioned S3 Bucket.",
       "author": "K-Wall",
       "repo_url": "https://github.com/UncleJunVIP/nextui-save-sync",
+      "previous_repo_urls": null,
       "release_filename": "SaveSync.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release!",
@@ -354,6 +370,7 @@
       "disabled": false
     },
     {
+      "id": "gN7zR5bL2k",
       "storefront_name": "Screenshot Monitor",
       "name": "Screenshot Monitor",
       "version": "0.8.0",
@@ -361,6 +378,7 @@
       "description": "Launches a daemon that allows users to take screenshots",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-screenshot-monitor-pak",
+      "previous_repo_urls": null,
       "release_filename": "Screenshot.Monitor.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -394,6 +412,7 @@
       "disabled": false
     },
     {
+      "id": "sD4xM9hP6j",
       "storefront_name": "Dropbear Server (SSH)",
       "name": "SSH Server",
       "version": "0.8.0",
@@ -401,6 +420,7 @@
       "description": "Manages the Dropbear SSH Server",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-dropbear-server-pak",
+      "previous_repo_urls": null,
       "release_filename": "SSH.Server.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -434,6 +454,7 @@
       "disabled": false
     },
     {
+      "id": "yF1cQ7nW3t",
       "storefront_name": "SFTPGO Server",
       "name": "FTP Server",
       "version": "0.6.1",
@@ -441,6 +462,7 @@
       "description": "Manages the FTP Server",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-sftpgo-server-pak",
+      "previous_repo_urls": null,
       "release_filename": "FTP.Server.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -474,6 +496,7 @@
       "disabled": false
     },
     {
+      "id": "kB8vT2gR5m",
       "storefront_name": "Dufs HTTP Server",
       "name": "HTTP Server",
       "version": "0.9.0",
@@ -481,6 +504,7 @@
       "description": "Manages the Dufs HTTP Server",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-dufs-server-pak",
+      "previous_repo_urls": null,
       "release_filename": "HTTP.Server.pak.zip",
       "changelog": null,
       "previous_names": [
@@ -516,6 +540,7 @@
       "disabled": false
     },
     {
+      "id": "hJ6yL4zK9n",
       "storefront_name": "File Browser",
       "name": "HTTP Filebrowser",
       "version": "0.8.0",
@@ -523,6 +548,7 @@
       "description": "Manages the HTTP Filebrowser",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-filebrowser-pak",
+      "previous_repo_urls": null,
       "release_filename": "HTTP.Filebrowser.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -556,6 +582,7 @@
       "disabled": false
     },
     {
+      "id": "cP3wS1dH7x",
       "storefront_name": "FTP Server",
       "name": "FTP Server",
       "version": "0.3.1",
@@ -563,6 +590,7 @@
       "description": "Manages the FTP Server",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-ftpserver-pak",
+      "previous_repo_urls": null,
       "release_filename": "FTP.Server.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -596,6 +624,7 @@
       "disabled": false
     },
     {
+      "id": "nX9mF5qB2v",
       "storefront_name": "Syncthing",
       "name": "Syncthing",
       "version": "0.7.2",
@@ -603,6 +632,7 @@
       "description": "Manages Syncthing",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-syncthing-pak",
+      "previous_repo_urls": null,
       "release_filename": "Syncthing.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -636,6 +666,7 @@
       "disabled": false
     },
     {
+      "id": "rT4kY8cN6p",
       "storefront_name": "Developer",
       "name": "Developer",
       "version": "0.9.0",
@@ -643,6 +674,7 @@
       "description": "Keeps the screen awake for development purposes",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-developer-pak",
+      "previous_repo_urls": null,
       "release_filename": "Developer.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -676,6 +708,7 @@
       "disabled": false
     },
     {
+      "id": "zW1hD3jL7g",
       "storefront_name": "Remote Terminal",
       "name": "Remote Terminal",
       "version": "0.7.0",
@@ -683,6 +716,7 @@
       "description": "Manages the Remote Terminal",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-remote-terminal-pak",
+      "previous_repo_urls": null,
       "release_filename": "Remote.Terminal.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -714,6 +748,7 @@
       "disabled": false
     },
     {
+      "id": "vM7rP9xQ2s",
       "storefront_name": "Report",
       "name": "Report",
       "version": "0.9.1",
@@ -721,6 +756,7 @@
       "description": "Generates a report for development purposes",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-report-pak",
+      "previous_repo_urls": null,
       "release_filename": "Report.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -755,6 +791,7 @@
       "disabled": false
     },
     {
+      "id": "dK5nB4wT8y",
       "storefront_name": "Terminal",
       "name": "Terminal",
       "version": "0.8.1",
@@ -762,6 +799,7 @@
       "description": "Manages the Terminal",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-terminal-pak",
+      "previous_repo_urls": null,
       "release_filename": "Terminal.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -793,6 +831,7 @@
       "disabled": false
     },
     {
+      "id": "qH2cF6zR1m",
       "storefront_name": "Simple Mode",
       "name": "Simple Mode",
       "version": "0.4.0",
@@ -800,6 +839,7 @@
       "description": "Manages MinUI's Simple Mode",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-simple-mode-pak",
+      "previous_repo_urls": null,
       "release_filename": "Simple.Mode.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -833,6 +873,7 @@
       "disabled": false
     },
     {
+      "id": "lY9vJ3gK7p",
       "storefront_name": "Artwork Scraper",
       "name": "Artwork Scraper",
       "version": "0.7.0",
@@ -840,6 +881,7 @@
       "description": "Scrapes artwork from the internet",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-artwork-scraper-pak",
+      "previous_repo_urls": null,
       "release_filename": "Artwork.Scraper.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -871,6 +913,7 @@
       "disabled": false
     },
     {
+      "id": "xS4dL8hN5w",
       "storefront_name": "Random Game",
       "name": "Random Game",
       "version": "0.5.0",
@@ -878,6 +921,7 @@
       "description": "Randomly selects a game from the ROMs folder and launches it",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-random-game-pak",
+      "previous_repo_urls": null,
       "release_filename": "Random.Game.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -911,6 +955,7 @@
       "disabled": false
     },
     {
+      "id": "bR1mQ7yC2t",
       "storefront_name": "PICO-8",
       "name": "PICO",
       "version": "0.6.0",
@@ -918,6 +963,7 @@
       "description": "Runs pico-8 in standalone mode",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-pico-8-pak",
+      "previous_repo_urls": null,
       "release_filename": "PICO.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -948,6 +994,7 @@
       "disabled": false
     },
     {
+      "id": "fW6pX3kB9v",
       "storefront_name": "Nintendo DS (DraStic)",
       "name": "NDS",
       "version": "0.7.0",
@@ -955,6 +1002,7 @@
       "description": "Runs drastic in standalone mode for the specified rom",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-nintendo-ds-pak",
+      "previous_repo_urls": null,
       "release_filename": "NDS.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -987,6 +1035,7 @@
       "disabled": false
     },
     {
+      "id": "jT8nH4zM1r",
       "storefront_name": "Nintendo 64 (mupen64plus)",
       "name": "N64",
       "version": "0.5.0",
@@ -994,6 +1043,7 @@
       "description": "Runs mupen64plus in standalone mode for the specified rom",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-n64-pak",
+      "previous_repo_urls": null,
       "release_filename": "N64.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1023,6 +1073,7 @@
       "disabled": false
     },
     {
+      "id": "pK2yD5qS7g",
       "storefront_name": "Dreamcast (Flycast)",
       "name": "DC",
       "version": "0.5.0",
@@ -1030,6 +1081,7 @@
       "description": "Runs Flycast in standalone mode for the specified rom",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-dreamcast-pak",
+      "previous_repo_urls": null,
       "release_filename": "DC.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1059,6 +1111,7 @@
       "disabled": false
     },
     {
+      "id": "tN9cW1vL4h",
       "storefront_name": "Moonlight",
       "name": "Moonlight",
       "version": "0.4.0",
@@ -1066,6 +1119,7 @@
       "description": "Game streaming server via Moonlight",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-moonlight-pak",
+      "previous_repo_urls": null,
       "release_filename": "Moonlight.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1095,6 +1149,7 @@
       "disabled": false
     },
     {
+      "id": "wB5jR8xF3k",
       "storefront_name": "Media Player",
       "name": "Media Player",
       "version": "0.2.1",
@@ -1102,6 +1157,7 @@
       "description": "Media Player",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-media-player-pak",
+      "previous_repo_urls": null,
       "release_filename": "Media.Player.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1131,6 +1187,7 @@
       "disabled": false
     },
     {
+      "id": "aM3gY6nP2z",
       "storefront_name": "Gallery Pak",
       "name": "Gallery",
       "version": "0.3.0",
@@ -1138,6 +1195,7 @@
       "description": "Launches a Gallery to view screenshots",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-gallery-pak",
+      "previous_repo_urls": null,
       "release_filename": "Gallery.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1171,6 +1229,7 @@
       "disabled": false
     },
     {
+      "id": "gQ7hT4dK9c",
       "storefront_name": "Portmaster",
       "name": "PORTS",
       "version": "2.10.0",
@@ -1178,6 +1237,7 @@
       "description": "A Emu Pak for PortMaster which includes everything needed and requires no additional software.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-portmaster",
+      "previous_repo_urls": null,
       "release_filename": "PORTS.pakz",
       "changelog": null,
       "previous_names": null,
@@ -1210,6 +1270,7 @@
       "disabled": false
     },
     {
+      "id": "mL1wS5bV8n",
       "storefront_name": "PPSSPP",
       "name": "PSP",
       "version": "4.1.0",
@@ -1217,6 +1278,7 @@
       "description": "A Emu Pak for PSP, wrapping the standalone PPSSPP emulator.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-psp",
+      "previous_repo_urls": null,
       "release_filename": "PSP.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1249,6 +1311,7 @@
       "disabled": false
     },
     {
+      "id": "sF9zJ2rX6y",
       "storefront_name": "Cloud Backups",
       "name": "Cloud Backups",
       "version": "1.1.0",
@@ -1256,6 +1319,7 @@
       "description": "A Pak to to back up saves, screenshots and other folders to cloud storage providers like Google Drive and Dropbox.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-cloud-backups",
+      "previous_repo_urls": null,
       "release_filename": "Cloud.Backups.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1287,6 +1351,7 @@
       "disabled": false
     },
     {
+      "id": "yC4kM7pQ1d",
       "storefront_name": "Favorites",
       "name": "Favorites",
       "version": "0.4.0",
@@ -1294,6 +1359,7 @@
       "description": "A Pak to manage a Favorites collection.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-favorites",
+      "previous_repo_urls": null,
       "release_filename": "Favorites.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1328,6 +1394,7 @@
       "disabled": false
     },
     {
+      "id": "kH8vN3gT5w",
       "storefront_name": "Tailscale",
       "name": "Tailscale",
       "version": "1.1.0",
@@ -1335,6 +1402,7 @@
       "description": "A Pak wrapping Tailscale, a secure and easy-to-use VPN.",
       "author": "ben16w",
       "repo_url": "https://github.com/ben16w/minui-tailscale",
+      "previous_repo_urls": null,
       "release_filename": "Tailscale.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1367,6 +1435,7 @@
       "disabled": false
     },
     {
+      "id": "hP6xL9yB2j",
       "storefront_name": "Over The Air Updater",
       "name": "Updater",
       "version": "0.5.0",
@@ -1374,6 +1443,7 @@
       "description": "Update NextUI over-the-air!",
       "author": "LanderN",
       "repo_url": "https://github.com/LanderN/nextui-updater-pak",
+      "previous_repo_urls": null,
       "release_filename": "Updater.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1403,6 +1473,7 @@
       "disabled": false
     },
     {
+      "id": "cR1dW4zK8m",
       "storefront_name": "Search Pak",
       "name": "Search",
       "version": "0.5.0",
@@ -1410,6 +1481,7 @@
       "description": "An app for searching your ROM collection.",
       "author": "Cuteseal",
       "repo_url": "https://github.com/laesetuc/minui-search-pak",
+      "previous_repo_urls": null,
       "release_filename": "Search.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1439,6 +1511,7 @@
       "disabled": false
     },
     {
+      "id": "nY7qF5hS3v",
       "storefront_name": "Collections Editor",
       "name": "Collections Editor",
       "version": "0.2.0",
@@ -1446,6 +1519,7 @@
       "description": "A utility for editing MinUI game collections.",
       "author": "Cuteseal",
       "repo_url": "https://github.com/laesetuc/minui-collections-editor",
+      "previous_repo_urls": null,
       "release_filename": "Collections.Editor.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1475,6 +1549,7 @@
       "disabled": false
     },
     {
+      "id": "rD3mT9cN6p",
       "storefront_name": "Dot File Cleaner",
       "name": "DotClean",
       "version": "0.2.0",
@@ -1482,6 +1557,7 @@
       "description": "Small utility to clean the filesystem of Mac operating system files.",
       "author": "Cuteseal",
       "repo_url": "https://github.com/laesetuc/minui-dotclean-pak",
+      "previous_repo_urls": null,
       "release_filename": "Dotclean.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1511,6 +1587,7 @@
       "disabled": false
     },
     {
+      "id": "zK8wB1jL4g",
       "storefront_name": "ScummVM",
       "name": "ScummVM",
       "version": "0.3.0",
@@ -1518,6 +1595,7 @@
       "description": "ScummVM emulator for NextUI.",
       "author": "Cuteseal",
       "repo_url": "https://github.com/laesetuc/minui-scummvm",
+      "previous_repo_urls": null,
       "release_filename": "SCUMMVM.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1547,6 +1625,7 @@
       "disabled": false
     },
     {
+      "id": "vN4yR7xQ2h",
       "storefront_name": "Rom Inspector",
       "name": "Rom Inspector",
       "version": "V0.9.0",
@@ -1554,6 +1633,7 @@
       "description": "This script manages ROM files with some tools",
       "author": "Gabrielpsp",
       "repo_url": "https://github.com/gabrielpsp/Rom-Inspector-pak",
+      "previous_repo_urls": null,
       "release_filename": "Rom.Inspector.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1584,6 +1664,7 @@
       "disabled": false
     },
     {
+      "id": "dJ9pK5nT8s",
       "storefront_name": "Rockbox",
       "name": "Rockbox",
       "version": "4.0.92",
@@ -1591,6 +1672,7 @@
       "description": "Rockbox is a free, open-source firmware replacement for digital audio players (DAPs), offering an alternative to the original operating system. It's designed to be highly customizable, with features like advanced equalizers, themes, and support for various file formats.",
       "author": "IncognitoMan",
       "repo_url": "https://github.com/IncognitoMan/rockbox",
+      "previous_repo_urls": null,
       "release_filename": "Rockbox.pak.zip",
       "changelog": {
         "4.0.0": "Initial Release",
@@ -1625,6 +1707,7 @@
       "disabled": false
     },
     {
+      "id": "qM2cH6zW1r",
       "storefront_name": "Zelda Classic",
       "name": "ZQUEST",
       "version": "v1.0.0",
@@ -1632,6 +1715,7 @@
       "description": "libretro core for playing Zelda Classic v2.10-compatible quests",
       "author": "Cobalt",
       "repo_url": "https://github.com/cobaltgit/Zelda-Classic-MinUI",
+      "previous_repo_urls": null,
       "release_filename": "ZQUEST.pakz",
       "changelog": {
         "v1.0.0": "Initial release"
@@ -1663,6 +1747,7 @@
       "disabled": false
     },
     {
+      "id": "lS7vD3gF9k",
       "storefront_name": "Theme Manager",
       "name": "",
       "version": "",
@@ -1670,6 +1755,7 @@
       "description": "",
       "author": "",
       "repo_url": "https://github.com/Leviathanium/NextUI-Theme-Manager",
+      "previous_repo_urls": null,
       "release_filename": "",
       "changelog": null,
       "previous_names": null,
@@ -1697,6 +1783,7 @@
       "disabled": true
     },
     {
+      "id": "xW4bY8hP5n",
       "storefront_name": "Power Menu",
       "name": "",
       "version": "",
@@ -1704,6 +1791,7 @@
       "description": "",
       "author": "",
       "repo_url": "https://github.com/UncleJunVIP/nextui-power-menu",
+      "previous_repo_urls": null,
       "release_filename": "",
       "changelog": null,
       "previous_names": null,
@@ -1731,6 +1819,7 @@
       "disabled": true
     },
     {
+      "id": "bT1mL9xK2c",
       "storefront_name": "Function Key Editor",
       "name": "",
       "version": "",
@@ -1738,6 +1827,7 @@
       "description": "",
       "author": "",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-fn-editor-pak",
+      "previous_repo_urls": null,
       "release_filename": "",
       "changelog": null,
       "previous_names": null,
@@ -1765,6 +1855,7 @@
       "disabled": true
     },
     {
+      "id": "fQ6nR3yS7v",
       "storefront_name": "USB Mass Storage",
       "name": "",
       "version": "",
@@ -1772,6 +1863,7 @@
       "description": "",
       "author": "",
       "repo_url": "https://github.com/josegonzalez/trimui-brick-usb-mass-storage-pak",
+      "previous_repo_urls": null,
       "release_filename": "",
       "changelog": null,
       "previous_names": null,
@@ -1799,6 +1891,7 @@
       "disabled": true
     },
     {
+      "id": "jH2wT5dM8g",
       "storefront_name": "Screenshot Viewer",
       "name": "Screenshots",
       "version": "v0.2.5",
@@ -1806,6 +1899,7 @@
       "description": "A MinUI pak for browsing your saved screenshots. Automatically organized by game/app.",
       "author": "mikecosentino",
       "repo_url": "https://github.com/mikecosentino/Screenshots",
+      "previous_repo_urls": null,
       "release_filename": "Screenshots.pak.zip",
       "changelog": {
         "v0.1.2": "Initial launch for the Pak Store",
@@ -1843,6 +1937,7 @@
       "disabled": false
     },
     {
+      "id": "pC9kJ4zN1h",
       "storefront_name": "WiliWili",
       "name": "WiliWili",
       "version": "v1.5.3",
@@ -1850,6 +1945,7 @@
       "description": "wiliwili has a B-station browsing experience that is very close to the official PC client.",
       "author": "xfangfang \u0026 dragonflylee",
       "repo_url": "https://github.com/Majirefy/nextui-wiliwili",
+      "previous_repo_urls": null,
       "release_filename": "WiliWili.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -1879,6 +1975,7 @@
       "disabled": false
     },
     {
+      "id": "tY5xB7qL3r",
       "storefront_name": "SMSU (Genesis Plus GX)",
       "name": "SMSU",
       "version": "v1.1.1",
@@ -1886,6 +1983,7 @@
       "description": "Genesis-Plus-GX (PUNCHiUM) core with MD-MSU support for Trimui Brick NextUI.",
       "author": "SkyZ0ro",
       "repo_url": "https://github.com/SkyZ0ro/Trimui-Brick-GMD",
+      "previous_repo_urls": null,
       "release_filename": "SMSU.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release.",
@@ -1919,6 +2017,7 @@
       "disabled": false
     },
     {
+      "id": "wF8gP2vK6m",
       "storefront_name": "SDLReader",
       "name": "SDLReader",
       "version": "v2.2.1",
@@ -1926,6 +2025,7 @@
       "description": "Read PDF, CBZ/ZIP \u0026 CBR/RAR comic archives, EPUB, MOBI, and plain text files with smooth navigation, zoom, rotation, and mirroring. SDLReader is a lightweight, cross-platform viewer optimized for the TrimUI Brick and TrimUI Smart Pro (TG5040) running NextUI, built on SDL2 and MuPDF.",
       "author": "Helaas",
       "repo_url": "https://github.com/Helaas/SDLReader-brick",
+      "previous_repo_urls": null,
       "release_filename": "SDLReader.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release with PDF, CBZ, and EPUB support, optimized for TrimUI Brick",
@@ -1977,6 +2077,7 @@
       "disabled": false
     },
     {
+      "id": "aD4hS9nW1j",
       "storefront_name": "M3U Manager",
       "name": "M3U Manager",
       "version": "0.1.2",
@@ -1984,6 +2085,7 @@
       "description": "Manages M3U files",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-m3u-manager-pak",
+      "previous_repo_urls": null,
       "release_filename": "M3U.Manager.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -2018,6 +2120,7 @@
       "disabled": false
     },
     {
+      "id": "gL7rY3cT5z",
       "storefront_name": "Map.txt Generator",
       "name": "Map.txt Generator",
       "version": "0.1.0",
@@ -2025,6 +2128,7 @@
       "description": "Generates the Map.txt files for FBN ROMs",
       "author": "josegonzalez",
       "repo_url": "https://github.com/josegonzalez/minui-map-txt-generator-pak",
+      "previous_repo_urls": null,
       "release_filename": "Map.txt.Generator.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -2058,6 +2162,7 @@
       "disabled": false
     },
     {
+      "id": "mN1kQ8xB4p",
       "storefront_name": "Storiies",
       "name": "Storiies",
       "version": "v1.0.4",
@@ -2065,6 +2170,7 @@
       "description": "A simple, intuitive and kid-friendly MP3 player for retro-handhelds.",
       "author": "pcorbel",
       "repo_url": "https://github.com/pcorbel/storiies",
+      "previous_repo_urls": null,
       "release_filename": "Storiies.pak.zip",
       "changelog": {
         "v1.0.0": "Initial release",
@@ -2104,6 +2210,7 @@
       "disabled": false
     },
     {
+      "id": "sR6wF2dH9v",
       "storefront_name": "8bit-Numera",
       "name": "8bit-Numera",
       "version": "v1.0.0",
@@ -2111,6 +2218,7 @@
       "description": "A simple calculator application.",
       "author": "Naveen Siva Gurumohanram",
       "repo_url": "https://github.com/naveensiva/Trimui-8bit-Numera",
+      "previous_repo_urls": null,
       "release_filename": "8bit-Numera.pak.zip",
       "changelog": null,
       "previous_names": null,
@@ -2142,6 +2250,7 @@
       "disabled": false
     },
     {
+      "id": "yK3mJ7zP1n",
       "storefront_name": "Intellivision (FreeINTV)",
       "name": "INTV",
       "version": "v0.0.0",
@@ -2149,6 +2258,7 @@
       "description": "Play classic Intellivision games with the FreeINTV core.",
       "author": "K2Retro2nd",
       "repo_url": "https://github.com/K2Retro2nd/minui-intv-pak",
+      "previous_repo_urls": null,
       "release_filename": "INTV.pak.zip",
       "changelog": {
         "v0.0.0": "Released"
@@ -2180,6 +2290,7 @@
       "disabled": false
     },
     {
+      "id": "kT9vL4gS8c",
       "storefront_name": "PCE SuperGrafx (beetle-supergrafx)",
       "name": "SUPERGRAFX",
       "version": "v1.0.0",
@@ -2187,6 +2298,7 @@
       "description": "An addon core for minarch for PC Engine SuperGrafx. Uses the beetle-supergrafx core. No support provided.",
       "author": "Mednafen Team",
       "repo_url": "https://github.com/BrandonKowalski/nextui-pce-supergrafx",
+      "previous_repo_urls": null,
       "release_filename": "SUPERGRAFX.pak.zip",
       "changelog": {
         "v1.0.0": "Initial Release."
@@ -2218,6 +2330,7 @@
       "disabled": false
     },
     {
+      "id": "hB5yN2xR6w",
       "storefront_name": "3DO",
       "name": "3DO",
       "version": "v1.0.0",
@@ -2225,6 +2338,7 @@
       "description": "A 3DO addon for minarch, utilizing the Opera core.",
       "author": "Dominick Vaccaro",
       "repo_url": "https://github.com/dominickvaccaro/nextui-opera-3do",
+      "previous_repo_urls": null,
       "release_filename": "3DO.pak.zip",
       "changelog": {
         "v1.0.0": "Initial Release."
@@ -2256,6 +2370,7 @@
       "disabled": false
     },
     {
+      "id": "cM8pD1hK4q",
       "storefront_name": "JAGUAR",
       "name": "JAGUAR",
       "version": "v1.0.0",
@@ -2263,6 +2378,7 @@
       "description": "An Atari Jaguar addon for minarch, utilizing the Virtual Jaguar core.",
       "author": "Dominick Vaccaro",
       "repo_url": "https://github.com/dominickvaccaro/nextui-virtual-jaguar",
+      "previous_repo_urls": null,
       "release_filename": "JAGUAR.pak.zip",
       "changelog": {
         "v1.0.0": "Initial Release."
@@ -2294,6 +2410,7 @@
       "disabled": false
     },
     {
+      "id": "nQ4wT7bL3j",
       "storefront_name": "Music Player",
       "name": "Music Player",
       "version": "v1.1.1",
@@ -2301,6 +2418,7 @@
       "description": "A comprehensive music playback application for NextUI featuring local file playback, internet radio streaming, and MP3 audio downloading.",
       "author": "kotaksempit",
       "repo_url": "https://github.com/mohammadsyuhada/nextui-music-player",
+      "previous_repo_urls": null,
       "release_filename": "Music.Player.pak.zip",
       "changelog": {
         "v1.0.0": "Initial stable release",
@@ -2336,6 +2454,7 @@
       "disabled": false
     },
     {
+      "id": "rH6cY9zM2g",
       "storefront_name": "TIC-80",
       "name": "TIC",
       "version": "0.1.0",
@@ -2343,6 +2462,7 @@
       "description": "Runs TIC-80 fantasy computer games",
       "author": "Alex Mayer",
       "repo_url": "https://github.com/amayer5125/nextui-tic-80-pak",
+      "previous_repo_urls": null,
       "release_filename": "TIC.pak.zip",
       "changelog": {
         "0.1.0": "Initial Pak"
