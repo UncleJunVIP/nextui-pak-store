@@ -1,6 +1,6 @@
 name: New Pak Submission
 description: Submit a new pak to be added to the Pak Store
-title: "[New Pak] "
+title: ""
 labels: ["new-pak"]
 body:
   - type: markdown

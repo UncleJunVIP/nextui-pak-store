@@ -495,7 +495,7 @@ jobs:
 
             **Pull Request:** ${prUrl}
 
-            The PR will be reviewed and merged by a maintainer. Once merged, your pak will appear in the Pak Store after the next storefront rebuild (runs hourly).
+            The PR will be reviewed and merged by a maintainer. Once merged, your pak will appear in the Pak Store after the next storefront rebuild.
             `;
 
             if (typeWarning) {
