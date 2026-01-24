@@ -66,3 +66,8 @@ tasks:
       - read
       - task: kill
     silent: true
+
+  pull-db:
+    cmds:
+      - adb pull /mnt/SDCARD/.userdata/tg5040/nextui-pak-store/pak-store.db device-pak-store.db
+    silent: true
