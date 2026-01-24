@@ -351,6 +351,7 @@ func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOu
 	options := gaba.DefaultInfoScreenOptions()
 	options.Sections = sections
 	options.ShowThemeBackground = false
+	options.ConfirmButton = constants.VirtualButtonX
 
 	footerItems := []gaba.FooterHelpItem{
 		FooterCancel(),
