@@ -4,12 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
-	"golang.org/x/mod/semver"
 )
 
 // GetInstalledPaks fetches installed paks from the database
@@ -203,14 +203,44 @@ func SyncInstalledWithStorefront(storefront models.Storefront) error {
 }
 
 // HasUpdate checks if a newer version is available
+// Supports both 3-digit (1.2.3) and 4-digit (1.2.3.4) versions, with or without leading "v"
 func HasUpdate(installed string, latest string) bool {
-	if !strings.HasPrefix(installed, "v") {
-		installed = "v" + installed
+	return compareVersions(installed, latest) == -1
+}
+
+// compareVersions compares two version strings
+// Returns -1 if a < b, 0 if a == b, 1 if a > b
+func compareVersions(a, b string) int {
+	// Strip leading "v" if present
+	a = strings.TrimPrefix(a, "v")
+	b = strings.TrimPrefix(b, "v")
+
+	partsA := strings.Split(a, ".")
+	partsB := strings.Split(b, ".")
+
+	// Compare each part numerically
+	maxLen := len(partsA)
+	if len(partsB) > maxLen {
+		maxLen = len(partsB)
 	}
 
-	if !strings.HasPrefix(latest, "v") {
-		latest = "v" + latest
+	for i := 0; i < maxLen; i++ {
+		var numA, numB int
+
+		if i < len(partsA) {
+			numA, _ = strconv.Atoi(partsA[i])
+		}
+		if i < len(partsB) {
+			numB, _ = strconv.Atoi(partsB[i])
+		}
+
+		if numA < numB {
+			return -1
+		}
+		if numA > numB {
+			return 1
+		}
 	}
 
-	return semver.Compare(installed, latest) == -1
+	return 0
 }

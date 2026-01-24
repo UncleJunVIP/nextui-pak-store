@@ -5,240 +5,438 @@ import (
 	"time"
 
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/router"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/ui"
 )
 
+// Screen identifiers
 const (
-	mainMenu        gaba.StateName = "main_menu"
-	browse          gaba.StateName = "browse"
-	pakList         gaba.StateName = "pak_list"
-	pakInfo         gaba.StateName = "pak_info"
-	updates         gaba.StateName = "updates"
-	manageInstalled gaba.StateName = "manage_installed"
+	screenMainMenu router.Screen = iota
+	screenBrowse
+	screenPakList
+	screenPakInfo
+	screenUpdates
+	screenManageInstalled
 )
 
+// ListPosition stores scroll state for a list screen
 type ListPosition struct {
 	Index             int
 	VisibleStartIndex int
 }
 
-type NavState struct {
-	BrowsePos        ListPosition
-	PakListPos       ListPosition
-	ManagePos        ListPosition
-	UpdatesPos       ListPosition
-	SelectedCategory string
-	SelectedPaks     []models.Pak
-	IsUpdate         bool
-	IsInstalled      bool
-	Source           gaba.StateName
+// Resume types for back navigation
+type BrowseResume struct {
+	Pos ListPosition
 }
 
-func (n *NavState) ResetPakListPos() {
-	n.PakListPos = ListPosition{}
+type PakListResume struct {
+	Pos      ListPosition
+	Category string
 }
 
-func buildFSM(storefront models.Storefront) *gaba.FSM {
-	fsm := gaba.NewFSM()
+type UpdatesResume struct {
+	Pos ListPosition
+}
 
-	nav := &NavState{}
+type ManageResume struct {
+	Pos ListPosition
+}
 
-	// Store storefront and nav state in context
-	gaba.Set(fsm.Context(), storefront)
-	gaba.Set(fsm.Context(), nav)
+// Input types that include resume state
+type BrowseInputWithResume struct {
+	Storefront models.Storefront
+	Resume     *BrowseResume
+}
 
-	// Main Menu State
-	gaba.AddState(fsm, mainMenu, func(ctx *gaba.Context) (ui.MainMenuOutput, gaba.ExitCode) {
-		storefront, _ := gaba.Get[models.Storefront](ctx)
+type PakListInputWithResume struct {
+	Storefront models.Storefront
+	Category   string
+	Resume     *PakListResume
+}
 
+type UpdatesInputWithResume struct {
+	Storefront models.Storefront
+	Resume     *UpdatesResume
+}
+
+type ManageInputWithResume struct {
+	Storefront models.Storefront
+	Resume     *ManageResume
+}
+
+type PakInfoInputWithSource struct {
+	Paks        []models.Pak
+	Category    string
+	IsUpdate    bool
+	IsInstalled bool
+	Source      router.Screen // Where we came from
+}
+
+func buildRouter(storefront models.Storefront) *router.Router {
+	r := router.New()
+
+	// Main Menu Screen
+	r.Register(screenMainMenu, func(input any) (any, error) {
 		screen := ui.NewMainMenuScreen()
 		result, err := screen.Draw(ui.MainMenuInput{
 			Storefront: storefront,
 		})
-
 		if err != nil {
-			return ui.MainMenuOutput{}, gaba.ExitCodeError
+			return result, err
 		}
+		return result, nil
+	})
 
-		return result.Value, result.ExitCode
-	}).
-		On(ui.ExitCodeBrowse, browse).
-		On(ui.ExitCodeUpdates, updates).
-		On(ui.ExitCodeManageInstalled, manageInstalled).
-		Exit(gaba.ExitCodeQuit)
-
-	// Browse State
-	gaba.AddState(fsm, browse, func(ctx *gaba.Context) (ui.BrowseOutput, gaba.ExitCode) {
-		storefront, _ := gaba.Get[models.Storefront](ctx)
-		nav, _ := gaba.Get[*NavState](ctx)
+	// Browse Screen
+	r.Register(screenBrowse, func(input any) (any, error) {
+		in := input.(BrowseInputWithResume)
+		var lastIdx, lastPos int
+		if in.Resume != nil {
+			lastIdx = in.Resume.Pos.Index
+			lastPos = in.Resume.Pos.VisibleStartIndex
+		}
 
 		screen := ui.NewBrowseScreen()
 		result, err := screen.Draw(ui.BrowseInput{
-			Storefront:           storefront,
-			LastSelectedIndex:    nav.BrowsePos.Index,
-			LastSelectedPosition: nav.BrowsePos.VisibleStartIndex,
+			Storefront:           in.Storefront,
+			LastSelectedIndex:    lastIdx,
+			LastSelectedPosition: lastPos,
 		})
-
 		if err != nil {
-			return ui.BrowseOutput{}, gaba.ExitCodeError
+			return result, err
 		}
+		return result, nil
+	})
 
-		nav.BrowsePos.Index = result.Value.LastSelectedIndex
-		nav.BrowsePos.VisibleStartIndex = result.Value.LastSelectedPosition
-
-		return result.Value, result.ExitCode
-	}).
-		OnWithHook(gaba.ExitCodeSuccess, pakList, func(ctx *gaba.Context) error {
-			output, _ := gaba.Get[ui.BrowseOutput](ctx)
-			nav, _ := gaba.Get[*NavState](ctx)
-			nav.SelectedCategory = output.SelectedCategory
-			nav.ResetPakListPos()
-			return nil
-		}).
-		On(gaba.ExitCodeBack, mainMenu)
-
-	// Pak List State
-	gaba.AddState(fsm, pakList, func(ctx *gaba.Context) (ui.PakListOutput, gaba.ExitCode) {
-		storefront, _ := gaba.Get[models.Storefront](ctx)
-		nav, _ := gaba.Get[*NavState](ctx)
+	// Pak List Screen
+	r.Register(screenPakList, func(input any) (any, error) {
+		in := input.(PakListInputWithResume)
+		var lastIdx, lastPos int
+		if in.Resume != nil {
+			lastIdx = in.Resume.Pos.Index
+			lastPos = in.Resume.Pos.VisibleStartIndex
+		}
 
 		screen := ui.NewPakListScreen()
 		result, err := screen.Draw(ui.PakListInput{
-			Storefront:           storefront,
-			Category:             nav.SelectedCategory,
-			LastSelectedIndex:    nav.PakListPos.Index,
-			LastSelectedPosition: nav.PakListPos.VisibleStartIndex,
+			Storefront:           in.Storefront,
+			Category:             in.Category,
+			LastSelectedIndex:    lastIdx,
+			LastSelectedPosition: lastPos,
 		})
-
 		if err != nil {
-			return ui.PakListOutput{}, gaba.ExitCodeError
+			return result, err
 		}
+		return result, nil
+	})
 
-		nav.PakListPos.Index = result.Value.LastSelectedIndex
-		nav.PakListPos.VisibleStartIndex = result.Value.LastSelectedPosition
-
-		return result.Value, result.ExitCode
-	}).
-		OnWithHook(gaba.ExitCodeSuccess, pakInfo, func(ctx *gaba.Context) error {
-			output, _ := gaba.Get[ui.PakListOutput](ctx)
-			nav, _ := gaba.Get[*NavState](ctx)
-			nav.SelectedPaks = []models.Pak{output.SelectedPak}
-			nav.IsUpdate = false
-			nav.IsInstalled = output.IsInstalled
-			nav.Source = pakList
-			return nil
-		}).
-		On(gaba.ExitCodeBack, browse)
-
-	// Pak Info State
-	gaba.AddState(fsm, pakInfo, func(ctx *gaba.Context) (ui.PakInfoOutput, gaba.ExitCode) {
-		nav, _ := gaba.Get[*NavState](ctx)
+	// Pak Info Screen
+	r.Register(screenPakInfo, func(input any) (any, error) {
+		in := input.(PakInfoInputWithSource)
 
 		screen := ui.NewPakInfoScreen()
 		result, err := screen.Draw(ui.PakInfoInput{
-			Paks:        nav.SelectedPaks,
-			Category:    nav.SelectedCategory,
-			IsUpdate:    nav.IsUpdate,
-			IsInstalled: nav.IsInstalled,
+			Paks:        in.Paks,
+			Category:    in.Category,
+			IsUpdate:    in.IsUpdate,
+			IsInstalled: in.IsInstalled,
 		})
-
 		if err != nil {
-			return ui.PakInfoOutput{}, gaba.ExitCodeError
+			return result, err
 		}
 
-		// Route back to the correct source screen
-		exitCode := result.ExitCode
-		if exitCode == gaba.ExitCodeBack || exitCode == gaba.ExitCodeSuccess {
-			switch nav.Source {
-			case manageInstalled:
-				exitCode = ui.ExitCodeBackToManage
-			case updates:
-				exitCode = ui.ExitCodeBackToUpdates
-			}
+		// Attach source and input info to result for transition function
+		return struct {
+			Result      ui.ScreenResult[ui.PakInfoOutput]
+			Source      router.Screen
+			Paks        []models.Pak
+			Category    string
+			IsUpdate    bool
+			IsInstalled bool
+		}{result, in.Source, in.Paks, in.Category, in.IsUpdate, in.IsInstalled}, nil
+	})
+
+	// Updates Screen
+	r.Register(screenUpdates, func(input any) (any, error) {
+		in := input.(UpdatesInputWithResume)
+		var lastIdx, lastPos int
+		if in.Resume != nil {
+			lastIdx = in.Resume.Pos.Index
+			lastPos = in.Resume.Pos.VisibleStartIndex
 		}
-
-		return result.Value, exitCode
-	}).
-		On(gaba.ExitCodeSuccess, pakList).
-		On(gaba.ExitCodeBack, pakList).
-		On(ui.ExitCodeBackToManage, manageInstalled).
-		On(ui.ExitCodeBackToUpdates, updates).
-		OnWithHook(ui.ExitCodePakStoreUpdated, mainMenu, func(ctx *gaba.Context) error {
-			gaba.ProcessMessage("Pak Store Updated! Exiting...", gaba.ProcessMessageOptions{}, func() (any, error) {
-				time.Sleep(3 * time.Second)
-				return nil, nil
-			})
-			os.Exit(0)
-			return nil
-		}).
-		On(ui.ExitCodeUninstalled, manageInstalled).
-		On(ui.ExitCodePartialUpdate, updates).
-		On(ui.ExitCodeCancelled, pakInfo)
-
-	// Updates State
-	gaba.AddState(fsm, updates, func(ctx *gaba.Context) (ui.UpdatesOutput, gaba.ExitCode) {
-		storefront, _ := gaba.Get[models.Storefront](ctx)
-		nav, _ := gaba.Get[*NavState](ctx)
 
 		screen := ui.NewUpdatesScreen()
 		result, err := screen.Draw(ui.UpdatesInput{
-			Storefront:           storefront,
-			LastSelectedIndex:    nav.UpdatesPos.Index,
-			LastSelectedPosition: nav.UpdatesPos.VisibleStartIndex,
+			Storefront:           in.Storefront,
+			LastSelectedIndex:    lastIdx,
+			LastSelectedPosition: lastPos,
 		})
-
 		if err != nil {
-			return ui.UpdatesOutput{}, gaba.ExitCodeError
+			return result, err
 		}
+		return result, nil
+	})
 
-		nav.UpdatesPos.Index = result.Value.LastSelectedIndex
-		nav.UpdatesPos.VisibleStartIndex = result.Value.LastSelectedPosition
-
-		return result.Value, result.ExitCode
-	}).
-		OnWithHook(gaba.ExitCodeSuccess, pakInfo, func(ctx *gaba.Context) error {
-			output, _ := gaba.Get[ui.UpdatesOutput](ctx)
-			nav, _ := gaba.Get[*NavState](ctx)
-			nav.SelectedPaks = output.SelectedPaks
-			nav.IsUpdate = true
-			nav.IsInstalled = false
-			nav.Source = updates
-			return nil
-		}).
-		On(gaba.ExitCodeBack, mainMenu)
-
-	// Manage Installed State
-	gaba.AddState(fsm, manageInstalled, func(ctx *gaba.Context) (ui.ManageInstalledOutput, gaba.ExitCode) {
-		storefront, _ := gaba.Get[models.Storefront](ctx)
-		nav, _ := gaba.Get[*NavState](ctx)
+	// Manage Installed Screen
+	r.Register(screenManageInstalled, func(input any) (any, error) {
+		in := input.(ManageInputWithResume)
+		var lastIdx, lastPos int
+		if in.Resume != nil {
+			lastIdx = in.Resume.Pos.Index
+			lastPos = in.Resume.Pos.VisibleStartIndex
+		}
 
 		screen := ui.NewManageInstalledScreen()
 		result, err := screen.Draw(ui.ManageInstalledInput{
-			Storefront:           storefront,
-			LastSelectedIndex:    nav.ManagePos.Index,
-			LastSelectedPosition: nav.ManagePos.VisibleStartIndex,
+			Storefront:           in.Storefront,
+			LastSelectedIndex:    lastIdx,
+			LastSelectedPosition: lastPos,
 		})
-
 		if err != nil {
-			return ui.ManageInstalledOutput{}, gaba.ExitCodeError
+			return result, err
+		}
+		return result, nil
+	})
+
+	// Transition function handles all navigation logic
+	r.OnTransition(func(from router.Screen, result any, stack *router.Stack) (router.Screen, any) {
+		switch from {
+		case screenMainMenu:
+			r := result.(ui.ScreenResult[ui.MainMenuOutput])
+			switch r.Action {
+			case ui.ActionBrowse:
+				return screenBrowse, BrowseInputWithResume{Storefront: storefront}
+			case ui.ActionUpdates:
+				return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
+			case ui.ActionManageInstalled:
+				return screenManageInstalled, ManageInputWithResume{Storefront: storefront}
+			case ui.ActionQuit, ui.ActionError:
+				return router.ScreenExit, nil
+			}
+
+		case screenBrowse:
+			r := result.(ui.ScreenResult[ui.BrowseOutput])
+			switch r.Action {
+			case ui.ActionSelected:
+				// Push current state for back navigation
+				stack.Push(from, BrowseInputWithResume{Storefront: storefront}, &BrowseResume{
+					Pos: ListPosition{
+						Index:             r.Value.LastSelectedIndex,
+						VisibleStartIndex: r.Value.LastSelectedPosition,
+					},
+				})
+				return screenPakList, PakListInputWithResume{
+					Storefront: storefront,
+					Category:   r.Value.SelectedCategory,
+				}
+			case ui.ActionBack:
+				return screenMainMenu, nil
+			}
+
+		case screenPakList:
+			r := result.(ui.ScreenResult[ui.PakListOutput])
+			switch r.Action {
+			case ui.ActionSelected:
+				// Push current state for back navigation
+				stack.Push(from, PakListInputWithResume{
+					Storefront: storefront,
+					Category:   r.Value.Category,
+				}, &PakListResume{
+					Pos: ListPosition{
+						Index:             r.Value.LastSelectedIndex,
+						VisibleStartIndex: r.Value.LastSelectedPosition,
+					},
+					Category: r.Value.Category,
+				})
+				return screenPakInfo, PakInfoInputWithSource{
+					Paks:        []models.Pak{r.Value.SelectedPak},
+					Category:    r.Value.Category,
+					IsUpdate:    r.Value.HasUpdate,
+					IsInstalled: r.Value.IsInstalled,
+					Source:      screenPakList,
+				}
+			case ui.ActionBack:
+				if entry := stack.Pop(); entry != nil {
+					in := entry.Input.(BrowseInputWithResume)
+					if entry.Resume != nil {
+						in.Resume = entry.Resume.(*BrowseResume)
+					}
+					return screenBrowse, in
+				}
+				return screenBrowse, BrowseInputWithResume{Storefront: storefront}
+			}
+
+		case screenPakInfo:
+			wrapper := result.(struct {
+				Result      ui.ScreenResult[ui.PakInfoOutput]
+				Source      router.Screen
+				Paks        []models.Pak
+				Category    string
+				IsUpdate    bool
+				IsInstalled bool
+			})
+			r := wrapper.Result
+			source := wrapper.Source
+
+			switch r.Action {
+			case ui.ActionInstallSuccess:
+				// Return to pak info showing the pak as installed
+				return screenPakInfo, PakInfoInputWithSource{
+					Paks:        wrapper.Paks,
+					Category:    wrapper.Category,
+					IsUpdate:    false,
+					IsInstalled: true,
+					Source:      source,
+				}
+
+			case ui.ActionPakStoreUpdated:
+				gaba.ProcessMessage("Pak Store Updated! Exiting...", gaba.ProcessMessageOptions{}, func() (any, error) {
+					time.Sleep(3 * time.Second)
+					return nil, nil
+				})
+				os.Exit(0)
+				return router.ScreenExit, nil
+
+			case ui.ActionUninstalled:
+				// Go back to source screen after uninstall (manage/updates) or stay on pak info (browse)
+				switch source {
+				case screenManageInstalled:
+					if entry := stack.Pop(); entry != nil {
+						in := entry.Input.(ManageInputWithResume)
+						if entry.Resume != nil {
+							in.Resume = entry.Resume.(*ManageResume)
+						}
+						return screenManageInstalled, in
+					}
+					return screenManageInstalled, ManageInputWithResume{Storefront: storefront}
+
+				case screenUpdates:
+					if entry := stack.Pop(); entry != nil {
+						in := entry.Input.(UpdatesInputWithResume)
+						if entry.Resume != nil {
+							in.Resume = entry.Resume.(*UpdatesResume)
+						}
+						return screenUpdates, in
+					}
+					return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
+
+				default: // screenPakList - return to pak info showing as uninstalled
+					return screenPakInfo, PakInfoInputWithSource{
+						Paks:        wrapper.Paks,
+						Category:    wrapper.Category,
+						IsUpdate:    false,
+						IsInstalled: false,
+						Source:      source,
+					}
+				}
+
+			case ui.ActionPartialUpdate:
+				// Go back to updates with resume state
+				if entry := stack.Pop(); entry != nil {
+					in := entry.Input.(UpdatesInputWithResume)
+					if entry.Resume != nil {
+						in.Resume = entry.Resume.(*UpdatesResume)
+					}
+					return screenUpdates, in
+				}
+				return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
+
+			case ui.ActionCancelled:
+				// Stay on pak info with same state (re-draw)
+				return screenPakInfo, PakInfoInputWithSource{
+					Paks:        wrapper.Paks,
+					Category:    wrapper.Category,
+					IsUpdate:    wrapper.IsUpdate,
+					IsInstalled: wrapper.IsInstalled,
+					Source:      source,
+				}
+
+			case ui.ActionBack, ui.ActionSelected:
+				// Go back to source screen
+				switch source {
+				case screenManageInstalled:
+					if entry := stack.Pop(); entry != nil {
+						in := entry.Input.(ManageInputWithResume)
+						if entry.Resume != nil {
+							in.Resume = entry.Resume.(*ManageResume)
+						}
+						return screenManageInstalled, in
+					}
+					return screenManageInstalled, ManageInputWithResume{Storefront: storefront}
+
+				case screenUpdates:
+					if entry := stack.Pop(); entry != nil {
+						in := entry.Input.(UpdatesInputWithResume)
+						if entry.Resume != nil {
+							in.Resume = entry.Resume.(*UpdatesResume)
+						}
+						return screenUpdates, in
+					}
+					return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
+
+				default: // screenPakList
+					if entry := stack.Pop(); entry != nil {
+						in := entry.Input.(PakListInputWithResume)
+						if entry.Resume != nil {
+							in.Resume = entry.Resume.(*PakListResume)
+						}
+						return screenPakList, in
+					}
+					return screenPakList, PakListInputWithResume{Storefront: storefront}
+				}
+			}
+
+		case screenUpdates:
+			r := result.(ui.ScreenResult[ui.UpdatesOutput])
+			switch r.Action {
+			case ui.ActionSelected:
+				// Push current state for back navigation
+				stack.Push(from, UpdatesInputWithResume{Storefront: storefront}, &UpdatesResume{
+					Pos: ListPosition{
+						Index:             r.Value.LastSelectedIndex,
+						VisibleStartIndex: r.Value.LastSelectedPosition,
+					},
+				})
+				return screenPakInfo, PakInfoInputWithSource{
+					Paks:     r.Value.SelectedPaks,
+					IsUpdate: true,
+					Source:   screenUpdates,
+				}
+			case ui.ActionBack:
+				return screenMainMenu, nil
+			}
+
+		case screenManageInstalled:
+			r := result.(ui.ScreenResult[ui.ManageInstalledOutput])
+			switch r.Action {
+			case ui.ActionSelected:
+				// Push current state for back navigation
+				stack.Push(from, ManageInputWithResume{Storefront: storefront}, &ManageResume{
+					Pos: ListPosition{
+						Index:             r.Value.LastSelectedIndex,
+						VisibleStartIndex: r.Value.LastSelectedPosition,
+					},
+				})
+				return screenPakInfo, PakInfoInputWithSource{
+					Paks:        []models.Pak{r.Value.SelectedPak},
+					IsUpdate:    false,
+					IsInstalled: true,
+					Source:      screenManageInstalled,
+				}
+			case ui.ActionBack:
+				return screenMainMenu, nil
+			}
 		}
 
-		nav.ManagePos.Index = result.Value.LastSelectedIndex
-		nav.ManagePos.VisibleStartIndex = result.Value.LastSelectedPosition
+		return router.ScreenExit, nil
+	})
 
-		return result.Value, result.ExitCode
-	}).
-		OnWithHook(gaba.ExitCodeSuccess, pakInfo, func(ctx *gaba.Context) error {
-			output, _ := gaba.Get[ui.ManageInstalledOutput](ctx)
-			nav, _ := gaba.Get[*NavState](ctx)
-			nav.SelectedPaks = []models.Pak{output.SelectedPak}
-			nav.IsUpdate = false
-			nav.IsInstalled = true
-			nav.Source = manageInstalled
-			return nil
-		}).
-		On(gaba.ExitCodeBack, mainMenu)
+	return r
+}
 
-	return fsm.Start(mainMenu)
+func runApp(storefront models.Storefront) error {
+	r := buildRouter(storefront)
+	return r.Run(screenMainMenu, nil)
 }

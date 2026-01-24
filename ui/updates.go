@@ -37,7 +37,7 @@ func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], e
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	updatesAvailable := state.GetUpdatesAvailable(input.Storefront, installedPaks)
@@ -80,7 +80,7 @@ func (s *UpdatesScreen) Draw(input UpdatesInput) (ScreenResult[UpdatesOutput], e
 		if errors.Is(err, gaba.ErrCancelled) {
 			return back(output), nil
 		}
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(sel.Selected) == 0 {

@@ -24,6 +24,7 @@ type PakListOutput struct {
 	LastSelectedIndex    int
 	LastSelectedPosition int
 	IsInstalled          bool
+	HasUpdate            bool
 }
 
 type PakListScreen struct{}
@@ -42,7 +43,7 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
@@ -51,11 +52,11 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 	for _, pakStatus := range browsePaks[input.Category] {
 		displayText := pakStatus.Pak.StorefrontName
 
-		// Add status indicator
+		// Add status indicator (icon on left side)
 		if pakStatus.HasUpdate {
-			displayText += " [Update Available]"
+			displayText = constants.Update + " " + displayText
 		} else if pakStatus.IsInstalled {
-			displayText += " " + constants.Download
+			displayText = constants.Download + " " + displayText
 		}
 
 		menuItems = append(menuItems, gaba.MenuItem{
@@ -66,8 +67,11 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 		})
 	}
 
+	// Sort by pak name, not display text (to ignore icon prefixes)
 	slices.SortFunc(menuItems, func(a, b gaba.MenuItem) int {
-		return strings.Compare(a.Text, b.Text)
+		aPak := a.Metadata.(state.PakWithStatus).Pak.StorefrontName
+		bPak := b.Metadata.(state.PakWithStatus).Pak.StorefrontName
+		return strings.Compare(aPak, bPak)
 	})
 
 	options := gaba.DefaultListOptions(input.Category, menuItems)
@@ -80,7 +84,7 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 		if errors.Is(err, gaba.ErrCancelled) {
 			return back(output), nil
 		}
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(sel.Selected) == 0 {
@@ -90,6 +94,7 @@ func (s *PakListScreen) Draw(input PakListInput) (ScreenResult[PakListOutput], e
 	selectedStatus := sel.Items[sel.Selected[0]].Metadata.(state.PakWithStatus)
 	output.SelectedPak = selectedStatus.Pak
 	output.IsInstalled = selectedStatus.IsInstalled
+	output.HasUpdate = selectedStatus.HasUpdate
 	output.LastSelectedIndex = sel.Selected[0]
 	output.LastSelectedPosition = sel.VisiblePosition
 

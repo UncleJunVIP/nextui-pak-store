@@ -26,7 +26,7 @@ WHERE pak_id = ?;
 -- name: Uninstall :exec
 DELETE
 FROM installed_paks
-WHERE pak_id = ?;
+Bug fixWHERE pak_id = ? AND pak_id IS NOT NULL AND pak_id != '';
 
 -- name: UpdateInstalledWithRepo :exec
 UPDATE installed_paks

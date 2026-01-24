@@ -124,7 +124,7 @@ func DownloadPakArchive(pak models.Pak) (tempFile string, completed bool, error 
 		URL:         dl,
 		Location:    tmp,
 		DisplayName: message,
-	}}, make(map[string]string), gabagool.DownloadManagerOptions{AutoContinue: true})
+	}}, make(map[string]string), gabagool.DownloadManagerOptions{AutoContinueOnComplete: true})
 
 	if err != nil {
 		// Check if it was cancelled

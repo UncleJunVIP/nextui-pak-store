@@ -29,7 +29,7 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
@@ -82,24 +82,24 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 	sel, err := gaba.List(options)
 	if err != nil {
 		if errors.Is(err, gaba.ErrCancelled) {
-			return withCode(output, gaba.ExitCodeQuit), nil
+			return withAction(output, ActionQuit), nil
 		}
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(sel.Selected) == 0 {
-		return withCode(output, gaba.ExitCodeQuit), nil
+		return withAction(output, ActionQuit), nil
 	}
 
 	output.Selection = sel.Items[sel.Selected[0]].Metadata.(string)
 
 	switch output.Selection {
 	case "Browse":
-		return withCode(output, ExitCodeBrowse), nil
+		return withAction(output, ActionBrowse), nil
 	case "Available Updates":
-		return withCode(output, ExitCodeUpdates), nil
+		return withAction(output, ActionUpdates), nil
 	case "Manage Installed":
-		return withCode(output, ExitCodeManageInstalled), nil
+		return withAction(output, ActionManageInstalled), nil
 	}
 
 	return success(output), nil

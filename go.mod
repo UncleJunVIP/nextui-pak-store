@@ -6,10 +6,9 @@ toolchain go1.24.2
 
 require (
 	github.com/BrandonKowalski/certifiable v1.3.0
-	github.com/BrandonKowalski/gabagool/v2 v2.6.3
+	github.com/BrandonKowalski/gabagool/v2 v2.7.1
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
-	golang.org/x/mod v0.32.0
-	modernc.org/sqlite v1.44.0
+	modernc.org/sqlite v1.44.3
 	qlova.tech v0.1.1
 )
 
@@ -29,7 +28,7 @@ require (
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
-	modernc.org/libc v1.67.4 // indirect
+	modernc.org/libc v1.67.6 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )

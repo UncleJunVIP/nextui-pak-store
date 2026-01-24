@@ -1,20 +1,24 @@
 package ui
 
-import gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+// Action represents the result of a screen interaction.
+type Action int
 
 const (
-	ExitCodePakStoreUpdated gaba.ExitCode = 23
-	ExitCodeUninstalled     gaba.ExitCode = 86
-	ExitCodeCancelled       gaba.ExitCode = 12
-	ExitCodePartialUpdate   gaba.ExitCode = 33
-	ExitCodeRefresh         gaba.ExitCode = 4
+	ActionNone Action = iota
+	ActionBack
+	ActionQuit
+	ActionSelected
+	ActionError
 
 	// Main menu selections
-	ExitCodeBrowse          gaba.ExitCode = 100
-	ExitCodeUpdates         gaba.ExitCode = 101
-	ExitCodeManageInstalled gaba.ExitCode = 102
+	ActionBrowse
+	ActionUpdates
+	ActionManageInstalled
 
-	// Navigation back codes
-	ExitCodeBackToManage  gaba.ExitCode = 110
-	ExitCodeBackToUpdates gaba.ExitCode = 111
+	// Pak info results
+	ActionPakStoreUpdated
+	ActionUninstalled
+	ActionPartialUpdate
+	ActionCancelled
+	ActionInstallSuccess
 )

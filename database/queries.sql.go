@@ -153,7 +153,7 @@ func (q *Queries) ListInstalledPaksWithoutRepo(ctx context.Context) ([]Installed
 const uninstall = `-- name: Uninstall :exec
 DELETE
 FROM installed_paks
-WHERE pak_id = ?
+WHERE pak_id = ? AND pak_id IS NOT NULL AND pak_id != ''
 `
 
 func (q *Queries) Uninstall(ctx context.Context, pakID sql.NullString) error {

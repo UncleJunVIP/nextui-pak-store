@@ -37,7 +37,7 @@ func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[M
 	// Get installed paks from database
 	installedPaks, err := state.GetInstalledPaks()
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(installedPaks) == 0 {
@@ -88,7 +88,7 @@ func (s *ManageInstalledScreen) Draw(input ManageInstalledInput) (ScreenResult[M
 		if errors.Is(err, gaba.ErrCancelled) {
 			return back(output), nil
 		}
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(sel.Selected) == 0 {

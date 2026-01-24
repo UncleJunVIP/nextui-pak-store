@@ -1,29 +1,28 @@
 package ui
 
-import gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
-
+// ScreenResult wraps a screen's output value with an action.
 type ScreenResult[T any] struct {
-	Value    T
-	ExitCode gaba.ExitCode
+	Value  T
+	Action Action
 }
 
 func success[T any](value T) ScreenResult[T] {
 	return ScreenResult[T]{
-		Value:    value,
-		ExitCode: gaba.ExitCodeSuccess,
+		Value:  value,
+		Action: ActionSelected,
 	}
 }
 
 func back[T any](value T) ScreenResult[T] {
 	return ScreenResult[T]{
-		Value:    value,
-		ExitCode: gaba.ExitCodeBack,
+		Value:  value,
+		Action: ActionBack,
 	}
 }
 
-func withCode[T any](value T, code gaba.ExitCode) ScreenResult[T] {
+func withAction[T any](value T, action Action) ScreenResult[T] {
 	return ScreenResult[T]{
-		Value:    value,
-		ExitCode: code,
+		Value:  value,
+		Action: action,
 	}
 }

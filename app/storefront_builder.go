@@ -59,8 +59,10 @@ func main() {
 			}
 		}
 
+		pak.ID = p.ID
 		pak.StorefrontName = p.StorefrontName
 		pak.PreviousNames = p.PreviousNames
+		pak.PreviousRepoURLs = p.PreviousRepoURLs
 		pak.RepoURL = p.RepoURL
 		pak.Categories = p.Categories
 		pak.LargePak = p.LargePak

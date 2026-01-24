@@ -38,7 +38,7 @@ func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], erro
 	// Compute data on demand
 	installedPaks, err := state.GetInstalledPaks()
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
@@ -76,7 +76,7 @@ func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], erro
 		if errors.Is(err, gaba.ErrCancelled) {
 			return back(output), nil
 		}
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if len(sel.Selected) == 0 {

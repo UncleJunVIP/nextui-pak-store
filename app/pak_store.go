@@ -58,9 +58,7 @@ func main() {
 
 	logger.Info("Starting Pak Store")
 
-	fsm := buildFSM(storefront)
-
-	if err := fsm.Run(); err != nil {
-		logger.Error("FSM error", "error", err)
+	if err := runApp(storefront); err != nil {
+		logger.Error("Router error", "error", err)
 	}
 }

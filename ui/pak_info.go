@@ -173,18 +173,18 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 	options := gaba.DefaultInfoScreenOptions()
 	options.Sections = sections
 	options.ShowThemeBackground = false
-	options.EnableAction = true
+	options.AllowAction = true
 
 	var footerItems []gaba.FooterHelpItem
-	if input.IsInstalled {
-		footerItems = []gaba.FooterHelpItem{
-			FooterBack(),
-			{ButtonName: "A", HelpText: "Uninstall"},
-		}
-	} else if input.IsUpdate {
+	if input.IsUpdate {
 		footerItems = []gaba.FooterHelpItem{
 			FooterBack(),
 			{ButtonName: "A", HelpText: "Update"},
+		}
+	} else if input.IsInstalled {
+		footerItems = []gaba.FooterHelpItem{
+			FooterBack(),
+			{ButtonName: "A", HelpText: "Uninstall"},
 		}
 	} else {
 		footerItems = []gaba.FooterHelpItem{
@@ -199,10 +199,10 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 			return back(output), nil
 		}
 		logger.Error("Unable to display pak info screen", "error", err)
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
-	if input.IsInstalled {
+	if input.IsInstalled && !input.IsUpdate {
 		_, err = gaba.ConfirmationMessage(fmt.Sprintf("Are you sure that you want to uninstall\n %s?", pak.Name),
 			[]gaba.FooterHelpItem{
 				{ButtonName: "B", HelpText: "Nevermind"},
@@ -213,9 +213,9 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 
 		if err != nil {
 			if errors.Is(err, gaba.ErrCancelled) {
-				return withCode(output, ExitCodeCancelled), nil
+				return withAction(output, ActionCancelled), nil
 			}
-			return withCode(output, gaba.ExitCodeError), err
+			return withAction(output, ActionError), err
 		}
 
 		_, err = gaba.ProcessMessage(fmt.Sprintf("%s %s...", "Uninstalling", pak.Name), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
@@ -250,25 +250,25 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 		}
 
 		output.WasInstalled = true
-		return withCode(output, ExitCodeUninstalled), nil
+		return withAction(output, ActionUninstalled), nil
 	}
 
 	tmp, completed, err := utils.DownloadPakArchive(pak)
 	if err != nil {
 
 		if err.Error() == "download cancelled by user" {
-			return withCode(output, ExitCodeCancelled), nil
+			return withAction(output, ActionCancelled), nil
 		}
 
 		logger.Error("Unable to download pak archive", "error", err)
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	} else if !completed {
-		return withCode(output, ExitCodeCancelled), nil
+		return withAction(output, ActionCancelled), nil
 	}
 
 	err = utils.UnzipPakArchive(pak, tmp)
 	if err != nil {
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	if !input.IsUpdate {
@@ -297,15 +297,15 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 	}
 
 	if pak.Name == "Pak Store" {
-		return withCode(output, ExitCodePakStoreUpdated), nil
+		return withAction(output, ActionPakStoreUpdated), nil
 	}
 
 	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
-		time.Sleep(3 * time.Second)
+		time.Sleep(1500 * time.Millisecond)
 		return nil, nil
 	})
 
-	return success(output), nil
+	return withAction(output, ActionInstallSuccess), nil
 }
 
 func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOutput], error) {
@@ -366,14 +366,14 @@ func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOu
 			return back(output), nil
 		}
 		logger.Error("Unable to display multi-pak info screen", "error", err)
-		return withCode(output, gaba.ExitCodeError), err
+		return withAction(output, ActionError), err
 	}
 
 	for _, pak := range input.Paks {
 		tmp, completed, err := utils.DownloadPakArchive(pak)
 		if err != nil {
 			if err.Error() == "download cancelled by user" {
-				return withCode(output, ExitCodePartialUpdate), nil
+				return withAction(output, ActionPartialUpdate), nil
 			}
 			logger.Error("Failed to download pak",
 				"error", err,
@@ -385,7 +385,7 @@ func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOu
 				})
 			continue
 		} else if !completed {
-			return withCode(output, ExitCodePartialUpdate), nil
+			return withAction(output, ActionPartialUpdate), nil
 		}
 
 		err = utils.UnzipPakArchive(pak, tmp)
@@ -419,7 +419,7 @@ func (s *PakInfoScreen) drawMultiple(input PakInfoInput) (ScreenResult[PakInfoOu
 					time.Sleep(2 * time.Second)
 					return nil, nil
 				})
-			return withCode(output, ExitCodePakStoreUpdated), nil
+			return withAction(output, ActionPakStoreUpdated), nil
 		}
 	}
 
