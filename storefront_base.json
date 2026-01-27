@@ -20,7 +20,8 @@
       "repo_url": "https://github.com/rommapp/grout",
       "categories": [
         "ROM Management"
-      ]
+      ],
+      "disabled": true
     },
     {
       "storefront_name": "Game Manager",
