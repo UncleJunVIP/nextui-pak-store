@@ -2285,7 +2285,7 @@
         "v1.0.0": "Initial stable release",
         "v1.1.0": "CPU usage optimizations and minor bug fixes",
         "v1.1.1": "Fix: Prevent downloads failing at 100% by enforcing M4A format",
-        "v1.1.2": "Support for tg5050 and bug fixes"
+        "v1.1.2": "Latest NextUI v6.7.1 is required. Support for tg5050 and bug fixes"
       },
       "previous_names": null,
       "scripts": {
