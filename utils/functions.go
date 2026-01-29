@@ -21,6 +21,17 @@ import (
 	"github.com/skip2/go-qrcode"
 )
 
+func GetPlatform() string {
+	switch models.Platform(strings.ToLower(os.Getenv("PLATFORM"))) {
+	case models.TG5040:
+		return string(models.TG5040)
+	case models.TG5050:
+		return string(models.TG5050)
+	default:
+		return string(models.TG5040)
+	}
+}
+
 func GetSDRoot() string {
 	if os.Getenv("ENVIRONMENT") == "DEV" {
 		return os.Getenv("SD_ROOT")
@@ -29,20 +40,17 @@ func GetSDRoot() string {
 	return models.SDRoot
 }
 
-func GetToolRoot() string {
-	if os.Getenv("ENVIRONMENT") == "DEV" {
-		return os.Getenv("TOOL_ROOT")
-	}
+func GetUserDataDir() string {
+	platform := GetPlatform()
+	return filepath.Join(GetSDRoot(), platform, models.UserdataDir, models.PakStoreUserDataDir)
+}
 
-	return models.ToolRoot
+func GetToolRoot() string {
+	return filepath.Join(GetSDRoot(), models.ToolDir, GetPlatform())
 }
 
 func GetEmulatorRoot() string {
-	if os.Getenv("ENVIRONMENT") == "DEV" {
-		return os.Getenv("EMULATOR_ROOT")
-	}
-
-	return models.EmulatorRoot
+	return filepath.Join(GetSDRoot(), models.EmulatorDir, GetPlatform())
 }
 
 func LogStandardFatal(msg string, err error) {

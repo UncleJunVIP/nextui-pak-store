@@ -20,6 +20,7 @@ func init() {
 		WindowTitle:    "Pak Store",
 		ShowBackground: true,
 		LogFilename:    "pak_store.log",
+		IsNextUI:       true,
 	})
 
 	sf, err := gaba.ProcessMessage("",
@@ -38,9 +39,12 @@ func init() {
 
 	database.Init()
 
-	// Sync installed paks with storefront data
-	if err := state.SyncInstalledWithStorefront(sf); err != nil {
-		gaba.GetLogger().Error("Failed to sync installed paks", "error", err)
+	if err := state.MigratePreID(sf); err != nil {
+		gaba.GetLogger().Error("Failed to migrate installed paks to use Pak ID", "error", err)
+	}
+
+	if err := state.SyncInstalledMetadataFromStorefront(sf); err != nil {
+		gaba.GetLogger().Error("Failed to sync installed metadata with storefront", "error", err)
 	}
 
 	storefront = sf

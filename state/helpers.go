@@ -117,12 +117,13 @@ func GetUpdatesAvailable(storefront models.Storefront, installedPaks map[string]
 	return updates
 }
 
-// SyncInstalledWithStorefront updates installed paks with pak_id and repo_url from storefront
+// MigratePreID updates installed paks with pak_id and repo_url from storefront,
+// required for upgrading existing installations to make use of the new Pak ID
 // Matching priority:
 // 1. Match by current repo_url
 // 2. Match by any previous_repo_urls
 // 3. Match by StorefrontName / PreviousNames (legacy fallback)
-func SyncInstalledWithStorefront(storefront models.Storefront) error {
+func MigratePreID(storefront models.Storefront) error {
 	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
@@ -195,6 +196,64 @@ func SyncInstalledWithStorefront(storefront models.Storefront) error {
 					}
 				}
 				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// SyncInstalledMetadataFromStorefront updates installed pak metadata from storefront
+// for paks that already have a pak_id. This keeps display_name, name, and repo_url
+// in sync with the latest storefront data.
+func SyncInstalledMetadataFromStorefront(storefront models.Storefront) error {
+	logger := gabagool.GetLogger()
+	ctx := context.Background()
+
+	// Get paks that have a pak_id
+	installed, err := database.DBQ().ListInstalledPaksWithPakID(ctx)
+	if err != nil {
+		return err
+	}
+
+	// Build a map of storefront paks by ID for quick lookup
+	storefrontByID := make(map[string]models.Pak)
+	for _, sfp := range storefront.Paks {
+		if sfp.ID != "" {
+			storefrontByID[sfp.ID] = sfp
+		}
+	}
+
+	for _, p := range installed {
+		if !p.PakID.Valid || p.PakID.String == "" {
+			continue
+		}
+
+		sfp, found := storefrontByID[p.PakID.String]
+		if !found {
+			continue
+		}
+
+		// Check if any data needs updating
+		needsUpdate := p.DisplayName != sfp.StorefrontName ||
+			p.Name != sfp.Name ||
+			!p.RepoUrl.Valid ||
+			p.RepoUrl.String != sfp.RepoURL
+
+		if needsUpdate {
+			err := database.DBQ().SyncInstalledByPakID(ctx, database.SyncInstalledByPakIDParams{
+				DisplayName: sfp.StorefrontName,
+				Name:        sfp.Name,
+				RepoUrl:     sql.NullString{String: sfp.RepoURL, Valid: true},
+				PakID:       p.PakID,
+			})
+			if err != nil {
+				logger.Error("Failed to sync installed pak data", "error", err, "pak_id", p.PakID.String)
+			} else {
+				logger.Info("Synced installed pak data from storefront",
+					"pak_id", p.PakID.String,
+					"old_name", p.DisplayName,
+					"new_name", sfp.StorefrontName)
 			}
 		}
 	}

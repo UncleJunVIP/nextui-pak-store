@@ -76,6 +76,43 @@ func (q *Queries) ListInstalledPaks(ctx context.Context) ([]InstalledPak, error)
 	return items, nil
 }
 
+const listInstalledPaksWithPakID = `-- name: ListInstalledPaksWithPakID :many
+SELECT name, display_name, pak_id, repo_url, type, version, can_uninstall
+FROM installed_paks
+WHERE pak_id IS NOT NULL AND pak_id != ''
+`
+
+func (q *Queries) ListInstalledPaksWithPakID(ctx context.Context) ([]InstalledPak, error) {
+	rows, err := q.db.QueryContext(ctx, listInstalledPaksWithPakID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []InstalledPak
+	for rows.Next() {
+		var i InstalledPak
+		if err := rows.Scan(
+			&i.Name,
+			&i.DisplayName,
+			&i.PakID,
+			&i.RepoUrl,
+			&i.Type,
+			&i.Version,
+			&i.CanUninstall,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listInstalledPaksWithoutPakID = `-- name: ListInstalledPaksWithoutPakID :many
 SELECT name, display_name, pak_id, repo_url, type, version, can_uninstall
 FROM installed_paks
@@ -148,6 +185,90 @@ func (q *Queries) ListInstalledPaksWithoutRepo(ctx context.Context) ([]Installed
 		return nil, err
 	}
 	return items, nil
+}
+
+const syncInstalledByPakID = `-- name: SyncInstalledByPakID :exec
+UPDATE installed_paks
+SET display_name = ?1,
+    name         = ?2,
+    repo_url     = ?3
+WHERE pak_id = ?4
+`
+
+type SyncInstalledByPakIDParams struct {
+	DisplayName string
+	Name        string
+	RepoUrl     sql.NullString
+	PakID       sql.NullString
+}
+
+func (q *Queries) SyncInstalledByPakID(ctx context.Context, arg SyncInstalledByPakIDParams) error {
+	_, err := q.db.ExecContext(ctx, syncInstalledByPakID,
+		arg.DisplayName,
+		arg.Name,
+		arg.RepoUrl,
+		arg.PakID,
+	)
+	return err
+}
+
+const syncPakStore = `-- name: SyncPakStore :exec
+UPDATE installed_paks
+SET display_name = ?1,
+    name         = ?2,
+    version      = ?3,
+    repo_url     = ?4
+WHERE pak_id = ?5
+`
+
+type SyncPakStoreParams struct {
+	DisplayName string
+	Name        string
+	Version     string
+	RepoUrl     sql.NullString
+	PakID       sql.NullString
+}
+
+func (q *Queries) SyncPakStore(ctx context.Context, arg SyncPakStoreParams) error {
+	_, err := q.db.ExecContext(ctx, syncPakStore,
+		arg.DisplayName,
+		arg.Name,
+		arg.Version,
+		arg.RepoUrl,
+		arg.PakID,
+	)
+	return err
+}
+
+const syncPakStoreByName = `-- name: SyncPakStoreByName :exec
+UPDATE installed_paks
+SET display_name = ?1,
+    name         = ?2,
+    version      = ?3,
+    repo_url     = ?4,
+    pak_id       = ?5
+WHERE name = ?6 AND (pak_id IS NULL OR pak_id = '')
+`
+
+type SyncPakStoreByNameParams struct {
+	DisplayName string
+	Name        string
+	Version     string
+	RepoUrl     sql.NullString
+	PakID       sql.NullString
+	OldName     string
+}
+
+func (q *Queries) SyncPakStoreByName(ctx context.Context, arg SyncPakStoreByNameParams) error {
+	_, err := q.db.ExecContext(ctx, syncPakStoreByName,
+		arg.DisplayName,
+		arg.Name,
+		arg.Version,
+		arg.RepoUrl,
+		arg.PakID,
+		arg.OldName,
+	)
+	return err
 }
 
 const uninstall = `-- name: Uninstall :exec

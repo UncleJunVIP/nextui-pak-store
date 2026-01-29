@@ -301,7 +301,7 @@ func (s *PakInfoScreen) drawSingle(input PakInfoInput) (ScreenResult[PakInfoOutp
 	}
 
 	gaba.ProcessMessage(fmt.Sprintf("%s %s!", pak.StorefrontName, action), gaba.ProcessMessageOptions{}, func() (interface{}, error) {
-		time.Sleep(1500 * time.Millisecond)
+		time.Sleep(1250 * time.Millisecond)
 		return nil, nil
 	})
 

@@ -14,6 +14,18 @@ SELECT *
 FROM installed_paks
 WHERE pak_id IS NULL OR pak_id = '';
 
+-- name: ListInstalledPaksWithPakID :many
+SELECT *
+FROM installed_paks
+WHERE pak_id IS NOT NULL AND pak_id != '';
+
+-- name: SyncInstalledByPakID :exec
+UPDATE installed_paks
+SET display_name = @display_name,
+    name         = @name,
+    repo_url     = @repo_url
+WHERE pak_id = @pak_id;
+
 -- name: Install :exec
 INSERT INTO installed_paks (display_name, name, pak_id, repo_url, version, type, can_uninstall)
 VALUES (?, ?, ?, ?, ?, ?, ?);
@@ -23,10 +35,27 @@ UPDATE installed_paks
 SET version = ?, repo_url = ?
 WHERE pak_id = ?;
 
+-- name: SyncPakStore :exec
+UPDATE installed_paks
+SET display_name = @display_name,
+    name         = @name,
+    version      = @version,
+    repo_url     = @repo_url
+WHERE pak_id = @pak_id;
+
+-- name: SyncPakStoreByName :exec
+UPDATE installed_paks
+SET display_name = @display_name,
+    name         = @name,
+    version      = @version,
+    repo_url     = @repo_url,
+    pak_id       = @pak_id
+WHERE name = @old_name AND (pak_id IS NULL OR pak_id = '');
+
 -- name: Uninstall :exec
 DELETE
 FROM installed_paks
-Bug fixWHERE pak_id = ? AND pak_id IS NOT NULL AND pak_id != '';
+WHERE pak_id = ? AND pak_id IS NOT NULL AND pak_id != '';
 
 -- name: UpdateInstalledWithRepo :exec
 UPDATE installed_paks

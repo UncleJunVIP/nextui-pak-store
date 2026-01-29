@@ -25,7 +25,7 @@ func Init() {
 	ctx := context.Background()
 
 	var err error
-	dbPath := filepath.Join(models.PakStoreConfigRoot, "pak-store.db")
+	dbPath := filepath.Join(utils.GetUserDataDir(), "pak-store.db")
 
 	if os.Getenv("ENVIRONMENT") == "DEV" {
 		dbPath = "pak-store.db"
@@ -76,10 +76,21 @@ func Init() {
 			CanUninstall: 0,
 		})
 	} else {
-		queries.UpdateVersion(ctx, UpdateVersionParams{
-			Version: pak.Version,
-			RepoUrl: sql.NullString{String: models.PakStoreRepo, Valid: true},
-			PakID:   sql.NullString{String: models.PakStoreID, Valid: true},
+		queries.SyncPakStore(ctx, SyncPakStoreParams{
+			DisplayName: pak.StorefrontName,
+			Name:        pak.Name,
+			Version:     pak.Version,
+			RepoUrl:     sql.NullString{String: models.PakStoreRepo, Valid: true},
+			PakID:       sql.NullString{String: models.PakStoreID, Valid: true},
+		})
+		// Fallback for pre-migrated tables without pak_id
+		queries.SyncPakStoreByName(ctx, SyncPakStoreByNameParams{
+			DisplayName: pak.StorefrontName,
+			Name:        pak.Name,
+			Version:     pak.Version,
+			RepoUrl:     sql.NullString{String: models.PakStoreRepo, Valid: true},
+			PakID:       sql.NullString{String: models.PakStoreID, Valid: true},
+			OldName:     "Pak Store",
 		})
 	}
 }
