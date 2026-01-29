@@ -9,11 +9,11 @@ import (
 
 	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/UncleJunVIP/nextui-pak-store/database"
+	"github.com/UncleJunVIP/nextui-pak-store/internal"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
+	"github.com/UncleJunVIP/nextui-pak-store/utils"
 )
 
-// GetInstalledPaks fetches installed paks from the database
-// Returns a map keyed by pak_id (with fallback to repo_url for legacy paks)
 func GetInstalledPaks() (map[string]database.InstalledPak, error) {
 	ctx := context.Background()
 	installed, err := database.DBQ().ListInstalledPaks(ctx)
@@ -23,7 +23,6 @@ func GetInstalledPaks() (map[string]database.InstalledPak, error) {
 
 	installedMap := make(map[string]database.InstalledPak)
 	for _, p := range installed {
-		// Key by pak_id if available, otherwise fall back to repo_url
 		if p.PakID.Valid && p.PakID.String != "" {
 			installedMap[p.PakID.String] = p
 		} else if p.RepoUrl.Valid && p.RepoUrl.String != "" {
@@ -31,31 +30,32 @@ func GetInstalledPaks() (map[string]database.InstalledPak, error) {
 		}
 	}
 
-	// Remove Pak Store from the map (it's managed separately)
 	delete(installedMap, "Pak Store")
 	delete(installedMap, models.PakStoreID)
 
 	return installedMap, nil
 }
 
-// PakWithStatus wraps a pak with its installation status
 type PakWithStatus struct {
 	Pak         models.Pak
 	IsInstalled bool
 	HasUpdate   bool
 }
 
-// GetBrowsePaks returns paks grouped by category, including installed status
 func GetBrowsePaks(storefront models.Storefront, installedPaks map[string]database.InstalledPak) map[string]map[string]PakWithStatus {
 	browsePaks := make(map[string]map[string]PakWithStatus)
+	currentPlatform := utils.GetPlatform()
+	config := internal.GetConfig()
 
 	for _, p := range storefront.Paks {
-		// Skip disabled paks
 		if p.Disabled {
 			continue
 		}
 
-		// Try to find installed pak by ID first, then by repo_url
+		if config.PlatformFilter == internal.PlatformFilterMatchDevice && !supportsCurrentPlatform(p, currentPlatform) {
+			continue
+		}
+
 		installed, isInstalled := findInstalledPak(p, installedPaks)
 		hasUpdate := false
 		if isInstalled {
@@ -79,17 +79,13 @@ func GetBrowsePaks(storefront models.Storefront, installedPaks map[string]databa
 	return browsePaks
 }
 
-// findInstalledPak tries to match a storefront pak with an installed pak
-// Priority: pak_id > repo_url
 func findInstalledPak(pak models.Pak, installedPaks map[string]database.InstalledPak) (database.InstalledPak, bool) {
-	// Try by pak_id first
 	if pak.ID != "" {
 		if installed, ok := installedPaks[pak.ID]; ok {
 			return installed, true
 		}
 	}
 
-	// Fall back to repo_url
 	if pak.RepoURL != "" {
 		if installed, ok := installedPaks[pak.RepoURL]; ok {
 			return installed, true
@@ -99,11 +95,16 @@ func findInstalledPak(pak models.Pak, installedPaks map[string]database.Installe
 	return database.InstalledPak{}, false
 }
 
-// GetUpdatesAvailable returns paks that have updates available
 func GetUpdatesAvailable(storefront models.Storefront, installedPaks map[string]database.InstalledPak) []models.Pak {
 	var updates []models.Pak
+	currentPlatform := utils.GetPlatform()
+	config := internal.GetConfig()
 
 	for _, p := range storefront.Paks {
+		if config.PlatformFilter == internal.PlatformFilterMatchDevice && !supportsCurrentPlatform(p, currentPlatform) {
+			continue
+		}
+
 		installed, isInstalled := findInstalledPak(p, installedPaks)
 		if isInstalled && HasUpdate(installed.Version, p.Version) {
 			updates = append(updates, p)
@@ -117,17 +118,10 @@ func GetUpdatesAvailable(storefront models.Storefront, installedPaks map[string]
 	return updates
 }
 
-// MigratePreID updates installed paks with pak_id and repo_url from storefront,
-// required for upgrading existing installations to make use of the new Pak ID
-// Matching priority:
-// 1. Match by current repo_url
-// 2. Match by any previous_repo_urls
-// 3. Match by StorefrontName / PreviousNames (legacy fallback)
 func MigratePreID(storefront models.Storefront) error {
 	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
-	// Get paks that don't have a pak_id yet
 	installed, err := database.DBQ().ListInstalledPaksWithoutPakID(ctx)
 	if err != nil {
 		return err
@@ -138,13 +132,11 @@ func MigratePreID(storefront models.Storefront) error {
 			matched := false
 			matchReason := ""
 
-			// Try to match by current repo_url
 			if p.RepoUrl.Valid && p.RepoUrl.String != "" && p.RepoUrl.String == sfp.RepoURL {
 				matched = true
 				matchReason = "repo_url"
 			}
 
-			// Try to match by previous repo_urls
 			if !matched && p.RepoUrl.Valid && p.RepoUrl.String != "" {
 				if slices.Contains(sfp.PreviousRepoURLs, p.RepoUrl.String) {
 					matched = true
@@ -152,7 +144,6 @@ func MigratePreID(storefront models.Storefront) error {
 				}
 			}
 
-			// Fallback: match by display name or previous names (legacy support)
 			if !matched && p.RepoUrl.String == "" {
 				if p.DisplayName == sfp.StorefrontName || slices.Contains(sfp.PreviousNames, p.DisplayName) {
 					matched = true
@@ -162,7 +153,6 @@ func MigratePreID(storefront models.Storefront) error {
 
 			if matched {
 				if p.RepoUrl.Valid && p.RepoUrl.String != "" {
-					// Update using repo_url as the WHERE clause
 					err := database.DBQ().UpdateInstalledWithPakID(ctx, database.UpdateInstalledWithPakIDParams{
 						PakID:          sql.NullString{String: sfp.ID, Valid: true},
 						NewDisplayName: sfp.StorefrontName,
@@ -179,7 +169,6 @@ func MigratePreID(storefront models.Storefront) error {
 							"match_reason", matchReason)
 					}
 				} else {
-					// Legacy: update using display_name as the WHERE clause
 					err := database.DBQ().UpdateInstalledWithRepo(ctx, database.UpdateInstalledWithRepoParams{
 						NewDisplayName: sfp.StorefrontName,
 						NewName:        sfp.Name,
@@ -203,20 +192,15 @@ func MigratePreID(storefront models.Storefront) error {
 	return nil
 }
 
-// SyncInstalledMetadataFromStorefront updates installed pak metadata from storefront
-// for paks that already have a pak_id. This keeps display_name, name, and repo_url
-// in sync with the latest storefront data.
 func SyncInstalledMetadataFromStorefront(storefront models.Storefront) error {
 	logger := gabagool.GetLogger()
 	ctx := context.Background()
 
-	// Get paks that have a pak_id
 	installed, err := database.DBQ().ListInstalledPaksWithPakID(ctx)
 	if err != nil {
 		return err
 	}
 
-	// Build a map of storefront paks by ID for quick lookup
 	storefrontByID := make(map[string]models.Pak)
 	for _, sfp := range storefront.Paks {
 		if sfp.ID != "" {
@@ -234,7 +218,6 @@ func SyncInstalledMetadataFromStorefront(storefront models.Storefront) error {
 			continue
 		}
 
-		// Check if any data needs updating
 		needsUpdate := p.DisplayName != sfp.StorefrontName ||
 			p.Name != sfp.Name ||
 			!p.RepoUrl.Valid ||
@@ -261,23 +244,26 @@ func SyncInstalledMetadataFromStorefront(storefront models.Storefront) error {
 	return nil
 }
 
-// HasUpdate checks if a newer version is available
-// Supports both 3-digit (1.2.3) and 4-digit (1.2.3.4) versions, with or without leading "v"
+func supportsCurrentPlatform(pak models.Pak, platform string) bool {
+	if len(pak.Platforms) == 0 {
+		return true
+	}
+	return slices.ContainsFunc(pak.Platforms, func(p string) bool {
+		return strings.EqualFold(p, platform)
+	})
+}
+
 func HasUpdate(installed string, latest string) bool {
 	return compareVersions(installed, latest) == -1
 }
 
-// compareVersions compares two version strings
-// Returns -1 if a < b, 0 if a == b, 1 if a > b
 func compareVersions(a, b string) int {
-	// Strip leading "v" if present
 	a = strings.TrimPrefix(a, "v")
 	b = strings.TrimPrefix(b, "v")
 
 	partsA := strings.Split(a, ".")
 	partsB := strings.Split(b, ".")
 
-	// Compare each part numerically
 	maxLen := len(partsA)
 	if len(partsB) > maxLen {
 		maxLen = len(partsB)

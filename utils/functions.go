@@ -22,7 +22,9 @@ import (
 )
 
 func GetPlatform() string {
-	switch models.Platform(strings.ToLower(os.Getenv("PLATFORM"))) {
+	raw := strings.ToLower(os.Getenv("PLATFORM"))
+
+	switch models.Platform(raw) {
 	case models.TG5040:
 		return string(models.TG5040)
 	case models.TG5050:

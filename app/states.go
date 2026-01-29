@@ -6,11 +6,11 @@ import (
 
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
 	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/router"
+	"github.com/UncleJunVIP/nextui-pak-store/internal"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/ui"
 )
 
-// Screen identifiers
 const (
 	screenMainMenu router.Screen = iota
 	screenBrowse
@@ -18,15 +18,15 @@ const (
 	screenPakInfo
 	screenUpdates
 	screenManageInstalled
+	screenSettings
+	screenInfo
 )
 
-// ListPosition stores scroll state for a list screen
 type ListPosition struct {
 	Index             int
 	VisibleStartIndex int
 }
 
-// Resume types for back navigation
 type BrowseResume struct {
 	Pos ListPosition
 }
@@ -44,7 +44,6 @@ type ManageResume struct {
 	Pos ListPosition
 }
 
-// Input types that include resume state
 type BrowseInputWithResume struct {
 	Storefront models.Storefront
 	Resume     *BrowseResume
@@ -71,13 +70,12 @@ type PakInfoInputWithSource struct {
 	Category    string
 	IsUpdate    bool
 	IsInstalled bool
-	Source      router.Screen // Where we came from
+	Source      router.Screen
 }
 
 func buildRouter(storefront models.Storefront) *router.Router {
 	r := router.New()
 
-	// Main Menu Screen
 	r.Register(screenMainMenu, func(input any) (any, error) {
 		screen := ui.NewMainMenuScreen()
 		result, err := screen.Draw(ui.MainMenuInput{
@@ -89,7 +87,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		return result, nil
 	})
 
-	// Browse Screen
 	r.Register(screenBrowse, func(input any) (any, error) {
 		in := input.(BrowseInputWithResume)
 		var lastIdx, lastPos int
@@ -110,7 +107,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		return result, nil
 	})
 
-	// Pak List Screen
 	r.Register(screenPakList, func(input any) (any, error) {
 		in := input.(PakListInputWithResume)
 		var lastIdx, lastPos int
@@ -132,7 +128,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		return result, nil
 	})
 
-	// Pak Info Screen
 	r.Register(screenPakInfo, func(input any) (any, error) {
 		in := input.(PakInfoInputWithSource)
 
@@ -147,7 +142,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 			return result, err
 		}
 
-		// Attach source and input info to result for transition function
 		return struct {
 			Result      ui.ScreenResult[ui.PakInfoOutput]
 			Source      router.Screen
@@ -158,7 +152,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		}{result, in.Source, in.Paks, in.Category, in.IsUpdate, in.IsInstalled}, nil
 	})
 
-	// Updates Screen
 	r.Register(screenUpdates, func(input any) (any, error) {
 		in := input.(UpdatesInputWithResume)
 		var lastIdx, lastPos int
@@ -179,7 +172,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		return result, nil
 	})
 
-	// Manage Installed Screen
 	r.Register(screenManageInstalled, func(input any) (any, error) {
 		in := input.(ManageInputWithResume)
 		var lastIdx, lastPos int
@@ -200,7 +192,27 @@ func buildRouter(storefront models.Storefront) *router.Router {
 		return result, nil
 	})
 
-	// Transition function handles all navigation logic
+	r.Register(screenSettings, func(input any) (any, error) {
+		config := internal.GetConfig()
+		screen := ui.NewSettingsScreen()
+		result, err := screen.Draw(ui.SettingsInput{
+			Config: config,
+		})
+		if err != nil {
+			return result, err
+		}
+		return result, nil
+	})
+
+	r.Register(screenInfo, func(input any) (any, error) {
+		screen := ui.NewInfoScreen()
+		result, err := screen.Draw(ui.InfoInput{})
+		if err != nil {
+			return result, err
+		}
+		return result, nil
+	})
+
 	r.OnTransition(func(from router.Screen, result any, stack *router.Stack) (router.Screen, any) {
 		switch from {
 		case screenMainMenu:
@@ -212,6 +224,8 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
 			case ui.ActionManageInstalled:
 				return screenManageInstalled, ManageInputWithResume{Storefront: storefront}
+			case ui.ActionSettings:
+				return screenSettings, nil
 			case ui.ActionQuit, ui.ActionError:
 				return router.ScreenExit, nil
 			}
@@ -220,7 +234,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 			r := result.(ui.ScreenResult[ui.BrowseOutput])
 			switch r.Action {
 			case ui.ActionSelected:
-				// Push current state for back navigation
 				stack.Push(from, BrowseInputWithResume{Storefront: storefront}, &BrowseResume{
 					Pos: ListPosition{
 						Index:             r.Value.LastSelectedIndex,
@@ -239,7 +252,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 			r := result.(ui.ScreenResult[ui.PakListOutput])
 			switch r.Action {
 			case ui.ActionSelected:
-				// Push current state for back navigation
 				stack.Push(from, PakListInputWithResume{
 					Storefront: storefront,
 					Category:   r.Value.Category,
@@ -282,7 +294,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 
 			switch r.Action {
 			case ui.ActionInstallSuccess:
-				// Return to pak info showing the pak as installed
 				return screenPakInfo, PakInfoInputWithSource{
 					Paks:        wrapper.Paks,
 					Category:    wrapper.Category,
@@ -300,7 +311,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				return router.ScreenExit, nil
 
 			case ui.ActionUninstalled:
-				// Go back to source screen after uninstall (manage/updates) or stay on pak info (browse)
 				switch source {
 				case screenManageInstalled:
 					if entry := stack.Pop(); entry != nil {
@@ -333,7 +343,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				}
 
 			case ui.ActionPartialUpdate:
-				// Go back to updates with resume state
 				if entry := stack.Pop(); entry != nil {
 					in := entry.Input.(UpdatesInputWithResume)
 					if entry.Resume != nil {
@@ -344,7 +353,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				return screenUpdates, UpdatesInputWithResume{Storefront: storefront}
 
 			case ui.ActionCancelled:
-				// Stay on pak info with same state (re-draw)
 				return screenPakInfo, PakInfoInputWithSource{
 					Paks:        wrapper.Paks,
 					Category:    wrapper.Category,
@@ -354,7 +362,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				}
 
 			case ui.ActionBack, ui.ActionSelected:
-				// Go back to source screen
 				switch source {
 				case screenManageInstalled:
 					if entry := stack.Pop(); entry != nil {
@@ -392,7 +399,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 			r := result.(ui.ScreenResult[ui.UpdatesOutput])
 			switch r.Action {
 			case ui.ActionSelected:
-				// Push current state for back navigation
 				stack.Push(from, UpdatesInputWithResume{Storefront: storefront}, &UpdatesResume{
 					Pos: ListPosition{
 						Index:             r.Value.LastSelectedIndex,
@@ -412,7 +418,6 @@ func buildRouter(storefront models.Storefront) *router.Router {
 			r := result.(ui.ScreenResult[ui.ManageInstalledOutput])
 			switch r.Action {
 			case ui.ActionSelected:
-				// Push current state for back navigation
 				stack.Push(from, ManageInputWithResume{Storefront: storefront}, &ManageResume{
 					Pos: ListPosition{
 						Index:             r.Value.LastSelectedIndex,
@@ -427,6 +432,22 @@ func buildRouter(storefront models.Storefront) *router.Router {
 				}
 			case ui.ActionBack:
 				return screenMainMenu, nil
+			}
+
+		case screenSettings:
+			r := result.(ui.ScreenResult[ui.SettingsOutput])
+			switch r.Action {
+			case ui.ActionBack, ui.ActionSettingsSaved:
+				return screenMainMenu, nil
+			case ui.ActionInfo:
+				return screenInfo, nil
+			}
+
+		case screenInfo:
+			r := result.(ui.ScreenResult[ui.InfoOutput])
+			switch r.Action {
+			case ui.ActionBack:
+				return screenSettings, nil
 			}
 		}
 

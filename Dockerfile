@@ -13,6 +13,15 @@ COPY go.mod go.sum* ./
 RUN GOWORK=off go mod download
 
 COPY . .
-RUN GOWORK=off go build -v -gcflags="all=-N -l" -o pak-store app/pak_store.go
+
+ARG VERSION=dev
+ARG GIT_COMMIT=unknown
+ARG BUILD_DATE=unknown
+
+RUN GOWORK=off go build -v \
+    -ldflags "-X github.com/UncleJunVIP/nextui-pak-store/version.Version=${VERSION} \
+              -X github.com/UncleJunVIP/nextui-pak-store/version.GitCommit=${GIT_COMMIT} \
+              -X github.com/UncleJunVIP/nextui-pak-store/version.BuildDate=${BUILD_DATE}" \
+    -o pak-store app/pak_store.go
 
 CMD ["/bin/bash"]

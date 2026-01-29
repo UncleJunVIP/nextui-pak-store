@@ -1,10 +1,10 @@
 <div align="center">
 <img src=".github/resources/banner.png" width="auto" alt="Mortar wordmark">
 
-![GitHub License](https://img.shields.io/github/license/UncleJunVip/nextui-pak-store?style=for-the-badge&color=007C77)
-![GitHub Release](https://img.shields.io/github/v/release/UncleJunVIP/nextui-pak-store?sort=semver&style=for-the-badge&color=007C77)
-![GitHub Repo stars](https://img.shields.io/github/stars/UncleJunVip/nextui-pak-store?style=for-the-badge&color=007C77)
-![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/UncleJunVIP/nextui-pak-store/total?style=for-the-badge&label=Downloads&color=007C77)
+![GitHub License][license-badge]
+![GitHub Release][release-badge]
+![GitHub Repo stars][stars-badge]
+![GitHub Downloads][downloads-badge]
 
 </div>
 
@@ -15,7 +15,7 @@
 1. Own a TrimUI Brick or Smart Pro and have a SD Card with NextUI configured.
 2. Connect your device to a Wi-Fi network.
 3. Download the latest Pak Store release from this repo.
-4. Unzip the release download. 
+4. Unzip the release download.
    - If the unzipped folder name is `Pak.Store.pak` please rename it to `Pak Store.pak`.
 5. Copy the entire `Pak Store.pak` folder to `SD_ROOT/Tools/tg5040`.
 6. Reinsert your SD Card into your device.
@@ -51,18 +51,15 @@ Awesome! To get added to Pak Store you have to complete the following steps:
 ```json
 {
   "name": "Pak Store",
-  "version": "v1.0.1",
-  "type": "TOOL | EMU",
+  "version": "v3.0.0",
+  "type": "TOOL",
   "description": "A Pak Store in this economy?!",
-  "author": "K-Wall",
-  "repo_url": "https://github.com/UncleJunVIP/nextui-pak-store",
+  "author": "The NextUI Community",
+  "repo_url": "https://github.com/LoveRetro/nextui-pak-store",
   "release_filename": "Pak.Store.pak.zip",
   "changelog": {
     "v1.0.0": "Upgraded the UI to use gabagool, my NextUI Pak UI Library!"
   },
-  "update_ignore": [
-    "path/of/file/to/ignore"
-  ],
   "screenshots": [
     ".github/resources/screenshots/main_menu.jpg",
     ".github/resources/screenshots/browse.jpg",
@@ -72,7 +69,8 @@ Awesome! To get added to Pak Store you have to complete the following steps:
     ".github/resources/screenshots/updates.jpg"
   ],
   "platforms": [
-    "tg5040"
+    "tg5040",
+    "tg5050"
   ]
 }
 ```
@@ -80,3 +78,9 @@ Awesome! To get added to Pak Store you have to complete the following steps:
 ---
 
 Enjoy! ✌🏻
+
+<!-- Badge References -->
+[license-badge]: https://img.shields.io/github/license/UncleJunVIP/nextui-pak-store?style=for-the-badge&color=9B2256
+[release-badge]: https://img.shields.io/github/v/release/UncleJunVIP/nextui-pak-store?sort=semver&style=for-the-badge&color=9B2256
+[stars-badge]: https://img.shields.io/github/stars/UncleJunVIP/nextui-pak-store?style=for-the-badge&color=9B2256
+[downloads-badge]: https://img.shields.io/github/downloads/UncleJunVIP/nextui-pak-store/total?style=for-the-badge&label=Downloads&color=9B2256

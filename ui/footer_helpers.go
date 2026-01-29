@@ -1,6 +1,9 @@
 package ui
 
-import gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+import (
+	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	icons "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/constants"
+)
 
 func FooterSelect() gaba.FooterHelpItem {
 	return gaba.FooterHelpItem{ButtonName: "A", HelpText: "Select"}
@@ -48,4 +51,12 @@ func BackViewFooter() []gaba.FooterHelpItem {
 
 func QuitSelectFooter() []gaba.FooterHelpItem {
 	return []gaba.FooterHelpItem{FooterQuit(), FooterSelect()}
+}
+
+func OptionsListFooter() []gaba.FooterHelpItem {
+	return []gaba.FooterHelpItem{
+		FooterCancel(),
+		{ButtonName: icons.LeftRight, HelpText: "Cycle"},
+		{ButtonName: "Start", HelpText: "Save"},
+	}
 }

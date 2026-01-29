@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	gaba "github.com/BrandonKowalski/gabagool/v2/pkg/gabagool"
+	"github.com/BrandonKowalski/gabagool/v2/pkg/gabagool/constants"
 	"github.com/UncleJunVIP/nextui-pak-store/models"
 	"github.com/UncleJunVIP/nextui-pak-store/state"
 )
@@ -35,16 +36,6 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 	browsePaks := state.GetBrowsePaks(input.Storefront, installedPaks)
 	updatesAvailable := state.GetUpdatesAvailable(input.Storefront, installedPaks)
 
-	// Count available (not installed) paks
-	availableCount := 0
-	for _, catPaks := range browsePaks {
-		for _, pakStatus := range catPaks {
-			if !pakStatus.IsInstalled {
-				availableCount++
-			}
-		}
-	}
-
 	title := "Pak Store"
 
 	var menuItems []gaba.MenuItem
@@ -60,7 +51,7 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 
 	if len(browsePaks) > 0 {
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     fmt.Sprintf("Browse (%d)", availableCount),
+			Text:     "Browse",
 			Selected: false,
 			Focused:  false,
 			Metadata: "Browse",
@@ -69,7 +60,7 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 
 	if len(installedPaks) > 0 {
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     fmt.Sprintf("Manage Installed (%d)", len(installedPaks)),
+			Text:     "Manage Installed",
 			Selected: false,
 			Focused:  false,
 			Metadata: "Manage Installed",
@@ -77,7 +68,14 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 	}
 
 	options := gaba.DefaultListOptions(title, menuItems)
-	options.FooterHelpItems = QuitSelectFooter()
+	options.FooterHelpItems = []gaba.FooterHelpItem{
+		FooterQuit(),
+		{ButtonName: "X", HelpText: "Settings"},
+		FooterSelect(),
+	}
+	options.ActionButton = constants.VirtualButtonX
+
+	options.EmptyMessage = "No Paks Available"
 
 	sel, err := gaba.List(options)
 	if err != nil {
@@ -85,6 +83,11 @@ func (s *MainMenuScreen) Draw(input MainMenuInput) (ScreenResult[MainMenuOutput]
 			return withAction(output, ActionQuit), nil
 		}
 		return withAction(output, ActionError), err
+	}
+
+	// Handle X button for Settings
+	if sel.Action == gaba.ListActionTriggered {
+		return withAction(output, ActionSettings), nil
 	}
 
 	if len(sel.Selected) == 0 {

@@ -46,16 +46,8 @@ func (s *BrowseScreen) Draw(input BrowseInput) (ScreenResult[BrowseOutput], erro
 	var menuItems []gaba.MenuItem
 
 	for cat := range browsePaks {
-		// Count available (not installed) paks in this category
-		available := 0
-		for _, pakStatus := range browsePaks[cat] {
-			if !pakStatus.IsInstalled {
-				available++
-			}
-		}
-
 		menuItems = append(menuItems, gaba.MenuItem{
-			Text:     cat + " (" + strconv.Itoa(available) + ")",
+			Text:     cat + " (" + strconv.Itoa(len(browsePaks[cat])) + ")",
 			Selected: false,
 			Focused:  false,
 			Metadata: cat,

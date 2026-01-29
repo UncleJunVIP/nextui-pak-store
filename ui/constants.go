@@ -14,6 +14,8 @@ const (
 	ActionBrowse
 	ActionUpdates
 	ActionManageInstalled
+	ActionSettings
+	ActionInfo
 
 	// Pak info results
 	ActionPakStoreUpdated
@@ -21,4 +23,7 @@ const (
 	ActionPartialUpdate
 	ActionCancelled
 	ActionInstallSuccess
+
+	// Settings results
+	ActionSettingsSaved
 )

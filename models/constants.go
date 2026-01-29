@@ -19,5 +19,5 @@ const (
 
 type Platform string
 
-const TG5040 Platform = "TG5040"
-const TG5050 Platform = "TG5050"
+const TG5040 Platform = "tg5040"
+const TG5050 Platform = "tg5050"

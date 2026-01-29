@@ -11,13 +11,20 @@ tasks:
     silent: true
 
   build:
+    vars:
+      VERSION:
+        sh: jq -r '.version' pak.json
+      GIT_COMMIT:
+        sh: git rev-parse --short HEAD 2>/dev/null || echo "unknown"
+      BUILD_DATE:
+        sh: date -u +"%Y-%m-%d"
     cmds:
       - rm -rf build
       - mkdir -p build
       - mkdir -p build/lib
       - mkdir -p build/bin
       - mkdir -p build/licenses
-      - docker buildx build --platform=linux/arm64 -t retro-console-arm64 -f Dockerfile .
+      - docker buildx build --platform=linux/arm64 -t retro-console-arm64 -f Dockerfile --build-arg VERSION={{.VERSION}} --build-arg GIT_COMMIT={{.GIT_COMMIT}} --build-arg BUILD_DATE={{.BUILD_DATE}} .
     silent: true
 
   package:
